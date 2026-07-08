@@ -59,24 +59,24 @@ const t = {
 // Realistic broker profiles based on cities
 const brokers = {
   kyiv: {
-    name: { en: "Kateryna Furtseva", ua: "Фурцова Катерина", ru: "Фурцова Екатерина" },
-    role: { en: "Senior Investment Advisor", ua: "Старший радник з інвестицій", ru: "Старший советник по инвестициям" },
-    photo: "/images/generated/walid_dib.png", // Reusing CEO photo contextually or styled initial box
-    initials: "КФ",
+    name: { en: "Walid Dib", ua: "Валід Діб", ru: "Валид Диб" },
+    role: { en: "Founder & Chairman", ua: "Засновник та Голова", ru: "Основатель и Председатель" },
+    photo: "/images/generated/walid_dib.png",
+    initials: "WD",
     phone: "+380 7777 04177",
   },
   lviv: {
-    name: { en: "Oleksandr Lysenko", ua: "Лисенко Олександр", ru: "Лысенко Александр" },
-    role: { en: "Lviv Regional Partner", ua: "Партнер у Львівському регіоні", ru: "Партнер во Львовском регионе" },
-    photo: "",
-    initials: "ОЛ",
+    name: { en: "Walid Dib", ua: "Валід Діб", ru: "Валид Диб" },
+    role: { en: "Founder & Chairman", ua: "Засновник та Голова", ru: "Основатель и Председатель" },
+    photo: "/images/generated/walid_dib.png",
+    initials: "WD",
     phone: "+380 7777 04177",
   },
   odesa: {
-    name: { en: "Dmitry Boyko", ua: "Бойко Дмитро", ru: "Бойко Дмитрий" },
-    role: { en: "Odesa Portfolio Manager", ua: "Портфельний менеджер (Одеса)", ru: "Портфельный менеджер (Одесса)" },
-    photo: "",
-    initials: "ДБ",
+    name: { en: "Walid Dib", ua: "Валід Діб", ru: "Валид Диб" },
+    role: { en: "Founder & Chairman", ua: "Засновник та Голова", ru: "Основатель и Председатель" },
+    photo: "/images/generated/walid_dib.png",
+    initials: "WD",
     phone: "+380 7777 04177",
   },
 };
