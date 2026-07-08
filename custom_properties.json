@@ -1,0 +1,542 @@
+[
+  {
+    "id": "seed_kyiv-pechersk-penthouse",
+    "slug": "kyiv-pechersk-penthouse",
+    "title": {
+      "en": "Panoramic Penthouse Overlooking the Lavra",
+      "ua": "Панорамний пентхаус з видом на Лавру",
+      "ru": "Панорамный пентхаус с видом на Лавру"
+    },
+    "location": {
+      "en": "Pechersk, Kyiv",
+      "ua": "Печерськ, Київ",
+      "ru": "Печерск, Киев"
+    },
+    "city": "kyiv",
+    "type": "apartments",
+    "price": 1850000,
+    "area": 320,
+    "bedrooms": 4,
+    "roi": "8.5",
+    "gallery": [
+      "/images/generated/prop-kyiv-pechersk-penthouse-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "/videos/tour.mp4",
+    "status": "exclusive",
+    "description": {
+      "en": "A double-height corner residence in one of Kyiv's most sought-after districts, with panoramic views of the gilded domes of Kyiv Pechersk Lavra and the Dnipro river. A wraparound terrace with a linear infinity pool, private lift lobby and dedicated concierge define the tier.",
+      "ua": "Двоповерхова кутова резиденція в одному з найбажаніших районів Києва з панорамним видом на позолочені куполи Києво-Печерської Лаври та Дніпро. Тераса з басейном інфініті, приватний ліфтовий хол і персональний консьєрж.",
+      "ru": "Двухуровневая угловая резиденция в одном из самых востребованных районов Киева с панорамным видом на золочёные купола Киево-Печерской Лавры и Днепр. Терраса с бассейном инфинити, приватный лифтовый холл и персональный консьерж."
+    },
+    "specs": {
+      "rooms": "4 Rooms",
+      "layout": "320 / 180 / 35 м²",
+      "floor": "Floor 24 of 25",
+      "renovation": "Luxury designer finish",
+      "newBuild": "New premium build",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous building boiler",
+      "ceilings": "3.4 m ceiling height",
+      "yearBuilt": "Built in 2021"
+    }
+  },
+  {
+    "id": "seed_kyiv-podil-loft",
+    "slug": "kyiv-podil-loft",
+    "title": {
+      "en": "Historic Loft in Podil",
+      "ua": "Історичний лофт на Подолі",
+      "ru": "Исторический лофт на Подоле"
+    },
+    "location": {
+      "en": "Podil, Kyiv",
+      "ua": "Поділ, Київ",
+      "ru": "Подол, Киев"
+    },
+    "city": "kyiv",
+    "type": "apartments",
+    "price": 620000,
+    "area": 145,
+    "bedrooms": 2,
+    "roi": "7.2",
+    "gallery": [
+      "/images/generated/prop-kyiv-podil-loft-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "ready",
+    "description": {
+      "en": "A restored loft in a 19th-century commercial building on Podil, blending exposed brick with contemporary design. Walking distance to the riverfront and Kontraktova square. Ideal city pied-à-terre or premium rental.",
+      "ua": "Реставрований лофт у комерційній будівлі XIX століття на Подолі. Поєднання цегли з сучасним дизайном. Кроки до набережної та Контрактової. Ідеально для міської квартири або преміальної оренди.",
+      "ru": "Отреставрированный лофт в коммерческом здании XIX века на Подоле. Сочетание кирпича с современным дизайном. Пешком до набережной и Контрактовой. Идеально для городской квартиры или премиум-аренды."
+    },
+    "specs": {
+      "rooms": "2 Rooms",
+      "layout": "120 / 72 / 20 м²",
+      "floor": "Floor 3 of 5",
+      "renovation": "Loft designer finish",
+      "newBuild": "Heritage Restored",
+      "construction": "Brick & Monolith",
+      "heating": "Autonomous gas boiler",
+      "ceilings": "3.8 m ceiling height",
+      "yearBuilt": "Built in 2018"
+    }
+  },
+  {
+    "id": "seed_odesa-arkadia-apartment",
+    "slug": "odesa-arkadia-apartment",
+    "title": {
+      "en": "Sea-view Apartment in Arkadia",
+      "ua": "Апартаменти з видом на море в Аркадії",
+      "ru": "Апартаменты с видом на море в Аркадии"
+    },
+    "location": {
+      "en": "Arkadia, Odesa",
+      "ua": "Аркадія, Одеса",
+      "ru": "Аркадия, Одесса"
+    },
+    "city": "odesa",
+    "type": "apartments",
+    "price": 385000,
+    "area": 98,
+    "bedrooms": 2,
+    "roi": "9.1",
+    "gallery": [
+      "/images/generated/prop-odesa-arkadia-apartment-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "description": {
+      "en": "Off-plan seafront apartment in the Arkadia resort district, delivered furnished with panoramic Black Sea views, direct beach access, and a full on-site resort service package. Strong short-term rental yield in Odesa's summer season.",
+      "ua": "Off-plan апартаменти на першій лінії Аркадії з панорамним видом на Чорне море, прямим виходом до пляжу та повним resort-сервісом. Висока прибутковість короткострокової оренди у літньому сезоні.",
+      "ru": "Off-plan апартаменты на первой линии Аркадии с панорамным видом на Чёрное море, прямым выходом к пляжу и полным resort-сервисом. Высокая доходность краткосрочной аренды летом."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "145 / 80 / 28 м²",
+      "floor": "Floor 12 of 18",
+      "renovation": "Turnkey premium finish",
+      "newBuild": "New building",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous building boiler",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_lviv-historic-townhouse",
+    "slug": "lviv-historic-townhouse",
+    "title": {
+      "en": "Restored 19th-Century Townhouse",
+      "ua": "Реставрований таунхаус XIX століття",
+      "ru": "Отреставрированный таунхаус XIX века"
+    },
+    "location": {
+      "en": "Old Town, Lviv",
+      "ua": "Старе місто, Львів",
+      "ru": "Старый город, Львов"
+    },
+    "city": "lviv",
+    "type": "villas",
+    "price": 850000,
+    "area": 410,
+    "bedrooms": 5,
+    "roi": "6.4",
+    "gallery": [
+      "/images/generated/prop-lviv-historic-townhouse-1.webp",
+      "/images/generated/category-villas.webp",
+      "/images/generated/featured-odesa-villa.webp",
+      "/images/generated/service-residential.webp",
+      "/images/generated/insight-offplan.webp"
+    ],
+    "video": "",
+    "status": "ready",
+    "description": {
+      "en": "A meticulously restored four-storey townhouse in Lviv's UNESCO-protected historic centre. Original stone facade, restored oak parquet, custom brass fittings and a private inner courtyard. Fully approved for boutique-hotel conversion.",
+      "ua": "Досконало відреставрований чотириповерховий таунхаус в історичному центрі Львова (ЮНЕСКО). Оригінальний кам'яний фасад, паркет з дуба, латунна фурнітура та приватний внутрішній дворик. З дозволами під бутик-готель.",
+      "ru": "Тщательно отреставрированный четырёхэтажный таунхаус в историческом центре Львова (ЮНЕСКО). Оригинальный каменный фасад, дубовый паркет, латунная фурнитура и приватный внутренний двор. С разрешениями под бутик-отель."
+    },
+    "specs": {
+      "rooms": "5 Rooms",
+      "layout": "410 / 246 / 20 m²",
+      "floor": "2 Floors",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_kozyn-forest-villa",
+    "slug": "kozyn-forest-villa",
+    "title": {
+      "en": "Forest Villa in Kozyn",
+      "ua": "Лісова вілла в Козині",
+      "ru": "Лесная вилла в Козине"
+    },
+    "location": {
+      "en": "Kozyn, Kyiv region",
+      "ua": "Козин, Київська область",
+      "ru": "Козин, Киевская область"
+    },
+    "city": "kyiv",
+    "type": "villas",
+    "price": 1450000,
+    "area": 580,
+    "bedrooms": 6,
+    "roi": "5.8",
+    "gallery": [
+      "/images/generated/prop-kozyn-forest-villa-1.webp",
+      "/images/generated/category-villas.webp",
+      "/images/generated/featured-odesa-villa.webp",
+      "/images/generated/service-residential.webp",
+      "/images/generated/insight-offplan.webp"
+    ],
+    "video": "",
+    "status": "exclusive",
+    "description": {
+      "en": "A contemporary architect-designed villa on a private plot of pine and silver birch outside Kyiv. Floor-to-ceiling glass, cantilevered upper level and a reflecting pool. 30 minutes to central Kyiv, 45 minutes to Boryspil airport.",
+      "ua": "Сучасна авторська вілла на приватній ділянці серед сосен і берез під Києвом. Скло від підлоги до стелі, консольний другий поверх та відображаючий басейн. 30 хвилин до центру Києва, 45 до Борисполя.",
+      "ru": "Современная авторская вилла на приватном участке среди сосен и берёз под Киевом. Стекло от пола до потолка, консольный второй этаж и отражающий бассейн. 30 минут до центра Киева, 45 до Борисполя."
+    },
+    "specs": {
+      "rooms": "6 Rooms",
+      "layout": "580 / 348 / 20 m²",
+      "floor": "2 Floors",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_odesa-beachfront-villa",
+    "slug": "odesa-beachfront-villa",
+    "title": {
+      "en": "Beachfront Villa with Infinity Pool",
+      "ua": "Вілла на узбережжі з басейном інфініті",
+      "ru": "Вилла на побережье с бассейном инфинити"
+    },
+    "location": {
+      "en": "Arkadia, Odesa",
+      "ua": "Аркадія, Одеса",
+      "ru": "Аркадия, Одесса"
+    },
+    "city": "odesa",
+    "type": "villas",
+    "price": 2200000,
+    "area": 480,
+    "bedrooms": 5,
+    "roi": "7.9",
+    "gallery": [
+      "/images/generated/prop-odesa-beachfront-villa-1.webp",
+      "/images/generated/category-villas.webp",
+      "/images/generated/featured-odesa-villa.webp",
+      "/images/generated/service-residential.webp",
+      "/images/generated/insight-offplan.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "description": {
+      "en": "An off-plan modernist villa on the Black Sea coast with private beach frontage and an infinity pool that visually meets the sea horizon. Designed for year-round living with underfloor heating, deep-set solar shading and full smart-home integration.",
+      "ua": "Off-plan модерна вілла на узбережжі Чорного моря з приватною береговою лінією та басейном інфініті, що зливається з горизонтом. Спроєктована для проживання цілорічно: тепла підлога, глибокі сонцезахисні виступи, повна smart-home інтеграція.",
+      "ru": "Off-plan модерн-вилла на побережье Чёрного моря с частной береговой линией и бассейном инфинити, сливающимся с горизонтом. Спроектирована для круглогодичного проживания: тёплые полы, глубокие солнцезащитные выступы, полная smart-home интеграция."
+    },
+    "specs": {
+      "rooms": "5 Rooms",
+      "layout": "480 / 288 / 20 m²",
+      "floor": "2 Floors",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_lviv-rynok-boutique",
+    "slug": "lviv-rynok-boutique",
+    "title": {
+      "en": "24-Key Boutique Hotel near Rynok Square",
+      "ua": "Бутик-готель на 24 номери біля площі Ринок",
+      "ru": "Бутик-отель на 24 номера у площади Рынок"
+    },
+    "location": {
+      "en": "Rynok, Lviv",
+      "ua": "Ринок, Львів",
+      "ru": "Рынок, Львов"
+    },
+    "city": "lviv",
+    "type": "hotels",
+    "price": 4800000,
+    "area": 2150,
+    "bedrooms": 0,
+    "roi": "11.2",
+    "gallery": [
+      "/images/generated/prop-lviv-rynok-boutique-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "investment",
+    "description": {
+      "en": "A fully operational 24-key boutique hotel in a restored Austro-Hungarian building, one block from Rynok Square. Historic detailing preserved throughout. Strong ADR and steady RevPAR growth across seasons.",
+      "ua": "Діючий бутик-готель на 24 номери у відреставрованій австро-угорській будівлі за квартал від Ринку. Історичні деталі збережено. Висока ADR та стабільне зростання RevPAR у сезонах.",
+      "ru": "Действующий бутик-отель на 24 номера в отреставрированном австро-угорском здании в квартале от Рынка. Исторические детали сохранены. Высокая ADR и стабильный рост RevPAR по сезонам."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "2150 / 1290 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_odesa-black-sea-hotel",
+    "slug": "odesa-black-sea-hotel",
+    "title": {
+      "en": "40-Key Seafront Hotel & Spa (Off-Plan)",
+      "ua": "Готель на 40 номерів на узбережжі та спа (off-plan)",
+      "ru": "Отель на 40 номеров на побережье и спа (off-plan)"
+    },
+    "location": {
+      "en": "Frantsuzskyi Boulevard, Odesa",
+      "ua": "Французький бульвар, Одеса",
+      "ru": "Французский бульвар, Одесса"
+    },
+    "city": "odesa",
+    "type": "hotels",
+    "price": 6200000,
+    "area": 3400,
+    "bedrooms": 0,
+    "roi": "12.5",
+    "gallery": [
+      "/images/generated/prop-odesa-black-sea-hotel-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "description": {
+      "en": "Off-plan 40-key seafront resort hotel with full-service spa, sea-view rooftop restaurant and direct beach access. Positioned in Odesa's premium resort corridor. Institutional-grade specification with international operator interest already secured.",
+      "ua": "Off-plan 40-номерний resort-готель з повноцінним спа, ресторан на даху з видом на море та прямим виходом до пляжу. Розташування в преміальному курортному коридорі Одеси. Institutional-grade специфікація, є попередній інтерес операторів.",
+      "ru": "Off-plan 40-номерный resort-отель с полноценным спа, рестораном на крыше с видом на море и прямым выходом к пляжу. Расположение в премиальном курортном коридоре Одессы. Institutional-grade спецификация, есть предварительный интерес операторов."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "3400 / 2040 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_kyiv-hospitality-project",
+    "slug": "kyiv-hospitality-project",
+    "title": {
+      "en": "78-Key Central Kyiv Hotel Redevelopment",
+      "ua": "Проєкт реновації готелю в центрі Києва (78 номерів)",
+      "ru": "Проект реновации отеля в центре Киева (78 номеров)"
+    },
+    "location": {
+      "en": "Central Kyiv",
+      "ua": "Центральний Київ",
+      "ru": "Центральный Киев"
+    },
+    "city": "kyiv",
+    "type": "hotels",
+    "price": 8400000,
+    "area": 5200,
+    "bedrooms": 0,
+    "roi": "10.8",
+    "gallery": [
+      "/images/generated/prop-kyiv-hospitality-project-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "investment",
+    "description": {
+      "en": "Existing central-Kyiv hotel building with approved redevelopment plans to a 78-key upper-upscale hospitality asset. Structural surveys complete. Positioned adjacent to leading corporate and government districts.",
+      "ua": "Готель у центрі Києва з затвердженими планами реновації до 78-номерного upper-upscale активу. Обстеження конструкцій завершено. Розташування поруч з корпоративним і урядовим кварталом.",
+      "ru": "Отель в центре Киева с утверждёнными планами реновации до 78-номерного upper-upscale актива. Обследование конструкций завершено. Расположение рядом с корпоративным и правительственным кварталом."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "5200 / 3120 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_kyiv-business-tower",
+    "slug": "kyiv-business-tower",
+    "title": {
+      "en": "Grade-A Business Tower Floors",
+      "ua": "Поверхи бізнес-центру Grade-A",
+      "ru": "Этажи бизнес-центра Grade-A"
+    },
+    "location": {
+      "en": "Central business district, Kyiv",
+      "ua": "Центральний діловий квартал, Київ",
+      "ru": "Центральный деловой квартал, Киев"
+    },
+    "city": "kyiv",
+    "type": "commercial",
+    "price": 12500000,
+    "area": 8600,
+    "bedrooms": 0,
+    "roi": "9.4",
+    "gallery": [
+      "/images/generated/prop-kyiv-business-tower-1.webp",
+      "/images/generated/category-commercial.webp",
+      "/images/generated/service-commercial.webp",
+      "/images/generated/service-investment.webp",
+      "/images/generated/insight-kyiv-market.webp"
+    ],
+    "video": "",
+    "status": "investment",
+    "description": {
+      "en": "Full-floor and multi-floor blocks in a Grade-A glass tower in central Kyiv's business district. Blue-chip anchor tenants secured for 60% of the leasable area. Long WALT and inflation-linked leases.",
+      "ua": "Повнотиповерхові блоки в скляному Grade-A бізнес-центрі у діловому кварталі Києва. Blue-chip якірні орендарі на 60% площі. Довгий WALT та індексовані оренди.",
+      "ru": "Полноэтажные блоки в стеклянном Grade-A бизнес-центре в деловом квартале Киева. Blue-chip якорные арендаторы на 60% площади. Длинный WALT и индексируемые аренды."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "8600 / 5160 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_lviv-office-building",
+    "slug": "lviv-office-building",
+    "title": {
+      "en": "Boutique Office Building in Lviv IT District",
+      "ua": "Бутик-офісна будівля у львівському IT-кластері",
+      "ru": "Бутик-офисное здание в львовском IT-кластере"
+    },
+    "location": {
+      "en": "IT district, Lviv",
+      "ua": "IT-квартал, Львів",
+      "ru": "IT-квартал, Львов"
+    },
+    "city": "lviv",
+    "type": "commercial",
+    "price": 3400000,
+    "area": 2800,
+    "bedrooms": 0,
+    "roi": "8.6",
+    "gallery": [
+      "/images/generated/prop-lviv-office-building-1.webp",
+      "/images/generated/category-commercial.webp",
+      "/images/generated/service-commercial.webp",
+      "/images/generated/service-investment.webp",
+      "/images/generated/insight-kyiv-market.webp"
+    ],
+    "video": "",
+    "status": "ready",
+    "description": {
+      "en": "A restored 4-storey boutique office building in the heart of Lviv's IT cluster, currently 92% leased to tech tenants on 3-5 year terms. Modern MEP, on-site parking and shared meeting suites.",
+      "ua": "Відреставрована 4-поверхова бутик-офісна будівля в серці львівського IT-квартала, наразі здана на 92% техно-орендарям на 3–5 років. Сучасні MEP, паркінг та переговорні кімнати.",
+      "ru": "Отреставрированное 4-этажное бутик-офисное здание в сердце львовского IT-квартала, сейчас сдано на 92% техно-арендаторам на 3–5 лет. Современные MEP, паркинг и переговорные комнаты."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "2800 / 1680 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_odesa-retail-plaza",
+    "slug": "odesa-retail-plaza",
+    "title": {
+      "en": "Seaside Retail Plaza (Off-Plan)",
+      "ua": "Приморський retail-plaza (off-plan)",
+      "ru": "Приморский retail-plaza (off-plan)"
+    },
+    "location": {
+      "en": "Frantsuzskyi Boulevard, Odesa",
+      "ua": "Французький бульвар, Одеса",
+      "ru": "Французский бульвар, Одесса"
+    },
+    "city": "odesa",
+    "type": "commercial",
+    "price": 5600000,
+    "area": 4200,
+    "bedrooms": 0,
+    "roi": "10.1",
+    "gallery": [
+      "/images/generated/prop-odesa-retail-plaza-1.webp",
+      "/images/generated/category-commercial.webp",
+      "/images/generated/service-commercial.webp",
+      "/images/generated/service-investment.webp",
+      "/images/generated/insight-kyiv-market.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "description": {
+      "en": "Off-plan mixed-use retail plaza on Odesa's premium boulevard, delivered with pre-leased anchor F&B tenants and street-level premium retail spaces. Direct seasonal foot traffic and strong year-round resident base.",
+      "ua": "Off-plan mixed-use retail plaza на преміальному бульварі Одеси з переднайманими F&B-якорними орендарями та вуличним ритейлом. Прямий сезонний трафік і стабільний резидентський попит.",
+      "ru": "Off-plan mixed-use retail plaza на премиальном бульваре Одессы с преднанятыми F&B-якорными арендаторами и уличным ритейлом. Прямой сезонный трафик и стабильный резидентский спрос."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "4200 / 2520 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  }
+]

@@ -1,0 +1,380 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), "Cormorant Garamond", ui-serif, serif;
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-bower-cream: var(--bower-cream);
+  --color-bower-ink: var(--bower-ink);
+  --color-bower-eyebrow: var(--bower-eyebrow);
+  --color-bower-line: var(--bower-line);
+  --color-bower-mute: var(--bower-mute);
+  --color-gold: #D4AF37;
+  --color-brand-dark: #0a0a0a;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  /* Golden Land brand tokens - updated to match multipage TZ */
+  --bower-cream: #ffffff; /* Clean white background */
+  --bower-cream-2: #f8f9fa; /* Ultra-light premium grey for cards/sections */
+  --bower-ink: #111111; /* Deep graphite black */
+  --bower-ink-2: #1c1c1c; /* Secondary dark text */
+  --bower-eyebrow: #7a746a; /* Muted tag color */
+  --bower-line: #e2e2e2; /* Centralized hairline dividers */
+  --bower-mute: #555555; /* Muted body paragraph with proper contrast */
+
+  --background: var(--bower-cream);
+  --foreground: var(--bower-ink);
+  --card: #ffffff;
+  --card-foreground: var(--bower-ink);
+  --popover: #ffffff;
+  --popover-foreground: var(--bower-ink);
+  --primary: var(--bower-ink);
+  --primary-foreground: #ffffff;
+  --secondary: var(--bower-cream-2);
+  --secondary-foreground: var(--bower-ink);
+  --muted: var(--bower-cream-2);
+  --muted-foreground: var(--bower-mute);
+  --accent: var(--bower-cream-2);
+  --accent-foreground: var(--bower-ink);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: var(--bower-line);
+  --input: var(--bower-line);
+  --ring: var(--bower-ink);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0px;
+  --sidebar: var(--bower-cream);
+  --sidebar-foreground: var(--bower-ink);
+  --sidebar-primary: var(--bower-ink);
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: var(--bower-cream-2);
+  --sidebar-accent-foreground: var(--bower-ink);
+  --sidebar-border: var(--bower-line);
+  --sidebar-ring: var(--bower-ink);
+}
+
+.dark {
+  --background: var(--bower-ink);
+  --foreground: var(--bower-cream);
+  --card: #171717;
+  --card-foreground: var(--bower-cream);
+  --popover: #171717;
+  --popover-foreground: var(--bower-cream);
+  --primary: var(--bower-cream);
+  --primary-foreground: var(--bower-ink);
+  --secondary: #1e1e1e;
+  --secondary-foreground: var(--bower-cream);
+  --muted: #1e1e1e;
+  --muted-foreground: #a09a90;
+  --accent: #1e1e1e;
+  --accent-foreground: var(--bower-cream);
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: var(--bower-cream);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--bower-ink-2);
+  }
+}
+
+/* Utility: eyebrow tag (small tracked all-caps label) */
+.eyebrow {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #D4AF37;
+}
+
+/* Utility: "As Seen In" subtle label */
+.eyebrow-small {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--bower-ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Section spacing */
+.section-py { padding-block: clamp(3.5rem, 8vw, 7rem); }
+.section-py-lg { padding-block: clamp(5rem, 10vw, 9rem); }
+
+/* Container */
+.bower-container { max-width: 1600px; margin-inline: auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+
+/* Fade-in-on-scroll base */
+.fade-up {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1), transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Buttons */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  background-color: #D4AF37;
+  color: #0a0a0a;
+  border: 1px solid #D4AF37;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.2);
+}
+.btn-gold:hover {
+  background-color: #0a0a0a;
+  border-color: #0a0a0a;
+  color: #D4AF37;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  background: var(--bower-ink);
+  color: #fff;
+  border: 1px solid var(--bower-ink);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background: #D4AF37;
+  border-color: #D4AF37;
+  color: #0a0a0a;
+}
+
+.btn-outline-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  font-family: var(--font-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.btn-outline-light:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--bower-ink);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .fade-up { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hide scrollbars on horizontal lists */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* WYSIWYG Editor content formatting styles */
+.style-editor-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: #D4AF37;
+}
+
+.style-editor-content h3 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  color: #fff;
+}
+
+.style-editor-content p {
+  margin-bottom: 0.75rem;
+}
+
+.style-editor-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.style-editor-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.style-editor-content li {
+  margin-bottom: 0.25rem;
+}
+
+.style-editor-content a {
+  color: #D4AF37;
+  text-decoration: underline;
+}
+
+.style-editor-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1rem auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: block;
+}
+
+/* Styles for rendered HTML content on the frontend dynamic pages */
+.dynamic-page-html h2 {
+  font-family: var(--font-display), serif;
+  font-size: 2.25rem;
+  font-weight: 300;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+  color: #111111;
+  line-height: 1.2;
+}
+
+.dynamic-page-html h3 {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  color: #111111;
+  line-height: 1.3;
+}
+
+.dynamic-page-html p {
+  font-family: var(--font-sans), sans-serif;
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: #333333;
+  margin-bottom: 1.25rem;
+}
+
+.dynamic-page-html ul {
+  list-style-type: disc;
+  padding-left: 1.75rem;
+  margin-bottom: 1.25rem;
+  color: #333333;
+  font-weight: 300;
+}
+
+.dynamic-page-html ol {
+  list-style-type: decimal;
+  padding-left: 1.75rem;
+  margin-bottom: 1.25rem;
+  color: #333333;
+  font-weight: 300;
+}
+
+.dynamic-page-html li {
+  margin-bottom: 0.5rem;
+}
+
+.dynamic-page-html a {
+  color: #D4AF37;
+  text-decoration: underline;
+}
+
+.dynamic-page-html img {
+  max-width: 100%;
+  height: auto;
+  margin: 2.5rem auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
