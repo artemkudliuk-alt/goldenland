@@ -415,6 +415,129 @@ export default function MobileAppSimulator() {
     }
   };
 
+  // ── Leaflet map integration ────────────────────────────────────────────────
+  React.useEffect(() => {
+    if (screen !== "map") return;
+
+    let cssLink = document.getElementById("leaflet-css") as HTMLLinkElement;
+    if (!cssLink) {
+      cssLink = document.createElement("link");
+      cssLink.id = "leaflet-css";
+      cssLink.rel = "stylesheet";
+      cssLink.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+      document.head.appendChild(cssLink);
+    }
+
+    let jsScript = document.getElementById("leaflet-js") as HTMLScriptElement;
+    if (!jsScript) {
+      jsScript = document.createElement("script");
+      jsScript.id = "leaflet-js";
+      jsScript.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+      jsScript.async = true;
+      document.head.appendChild(jsScript);
+    }
+
+    let mapInstance: any = null;
+
+    const initMap = () => {
+      const L = (window as any).L;
+      if (!L) return;
+
+      const mapContainer = document.getElementById("leaflet-map");
+      if (!mapContainer) return;
+
+      mapInstance = L.map("leaflet-map", {
+        zoomControl: false,
+        attributionControl: false,
+      }).setView([48.3794, 31.1656], 6);
+
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        maxZoom: 19,
+      }).addTo(mapInstance);
+
+      L.control.zoom({
+        position: 'topright'
+      }).addTo(mapInstance);
+
+      const citiesCoords: Record<string, [number, number]> = {
+        kyiv: [50.4501, 30.5234],
+        kozyn: [50.2256, 30.6729],
+        odesa: [46.4825, 30.7233],
+        lviv: [49.8397, 24.0297],
+      };
+
+      filteredCities.forEach(city => {
+        const coords = citiesCoords[city.id];
+        if (!coords) return;
+
+        const isSelected = selectedCity?.id === city.id;
+
+        const iconHtml = `
+          <div class="custom-leaflet-marker transition-all duration-300 transform hover:scale-105 active:scale-95" style="transform: translate(-50%, -50%);">
+            <div class="bg-[#1e1c18] text-white border border-[#cfa24d]/20 px-3.5 py-1.5 rounded-full text-[12px] font-bold shadow-md flex items-center gap-1.5 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#cfa24d]"></span>
+              ${city.name[appLang]} · ${city.count}
+            </div>
+          </div>
+        `;
+
+        const selectedIconHtml = `
+          <div class="custom-leaflet-marker transition-all duration-300 transform scale-105" style="transform: translate(-50%, -50%);">
+            <div class="bg-[#cfa24d] text-black border-none px-3.5 py-1.5 rounded-full text-[12px] font-bold shadow-[0_0_16px_rgba(207,162,77,.5)] flex items-center gap-1.5 whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-black/50"></span>
+              ${city.name[appLang]} · ${city.count}
+            </div>
+          </div>
+        `;
+
+        const markerIcon = L.divIcon({
+          className: '',
+          html: isSelected ? selectedIconHtml : iconHtml,
+          iconSize: [110, 30],
+          iconAnchor: [55, 15]
+        });
+
+        const marker = L.marker(coords, { icon: markerIcon }).addTo(mapInstance);
+
+        marker.on("click", (e: any) => {
+          L.DomEvent.stopPropagation(e);
+          setSelectedCity(city);
+          mapInstance.setView(coords, 9, { animate: true });
+        });
+      });
+
+      mapInstance.on("click", () => {
+        setSelectedCity(null);
+      });
+
+      if (selectedCity) {
+        const coords = citiesCoords[selectedCity.id];
+        if (coords) {
+          mapInstance.setView(coords, 9, { animate: false });
+        }
+      }
+    };
+
+    const handleScriptLoad = () => {
+      initMap();
+    };
+
+    if ((window as any).L) {
+      initMap();
+    } else {
+      jsScript.addEventListener("load", handleScriptLoad);
+    }
+
+    return () => {
+      if (jsScript) {
+        jsScript.removeEventListener("load", handleScriptLoad);
+      }
+      if (mapInstance) {
+        mapInstance.remove();
+      }
+    };
+  }, [screen, selectedCity, appLang, mapSearch]);
+
   // ── navigation ──────────────────────────────────────────────────────────────
   const goTo = (s: Screen) => {
     setPrevScreen(screen);
@@ -512,6 +635,10 @@ export default function MobileAppSimulator() {
         }
         .map-road-h { background:linear-gradient(to right,transparent,rgba(255,255,255,.65) 20%,rgba(255,255,255,.65) 80%,transparent); height:2px; }
         .map-road-v { background:linear-gradient(to bottom,transparent,rgba(255,255,255,.55) 20%,rgba(255,255,255,.55) 80%,transparent); width:2px; }
+        .leaflet-div-icon {
+          background: none !important;
+          border: none !important;
+        }
       `}</style>
 
       {/* ── App viewport ── */}
@@ -767,29 +894,7 @@ export default function MobileAppSimulator() {
                     {mapSearch && <button onClick={() => setMapSearch("")} className="bg-transparent border-none cursor-pointer"><X className="w-4 h-4 text-white/40" /></button>}
                   </div>
                 </div>
-                <div className="absolute inset-0 map-bg overflow-hidden" onClick={() => setSelectedCity(null)}>
-                  <div className="map-road-h absolute left-0 right-0" style={{ top: "38%" }} />
-                  <div className="map-road-h absolute left-0 right-0" style={{ top: "55%" }} />
-                  <div className="map-road-h absolute left-0 right-0" style={{ top: "72%" }} />
-                  <div className="map-road-v absolute top-0 bottom-0" style={{ left: "28%" }} />
-                  <div className="map-road-v absolute top-0 bottom-0" style={{ left: "52%" }} />
-                  <div className="map-road-v absolute top-0 bottom-0" style={{ left: "74%" }} />
-                  <span className="absolute text-[11px] font-bold tracking-[0.18em] text-[#8a7f6a]/50 uppercase" style={{ bottom: "18%", right: "8%" }}>{T.ukraine[appLang]}</span>
-                  {filteredCities.map(city => {
-                    const isSelected = selectedCity?.id === city.id;
-                    return (
-                      <button key={city.id}
-                        onClick={e => { e.stopPropagation(); setSelectedCity(isSelected ? null : city); }}
-                        style={{ left: `${city.xPct}%`, top: `${city.yPct}%`, transform: "translate(-50%,-50%)" }}
-                        className={`absolute flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[12px] font-bold border-none cursor-pointer transition-all shadow-md anim-pin ${
-                          isSelected ? "bg-[#cfa24d] text-black shadow-[0_0_16px_rgba(207,162,77,.5)]" : "bg-[#1e1c18] text-white hover:bg-[#2e2b24]"
-                        }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isSelected ? "bg-black/50" : "bg-[#cfa24d]"}`} />
-                        {city.name[appLang]} · {city.count}
-                      </button>
-                    );
-                  })}
-                </div>
+                <div id="leaflet-map" className="absolute inset-0 z-0 bg-[#161412]" />
                 {selectedCity && (
                   <div className="absolute bottom-[72px] left-0 right-0 bg-[#141210] border-t border-[#cfa24d]/15 rounded-t-3xl z-20 anim-slideup shadow-[0_-8px_30px_rgba(0,0,0,.6)]">
                     <div className="flex justify-center pt-3 pb-4"><div className="w-10 h-1 bg-white/20 rounded-full" /></div>
