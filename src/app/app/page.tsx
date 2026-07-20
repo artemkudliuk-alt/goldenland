@@ -564,20 +564,52 @@ export default function MobileAppSimulator() {
     goTo(tab);
   };
 
+  // ── expanded properties to match map counters ──────────────────────────────
+  const expandedProperties = useMemo(() => {
+    const result: AppProperty[] = [...ALL_PROPERTIES];
+    const byCity: Record<string, AppProperty[]> = {};
+    ALL_PROPERTIES.forEach(p => {
+      if (!byCity[p.city]) byCity[p.city] = [];
+      byCity[p.city].push(p);
+    });
+
+    CITIES.forEach(city => {
+      const currentList = byCity[city.id] || [];
+      if (currentList.length === 0) return;
+      let index = 0;
+      while (result.filter(p => p.city === city.id).length < city.count) {
+        const source = currentList[index % currentList.length];
+        const copyNum = Math.floor(result.filter(p => p.city === city.id).length / currentList.length) + 1;
+        result.push({
+          ...source,
+          slug: `${source.slug}-copy-${copyNum}`,
+          title: {
+            en: `${source.title.en} (Unit ${copyNum + 1})`,
+            ua: `${source.title.ua} (Блок ${copyNum + 1})`,
+            ar: `${source.title.ar} (الوحدة ${copyNum + 1})`,
+          },
+          price: source.price + (copyNum * 15_000),
+        });
+        index++;
+      }
+    });
+    return result;
+  }, []);
+
   // ── explore filter ─────────────────────────────────────────────────────────
   const filteredProperties = useMemo(() => {
     const lang = appLang;
-    return ALL_PROPERTIES.filter(p =>
+    return expandedProperties.filter(p =>
       searchQ === "" ||
       p.title[lang].toLowerCase().includes(searchQ.toLowerCase()) ||
       p.location[lang].toLowerCase().includes(searchQ.toLowerCase())
     );
-  }, [searchQ, appLang]);
+  }, [searchQ, appLang, expandedProperties]);
 
   // ── map helpers ────────────────────────────────────────────────────────────
   const cityProperties = useMemo(
-    () => selectedCity ? ALL_PROPERTIES.filter(p => p.city === selectedCity.id) : [],
-    [selectedCity]
+    () => selectedCity ? expandedProperties.filter(p => p.city === selectedCity.id) : [],
+    [selectedCity, expandedProperties]
   );
   const filteredCities = useMemo(
     () => CITIES.filter(c =>
