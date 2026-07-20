@@ -485,7 +485,7 @@ export default function MobileAppSimulator() {
   );
 
   return (
-    <div className="min-h-screen bg-[#070707] text-white flex flex-col items-center justify-start relative font-sans overflow-x-hidden select-none">
+    <div className="fixed inset-0 bg-[#090807] text-white flex flex-col relative font-sans select-none overflow-hidden">
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
         .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
@@ -514,51 +514,8 @@ export default function MobileAppSimulator() {
         .map-road-v { background:linear-gradient(to bottom,transparent,rgba(255,255,255,.55) 20%,rgba(255,255,255,.55) 80%,transparent); width:2px; }
       `}</style>
 
-      {/* Ambient desktop bg */}
-      <div className="absolute inset-0 z-0 bg-cover bg-center opacity-10 blur-2xl pointer-events-none"
-        style={{ backgroundImage: "url('/images/burj_khalifa_bg.png')" }} />
-
-      {/* ── Desktop header ── */}
-      <header className="w-full max-w-[1200px] mt-6 px-6 z-10 flex flex-col sm:flex-row items-center justify-between gap-4 py-4 border-b border-white/5 bg-white/[0.02] backdrop-blur-md">
-        <div className="flex items-center gap-3 font-ui">
-          <Link href="/" className="text-[11px] font-semibold text-white/50 hover:text-[#cfa24d] uppercase tracking-widest transition-colors">← Website</Link>
-          <div className="h-4 w-px bg-white/10" />
-          <span className="text-[12px] font-semibold uppercase tracking-widest text-[#cfa24d]">Golden Land App</span>
-          <span className="text-[9px] bg-[#cfa24d]/10 text-[#cfa24d] border border-[#cfa24d]/20 px-2 py-0.5 rounded-full tracking-wider font-semibold uppercase">{screen}</span>
-        </div>
-        <div className="flex items-center gap-2 font-ui text-[11px]">
-          <span className="text-white/40 uppercase tracking-widest text-[9px] mr-1">Language:</span>
-          {(["en", "ua", "ar"] as Lang[]).map(l => (
-            <button key={l} onClick={() => setAppLang(l)}
-              className={`px-3 py-1.5 font-semibold tracking-wider border cursor-pointer transition-all ${
-                appLang === l ? "bg-[#cfa24d] border-[#cfa24d] text-black" : "bg-white/5 border-white/10 hover:border-white/20 text-white/70"
-              }`}>{l.toUpperCase()}</button>
-          ))}
-        </div>
-      </header>
-
-      {/* ── iPhone simulator shell ── */}
-      <main className="flex-1 w-full max-w-[1200px] flex items-center justify-center py-6 px-4 z-10">
-        <div className="relative w-full max-w-[390px] h-[820px] md:bg-[#1a1917] md:border-[12px] md:border-[#2f2e2b] md:rounded-[56px] md:shadow-[0_25px_60px_-15px_rgba(0,0,0,.9)] md:ring-4 md:ring-[#cfa24d]/10 flex flex-col overflow-hidden">
-
-          {/* Dynamic Island */}
-          <div className="hidden md:flex absolute top-3 left-1/2 -translate-x-1/2 w-[110px] h-[30px] bg-black rounded-full z-50 items-center justify-end px-3">
-            <div className="w-2.5 h-2.5 bg-[#050510] rounded-full border border-white/5" />
-          </div>
-
-          {/* Status bar */}
-          <div className="w-full h-11 bg-black shrink-0 px-8 flex justify-between items-center text-[12px] font-ui font-medium tracking-tight text-white/95 z-40">
-            <span>9:41</span>
-            <div className="flex items-center gap-1.5">
-              <svg className="w-4 h-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01" />
-              </svg>
-              <div className="flex items-center border border-white/80 rounded-sm px-0.5 h-2.5 w-6"><div className="h-full w-full bg-white rounded-sm" /></div>
-            </div>
-          </div>
-
-          {/* ── App viewport ── */}
-          <div className={`flex-1 flex flex-col relative bg-[#090807] overflow-hidden font-ui ${rtl ? "rtl" : "ltr"}`}>
+      {/* ── App viewport ── */}
+      <div className={`flex-1 flex flex-col relative bg-[#090807] overflow-hidden font-ui w-full h-full ${rtl ? "rtl" : "ltr"}`}>
 
             {/* ══════════════════════════════════════════
                 WELCOME
@@ -1172,14 +1129,6 @@ export default function MobileAppSimulator() {
                 {
                   section: { en: "Preferences", ua: "Параметри", ar: "التفضيلات" },
                   items: [
-                    {
-                      label: { en: `Language (${appLang.toUpperCase()})`, ua: `Мова (${appLang.toUpperCase()})`, ar: `اللغة (${appLang.toUpperCase()})` },
-                      action: () => {
-                        const order: Lang[] = ["en", "ua", "ar"];
-                        const nextIdx = (order.indexOf(appLang) + 1) % order.length;
-                        setAppLang(order[nextIdx]);
-                      }
-                    },
                     { label: { en: "Notifications", ua: "Сповіщення", ar: "الإشعارات" }, action: () => setModalMsg("Notifications preferences coming soon!") },
                   ]
                 },
@@ -1312,17 +1261,6 @@ export default function MobileAppSimulator() {
             )}
 
           </div>
-
-          {/* Home indicator */}
-          <div className="w-full h-5 bg-black shrink-0 flex items-center justify-center pb-1.5 z-40">
-            <div onClick={() => goTo("welcome")} className="w-32 h-1 bg-white/40 rounded-full cursor-pointer hover:bg-white/70 transition-colors" title="Back to Welcome" />
-          </div>
         </div>
-      </main>
-
-      <footer className="w-full max-w-[1200px] mb-8 px-6 text-center text-[11px] text-white/30 font-ui font-light">
-        © 2026 Golden Land Property Investment. All rights reserved.
-      </footer>
-    </div>
-  );
-}
+      );
+    }
