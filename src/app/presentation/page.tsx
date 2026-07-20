@@ -35,8 +35,6 @@ export default function PresentationPage() {
     window.print();
   };
 
-  const isLightSlide = currentSlide === 1 || currentSlide === 5;
-
   return (
     <div className="min-h-screen bg-[#090807] text-white font-ui flex flex-col items-center justify-center p-4 md:p-8 select-none relative overflow-x-hidden">
       
@@ -61,11 +59,11 @@ export default function PresentationPage() {
         </div>
       </div>
 
-      {/* ── Slide Viewer Container ── */}
-      <div className={`w-full max-w-[1100px] md:min-h-[620px] border border-white/5 md:rounded-3xl flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-500 slide-container ${isLightSlide ? "md:border-black/5" : ""}`}>
+      {/* ── Slide Viewer Container (Unified Premium Dark Border & Shadow) ── */}
+      <div className="w-full max-w-[1100px] md:min-h-[620px] border border-white/5 md:rounded-3xl flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-500 slide-container">
         
         {/* Slide Counter (Desktop only) */}
-        <div className={`absolute top-6 right-8 text-[12px] font-bold tracking-[0.2em] select-none print-hide z-20 max-md:hidden ${isLightSlide ? "text-[#806331]/60" : "text-[#cfa24d]/45"}`}>
+        <div className="absolute top-6 right-8 text-[12px] font-bold tracking-[0.2em] select-none print-hide z-20 max-md:hidden text-[#cfa24d]/45">
           {String(currentSlide + 1).padStart(2, "0")} / {String(totalSlides).padStart(2, "0")}
         </div>
 
@@ -76,9 +74,9 @@ export default function PresentationPage() {
             style={{ transform: `translateX(-${currentSlide * 100}%)` }}
           >
             
-            {/* SLIDE 1: COVER PAGE (DARK) */}
+            {/* SLIDE 1: COVER PAGE */}
             <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col items-center justify-center h-full slide-node bg-[#0f0e0d] relative">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-[#cfa24d]/10 to-transparent blur-[90px] pointer-events-none z-0" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-[#cfa24d]/12 to-transparent blur-[95px] pointer-events-none z-0" />
               
               <div className="relative z-10 flex flex-col items-center text-center">
                 <img src="/images/logo-golden-land.png" alt="Golden Land" className="h-16 md:h-20 object-contain mb-8 filter brightness-110" />
@@ -103,57 +101,61 @@ export default function PresentationPage() {
               </div>
             </div>
 
-            {/* SLIDE 2: ABOUT & VISION (LIGHT - CONTRAST 1) */}
-            <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#f5f3ed] text-[#0e0c0a] relative">
-              <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-[#cfa24d]/12 to-transparent blur-[100px] pointer-events-none z-0" />
+            {/* SLIDE 2: ABOUT & VISION */}
+            <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
+              {/* Luxury Business Center image blended under gold gradient */}
+              <div className="absolute inset-0 z-0 bg-[url('/images/generated/kyiv_luxury_business_center.png')] bg-cover bg-center opacity-[0.09] filter saturate-50 brightness-75 pointer-events-none" />
+              <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-[#cfa24d]/10 to-transparent blur-[100px] pointer-events-none z-0" />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                 <div className="space-y-4">
-                  <span className="text-[#806331] text-[11.5px] font-bold tracking-[0.25em] uppercase block">01. About Platform</span>
-                  <h2 className="font-display text-[28px] md:text-[34px] font-light text-[#0e0c0a] leading-tight">
+                  <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">01. About Platform</span>
+                  <h2 className="font-display text-[28px] md:text-[34px] font-light text-white leading-tight">
                     Next-Gen Real Estate Ecosystem
                   </h2>
-                  <div className="w-12 h-[1px] bg-[#806331]/30 my-3" />
-                  <p className="text-[13.5px] md:text-[14.5px] text-[#444039] leading-relaxed font-light">
+                  <div className="w-12 h-[1px] bg-[#cfa24d] my-3" />
+                  <p className="text-[13px] md:text-[14.5px] text-white/70 leading-relaxed font-light">
                     Golden Land Invest is a next-generation digital real estate investment platform designed to connect property developers, real estate companies, and international investors through one professional digital ecosystem.
                   </p>
-                  <p className="text-[13.5px] md:text-[14.5px] text-[#444039] leading-relaxed font-light">
+                  <p className="text-[13px] md:text-[14.5px] text-white/70 leading-relaxed font-light">
                     We provide investors with curated international opportunities while giving developers a direct, powerful channel to present projects to qualified global buyers.
                   </p>
                 </div>
 
-                <div className="border border-[#806331]/15 bg-white/60 rounded-2xl p-6 md:p-8 space-y-6 shadow-sm">
+                <div className="border border-white/5 bg-white/[0.02] backdrop-blur-sm rounded-2xl p-6 md:p-8 space-y-6">
                   <div>
-                    <span className="text-[#806331] text-[11px] font-bold tracking-[0.25em] uppercase block">02. Our Vision</span>
-                    <p className="text-[14px] text-[#806331] italic font-light mt-1">
+                    <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">02. Our Vision</span>
+                    <p className="text-[14px] text-[#cfa24d] italic font-light mt-1">
                       "To become a trusted global digital gateway for real estate investment."
                     </p>
                   </div>
                   <div className="flex gap-2">
                     {["More Accessible", "More Connected", "More Professional"].map((item, idx) => (
-                      <div key={idx} className="flex-1 bg-white border border-[#806331]/15 rounded-lg py-2.5 text-center shadow-sm">
-                        <span className="text-[10px] md:text-[11px] font-bold tracking-wider text-[#0e0c0a] block">{item}</span>
+                      <div key={idx} className="flex-1 bg-[#1e1c18] border border-[#cfa24d]/15 rounded-lg py-2.5 text-center shadow-sm">
+                        <span className="text-[10px] md:text-[11px] font-bold tracking-wider text-white/80 block">{item}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="grid grid-cols-2 gap-3 text-[11px] font-light text-[#555047]">
-                    <div className="flex items-center gap-2"><Building className="w-3.5 h-3.5 text-[#806331]" /> Property Developers</div>
-                    <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5 text-[#806331]" /> International Investors</div>
-                    <div className="flex items-center gap-2"><Globe className="w-3.5 h-3.5 text-[#806331]" /> Global Markets</div>
-                    <div className="flex items-center gap-2"><Smartphone className="w-3.5 h-3.5 text-[#806331]" /> Digital Ecosystem</div>
+                  <div className="grid grid-cols-2 gap-3 text-[11px] font-light text-white/60">
+                    <div className="flex items-center gap-2"><Building className="w-3.5 h-3.5 text-[#cfa24d]" /> Property Developers</div>
+                    <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5 text-[#cfa24d]" /> International Investors</div>
+                    <div className="flex items-center gap-2"><Globe className="w-3.5 h-3.5 text-[#cfa24d]" /> Global Markets</div>
+                    <div className="flex items-center gap-2"><Smartphone className="w-3.5 h-3.5 text-[#cfa24d]" /> Digital Ecosystem</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* SLIDE 3: MARKET CHALLENGE & SOLUTION (DARK) */}
+            {/* SLIDE 3: MARKET CHALLENGE & SOLUTION */}
             <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
+              {/* Business Tower image blended under gradients */}
+              <div className="absolute inset-0 z-0 bg-[url('/images/generated/prop-kyiv-business-tower-1.webp')] bg-cover bg-center opacity-[0.09] filter saturate-50 brightness-75 pointer-events-none" />
               <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-tl from-[#cfa24d]/8 to-transparent blur-[100px] pointer-events-none z-0" />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center relative z-10">
                 
                 {/* Challenge Box */}
-                <div className="border border-red-950/20 bg-red-950/5 rounded-2xl p-6 md:p-8 space-y-4">
+                <div className="border border-red-950/25 bg-red-950/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 space-y-4">
                   <span className="text-red-400 text-[11px] font-bold tracking-[0.25em] uppercase block">03. The Market Challenge</span>
                   <h3 className="font-display text-[22px] font-light text-white leading-snug">
                     Fragmented International Access
@@ -178,7 +180,7 @@ export default function PresentationPage() {
                 </div>
 
                 {/* Solution Box */}
-                <div className="border border-[#cfa24d]/15 bg-[#cfa24d]/[0.02] rounded-2xl p-6 md:p-8 space-y-4">
+                <div className="border border-[#cfa24d]/15 bg-[#cfa24d]/[0.02] backdrop-blur-sm rounded-2xl p-6 md:p-8 space-y-4">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">04. Our Solution</span>
                   <h3 className="font-display text-[22px] font-light text-white leading-snug">
                     One Unified Digital Platform
@@ -194,7 +196,7 @@ export default function PresentationPage() {
                       { label: "Explore", desc: "Interactive search" },
                       { label: "Connect", desc: "Direct consultation" }
                     ].map((s, i) => (
-                      <div key={i} className="bg-[#181613] border border-white/5 p-3 rounded-xl">
+                      <div key={i} className="bg-[#181613] border border-white/5 p-3 rounded-xl shadow-sm">
                         <p className="text-[12px] font-bold text-[#cfa24d]">{s.label}</p>
                         <p className="text-[10px] text-white/45 font-light mt-0.5">{s.desc}</p>
                       </div>
@@ -205,9 +207,11 @@ export default function PresentationPage() {
               </div>
             </div>
 
-            {/* SLIDE 4: VALUE PROP BY AUDIENCE (DARK) */}
+            {/* SLIDE 4: VALUE PROP BY AUDIENCE */}
             <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
-              <div className="absolute top-1/4 left-10 w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[#cfa24d]/7 to-transparent blur-[90px] pointer-events-none z-0" />
+              {/* Luxury residential apartment interior blended under gradient */}
+              <div className="absolute inset-0 z-0 bg-[url('/images/generated/shared-apt-living.webp')] bg-cover bg-center opacity-[0.09] filter saturate-50 brightness-75 pointer-events-none" />
+              <div className="absolute top-1/4 left-10 w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[#cfa24d]/9 to-transparent blur-[95px] pointer-events-none z-0" />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                 
@@ -237,7 +241,7 @@ export default function PresentationPage() {
                   </div>
                 </div>
 
-                <div className="border border-white/5 bg-white/[0.01] rounded-2xl p-6 md:p-8 space-y-5">
+                <div className="border border-white/5 bg-white/[0.01] backdrop-blur-sm rounded-2xl p-6 md:p-8 space-y-5">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">06. For International Investors</span>
                   <h3 className="font-display text-[22px] font-light text-white leading-tight">
                     Diverse Asset Selection
@@ -268,10 +272,10 @@ export default function PresentationPage() {
               </div>
             </div>
 
-            {/* SLIDE 5: KEY FEATURES (DARK + PHOTO BACKGROUND under gradient) */}
+            {/* SLIDE 5: KEY FEATURES */}
             <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
-              {/* Gold investment map background blended under gold/bronze gradients */}
-              <div className="absolute inset-0 z-0 bg-[url('/images/generated/ukraine_investment_gold_map.png')] bg-cover bg-center opacity-[0.06] filter saturate-50 brightness-75 pointer-events-none" />
+              {/* Ukraine gold map blended softly under gradients */}
+              <div className="absolute inset-0 z-0 bg-[url('/images/generated/ukraine_investment_gold_map.png')] bg-cover bg-center opacity-[0.09] filter saturate-50 brightness-75 pointer-events-none" />
               <div className="absolute bottom-10 right-10 w-[350px] h-[350px] rounded-full bg-gradient-to-bl from-[#cfa24d]/10 to-transparent blur-[90px] pointer-events-none z-0" />
               
               <div className="space-y-6 relative z-10">
@@ -303,14 +307,16 @@ export default function PresentationPage() {
               </div>
             </div>
 
-            {/* SLIDE 6: HOW IT WORKS (LIGHT - CONTRAST 2) */}
-            <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#f5f3ed] text-[#0e0c0a] relative">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-gradient-to-r from-[#cfa24d]/10 to-transparent blur-[100px] pointer-events-none z-0" />
+            {/* SLIDE 6: HOW IT WORKS (FLOW CHART) */}
+            <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
+              {/* Investment consult graphic blended under gradient */}
+              <div className="absolute inset-0 z-0 bg-[url('/images/generated/service-investment.webp')] bg-cover bg-center opacity-[0.09] filter saturate-50 brightness-75 pointer-events-none" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-gradient-to-r from-[#cfa24d]/8 to-transparent blur-[100px] pointer-events-none z-0" />
               
-              <div className="space-y-8 relative z-10 w-full">
+              <div className="space-y-8 relative z-10">
                 <div className="text-center max-w-xl mx-auto">
-                  <span className="text-[#806331] text-[11px] font-bold tracking-[0.25em] uppercase block">08. Operational Flow</span>
-                  <h3 className="font-display text-[26px] md:text-[32px] font-light text-[#0e0c0a] mt-1">
+                  <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">08. Operational Flow</span>
+                  <h3 className="font-display text-[26px] md:text-[32px] font-light text-white mt-1">
                     How The Platform Works
                   </h3>
                 </div>
@@ -318,7 +324,7 @@ export default function PresentationPage() {
                 <div className="relative flex flex-col md:flex-row items-stretch justify-between gap-4 md:gap-2 pt-6">
                   
                   {/* Visual Connector Line */}
-                  <div className="hidden md:block absolute top-[28px] left-[5%] right-[5%] h-[1px] bg-[#806331]/20 z-0" />
+                  <div className="hidden md:block absolute top-[28px] left-[5%] right-[5%] h-[1px] bg-gradient-to-r from-[#cfa24d]/5 via-[#cfa24d]/25 to-[#cfa24d]/5 z-0" />
 
                   {[
                     { step: "1", title: "Developer", desc: "Submits property for strategic screening." },
@@ -327,20 +333,22 @@ export default function PresentationPage() {
                     { step: "4", title: "Consultation", desc: "Requests expert support on selected opportunities." },
                     { step: "5", title: "Investment", desc: "Golden Land facilitates deal execution." }
                   ].map((s, idx) => (
-                    <div key={idx} className="flex-1 bg-white border border-[#806331]/10 rounded-2xl p-4 text-center relative z-10 flex flex-col items-center shadow-sm">
-                      <div className="w-7 h-7 rounded-full bg-white border border-[#806331]/40 flex items-center justify-center mb-3">
-                        <span className="text-[12px] font-bold text-[#806331]">{s.step}</span>
+                    <div key={idx} className="flex-1 bg-[#100f0d]/90 border border-white/5 backdrop-blur-sm rounded-2xl p-4 text-center relative z-10 flex flex-col items-center">
+                      <div className="w-7 h-7 rounded-full bg-[#1e1c18] border border-[#cfa24d]/40 flex items-center justify-center mb-3">
+                        <span className="text-[12px] font-bold text-[#cfa24d]">{s.step}</span>
                       </div>
-                      <h4 className="text-[13px] font-semibold text-[#0e0c0a]">{s.title}</h4>
-                      <p className="text-[10px] text-[#555047] font-light mt-1.5 leading-relaxed max-w-[150px]">{s.desc}</p>
+                      <h4 className="text-[13px] font-semibold text-white">{s.title}</h4>
+                      <p className="text-[10px] text-white/45 font-light mt-1.5 leading-relaxed max-w-[150px]">{s.desc}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* SLIDE 7: NETWORK & PARTNERSHIP (DARK) */}
+            {/* SLIDE 7: NETWORK & PARTNERSHIP */}
             <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
+              {/* Service banner blended softly under gradient */}
+              <div className="absolute inset-0 z-0 bg-[url('/images/generated/services_banner.png')] bg-cover bg-center opacity-[0.09] filter saturate-50 brightness-75 pointer-events-none" />
               <div className="absolute top-10 right-10 w-[350px] h-[350px] rounded-full bg-gradient-to-br from-[#cfa24d]/7 to-transparent blur-[90px] pointer-events-none z-0" />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
@@ -360,7 +368,7 @@ export default function PresentationPage() {
                       { flag: "EU", label: "Europe" },
                       { flag: "UA", label: "Ukraine" }
                     ].map((c, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-white/[0.02] border border-white/5 rounded-xl px-3 py-2.5">
+                      <div key={i} className="flex items-center gap-2 bg-white/[0.02] border border-white/5 backdrop-blur-sm rounded-xl px-3 py-2.5">
                         <span className="text-[10px] font-bold text-[#cfa24d]">{c.flag}</span>
                         <span className="text-[11px] text-white/80 font-light">{c.label}</span>
                       </div>
@@ -368,7 +376,7 @@ export default function PresentationPage() {
                   </div>
                 </div>
 
-                <div className="border border-white/5 bg-white/[0.01] rounded-2xl p-6 md:p-8 space-y-4">
+                <div className="border border-white/5 bg-white/[0.01] backdrop-blur-sm rounded-2xl p-6 md:p-8 space-y-4">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">10. Developer Partnership</span>
                   <h3 className="font-display text-[22px] font-light text-white leading-tight">
                     Strategic Projects Welcomed
@@ -393,10 +401,10 @@ export default function PresentationPage() {
               </div>
             </div>
 
-            {/* SLIDE 8: WHY US & FUTURE VISION / CTA (DARK + BURJ KHALIFA backdrop under gradient) */}
+            {/* SLIDE 8: WHY US & FUTURE VISION / CTA */}
             <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
-              {/* Burj Khalifa silhouette background blended softly under gradients */}
-              <div className="absolute inset-0 z-0 bg-[url('/images/burj_khalifa_bg.png')] bg-cover bg-center opacity-[0.08] filter saturate-50 brightness-75 pointer-events-none" />
+              {/* Premium Odesa luxury waterfront villa photo backdrop under gradient */}
+              <div className="absolute inset-0 z-0 bg-[url('/images/generated/featured-odesa-villa.webp')] bg-cover bg-center opacity-[0.09] filter saturate-50 brightness-75 pointer-events-none" />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-gradient-to-r from-[#cfa24d]/12 to-[#cfa24d]/2 blur-[80px] pointer-events-none z-0" />
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
@@ -427,7 +435,7 @@ export default function PresentationPage() {
                   </div>
                 </div>
 
-                <div className="border border-[#cfa24d]/15 bg-[#cfa24d]/[0.02] rounded-2xl p-6 md:p-8 text-center flex flex-col justify-center items-center space-y-6 backdrop-blur-sm">
+                <div className="border border-[#cfa24d]/15 bg-[#cfa24d]/[0.02] backdrop-blur-sm rounded-2xl p-6 md:p-8 text-center flex flex-col justify-center items-center space-y-6">
                   <div>
                     <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block mb-1">12. Future Vision</span>
                     <p className="text-[12px] text-white/60 font-light leading-relaxed max-w-xs">
@@ -455,30 +463,26 @@ export default function PresentationPage() {
         </div>
 
         {/* ── Slide Footer (Desktop only) ── */}
-        <div className={`flex items-center justify-between border-t pt-4 mt-6 print-hide max-md:hidden z-20 absolute bottom-0 left-0 right-0 h-16 px-10 transition-all duration-300 ${isLightSlide ? "border-black/5 bg-[#f5f3ed]" : "border-white/5 bg-[#0f0e0d]"}`}>
+        <div className="flex items-center justify-between border-t border-white/5 pt-4 mt-6 print-hide max-md:hidden z-20 absolute bottom-0 left-0 right-0 h-16 px-10 bg-[#0f0e0d]">
           <div className="flex items-center gap-1.5">
             <span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]" />
-            <span className={`text-[10px] font-bold tracking-[0.25em] ${isLightSlide ? "text-black/30" : "text-white/30"}`}>GOLDEN LAND INVEST</span>
+            <span className="text-[10px] font-bold tracking-[0.25em] text-white/30">GOLDEN LAND INVEST</span>
           </div>
 
           {/* Navigation Arrows */}
           <div className="flex items-center gap-4">
             <button 
               onClick={prevSlide}
-              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer bg-transparent ${
-                isLightSlide ? "border-black/10 text-black/60 hover:bg-black/5 hover:text-black" : "border-white/10 text-white/60 hover:bg-white/5 hover:text-white"
-              }`}
+              className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 text-white/60 hover:text-white transition-all cursor-pointer bg-transparent"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <span className={`text-[11.5px] font-light ${isLightSlide ? "text-black/35" : "text-white/35"}`}>
+            <span className="text-[11.5px] font-light text-white/35">
               {currentSlide + 1} / {totalSlides}
             </span>
             <button 
               onClick={nextSlide}
-              className={`w-8 h-8 rounded-full border flex items-center justify-center transition-all cursor-pointer bg-transparent ${
-                isLightSlide ? "border-black/10 text-black/60 hover:bg-black/5 hover:text-black" : "border-white/10 text-white/60 hover:bg-white/5 hover:text-white"
-              }`}
+              className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center hover:bg-white/5 text-white/60 hover:text-white transition-all cursor-pointer bg-transparent"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -501,7 +505,7 @@ export default function PresentationPage() {
           background-image: 
             radial-gradient(circle at 10% 20%, rgba(207, 162, 77, 0.05) 0%, transparent 40%),
             radial-gradient(circle at 90% 80%, rgba(207, 162, 77, 0.04) 0%, transparent 45%),
-            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23cfa24d' stroke-width='0.5' stroke-opacity='0.02'/%3E%3C/svg%3E") !important;
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23cfa24d' stroke-width='0.5' stroke-opacity='0.025'/%3E%3C/svg%3E") !important;
           background-size: auto, auto, 60px 60px !important;
         }
 
