@@ -485,7 +485,7 @@ export default function MobileAppSimulator() {
   );
 
   return (
-    <div className="fixed inset-0 bg-[#090807] text-white flex flex-col relative font-sans select-none overflow-hidden">
+    <div className="fixed inset-0 bg-[#090807] text-white flex flex-col font-sans select-none overflow-hidden">
       <style jsx global>{`
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
         .font-display { font-family: 'Cormorant Garamond', Georgia, serif; }
