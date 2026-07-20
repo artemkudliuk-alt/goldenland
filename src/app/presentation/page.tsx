@@ -9,15 +9,13 @@ import {
   Building, 
   Globe, 
   Smartphone, 
-  TrendingUp, 
   Users, 
   Search, 
   Map, 
   Cpu, 
   Calculator, 
   PhoneCall, 
-  Compass, 
-  ArrowRight
+  Compass
 } from "lucide-react";
 
 export default function PresentationPage() {
@@ -62,14 +60,14 @@ export default function PresentationPage() {
       </div>
 
       {/* ── Slide Viewer Container ── */}
-      <div className="w-full max-w-[1100px] md:min-h-[620px] bg-[#100f0d] border border-white/5 md:rounded-3xl p-6 md:p-10 flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-500 slide-container">
+      <div className="w-full max-w-[1100px] md:min-h-[620px] border border-white/5 md:rounded-3xl p-6 md:p-10 flex flex-col justify-between shadow-2xl relative overflow-hidden transition-all duration-500 slide-container">
         
         {/* Decorative corner grid background (Desktop only) */}
         <div className="absolute top-0 right-0 w-[150px] h-[150px] pointer-events-none opacity-[0.02] max-md:hidden" 
              style={{ backgroundImage: "radial-gradient(#cfa24d 1px, transparent 0), radial-gradient(#cfa24d 1px, transparent 0)", backgroundSize: "8px 8px" }} />
         
         {/* Slide Counter (Desktop only) */}
-        <div className="absolute top-6 right-8 text-[12px] font-bold tracking-[0.2em] text-[#cfa24d]/40 select-none print-hide max-md:hidden">
+        <div className="absolute top-6 right-8 text-[12px] font-bold tracking-[0.2em] text-[#cfa24d]/45 select-none print-hide max-md:hidden">
           {String(currentSlide + 1).padStart(2, "0")} / {String(totalSlides).padStart(2, "0")}
         </div>
 
@@ -82,8 +80,8 @@ export default function PresentationPage() {
             
             {/* SLIDE 1: COVER PAGE */}
             <div className="w-full shrink-0 px-4 flex flex-col items-center justify-center py-6 h-full slide-node relative">
-              {/* Background cover image with dark overlay */}
-              <div className="absolute inset-0 z-0 bg-[url('/images/burj_khalifa_bg.png')] bg-cover bg-center opacity-10 rounded-2xl pointer-events-none" />
+              {/* Luxury radial gradient glow */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-gradient-to-r from-[#cfa24d]/10 to-transparent blur-[90px] pointer-events-none z-0" />
               
               <div className="relative z-10 flex flex-col items-center text-center">
                 <img src="/images/logo-golden-land.png" alt="Golden Land" className="h-16 md:h-20 object-contain mb-8 filter brightness-110" />
@@ -109,8 +107,10 @@ export default function PresentationPage() {
             </div>
 
             {/* SLIDE 2: ABOUT & VISION */}
-            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node relative">
+              <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-br from-[#cfa24d]/8 to-transparent blur-[100px] pointer-events-none z-0" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                 <div className="space-y-4">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">01. About Platform</span>
                   <h2 className="font-display text-[28px] md:text-[34px] font-light text-white leading-tight">
@@ -125,36 +125,35 @@ export default function PresentationPage() {
                   </p>
                 </div>
 
-                <div className="border border-white/5 bg-white/[0.02] rounded-2xl p-6 md:p-8 space-y-6 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-[url('/images/generated/about_banner.png')] bg-cover bg-center opacity-[0.03] pointer-events-none" />
-                  <div className="relative z-10 space-y-6">
-                    <div>
-                      <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">02. Our Vision</span>
-                      <p className="text-[14px] text-[#cfa24d] italic font-light mt-1">
-                        "To become a trusted global digital gateway for real estate investment."
-                      </p>
-                    </div>
-                    <div className="flex gap-2">
-                      {["More Accessible", "More Connected", "More Professional"].map((item, idx) => (
-                        <div key={idx} className="flex-1 bg-[#1e1c18] border border-[#cfa24d]/15 rounded-lg py-2.5 text-center">
-                          <span className="text-[10px] md:text-[11px] font-bold tracking-wider text-white/80 block">{item}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 text-[11px] font-light text-white/60">
-                      <div className="flex items-center gap-2"><Building className="w-3.5 h-3.5 text-[#cfa24d]" /> Property Developers</div>
-                      <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5 text-[#cfa24d]" /> International Investors</div>
-                      <div className="flex items-center gap-2"><Globe className="w-3.5 h-3.5 text-[#cfa24d]" /> Global Markets</div>
-                      <div className="flex items-center gap-2"><Smartphone className="w-3.5 h-3.5 text-[#cfa24d]" /> Digital Ecosystem</div>
-                    </div>
+                <div className="border border-white/5 bg-white/[0.02] rounded-2xl p-6 md:p-8 space-y-6">
+                  <div>
+                    <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">02. Our Vision</span>
+                    <p className="text-[14px] text-[#cfa24d] italic font-light mt-1">
+                      "To become a trusted global digital gateway for real estate investment."
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    {["More Accessible", "More Connected", "More Professional"].map((item, idx) => (
+                      <div key={idx} className="flex-1 bg-[#1e1c18] border border-[#cfa24d]/15 rounded-lg py-2.5 text-center">
+                        <span className="text-[10px] md:text-[11px] font-bold tracking-wider text-white/80 block">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 text-[11px] font-light text-white/60">
+                    <div className="flex items-center gap-2"><Building className="w-3.5 h-3.5 text-[#cfa24d]" /> Property Developers</div>
+                    <div className="flex items-center gap-2"><Users className="w-3.5 h-3.5 text-[#cfa24d]" /> International Investors</div>
+                    <div className="flex items-center gap-2"><Globe className="w-3.5 h-3.5 text-[#cfa24d]" /> Global Markets</div>
+                    <div className="flex items-center gap-2"><Smartphone className="w-3.5 h-3.5 text-[#cfa24d]" /> Digital Ecosystem</div>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* SLIDE 3: MARKET CHALLENGE & SOLUTION */}
-            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center">
+            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node relative">
+              <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-tl from-[#cfa24d]/8 to-transparent blur-[100px] pointer-events-none z-0" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-center relative z-10">
                 
                 {/* Challenge Box */}
                 <div className="border border-red-950/20 bg-red-950/5 rounded-2xl p-6 md:p-8 space-y-4">
@@ -176,7 +175,7 @@ export default function PresentationPage() {
                     </div>
                     <div className="flex items-start gap-2.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-red-400/80 mt-1.5 shrink-0" />
-                      <span>Lack of direct, connection with reputable developers</span>
+                      <span>Lack of direct connection with reputable developers</span>
                     </div>
                   </div>
                 </div>
@@ -210,8 +209,10 @@ export default function PresentationPage() {
             </div>
 
             {/* SLIDE 4: VALUE PROP BY AUDIENCE */}
-            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node relative">
+              <div className="absolute top-1/4 left-10 w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[#cfa24d]/7 to-transparent blur-[90px] pointer-events-none z-0" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                 
                 <div className="space-y-4">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">05. For Property Developers</span>
@@ -239,34 +240,29 @@ export default function PresentationPage() {
                   </div>
                 </div>
 
-                <div className="border border-white/5 bg-white/[0.01] rounded-2xl p-6 md:p-8 space-y-5 relative overflow-hidden">
-                  {/* Embedded photo layout */}
-                  <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-[url('/images/generated/featured-odesa-villa.webp')] bg-cover bg-center opacity-10 max-md:hidden border-l border-white/5" />
+                <div className="border border-white/5 bg-white/[0.01] rounded-2xl p-6 md:p-8 space-y-5">
+                  <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">06. For International Investors</span>
+                  <h3 className="font-display text-[22px] font-light text-white leading-tight">
+                    Diverse Asset Selection
+                  </h3>
                   
-                  <div className="relative z-10 md:w-2/3 space-y-5">
-                    <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">06. For International Investors</span>
-                    <h3 className="font-display text-[22px] font-light text-white leading-tight">
-                      Diverse Asset Selection
-                    </h3>
-                    
-                    <div className="space-y-4 pt-1">
-                      <div>
-                        <p className="text-[10px] font-bold tracking-wider text-white/40 uppercase mb-1.5">Target Markets</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {["Ukraine", "UAE", "Qatar", "Australia", "Europe"].map((c, i) => (
-                            <span key={i} className="text-[11px] font-light bg-[#1e1c18] border border-[#cfa24d]/15 text-white/80 px-2.5 py-0.5 rounded-full">{c}</span>
-                          ))}
-                        </div>
+                  <div className="space-y-4 pt-1">
+                    <div>
+                      <p className="text-[10px] font-bold tracking-wider text-white/40 uppercase mb-1.5">Target Markets</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {["Ukraine", "UAE", "Qatar", "Australia", "Europe"].map((c, i) => (
+                          <span key={i} className="text-[11px] font-light bg-[#1e1c18] border border-[#cfa24d]/15 text-white/80 px-2.5 py-0.5 rounded-full">{c}</span>
+                        ))}
                       </div>
+                    </div>
 
-                      <div>
-                        <p className="text-[10px] font-bold tracking-wider text-white/40 uppercase mb-1.5">Asset Categories</p>
-                        <div className="grid grid-cols-2 gap-2 text-[11px] font-light text-white/70">
-                          <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Residential Property</div>
-                          <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Commercial Space</div>
-                          <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Hotels & Hospitality</div>
-                          <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Land & Business Deals</div>
-                        </div>
+                    <div>
+                      <p className="text-[10px] font-bold tracking-wider text-white/40 uppercase mb-1.5">Asset Categories</p>
+                      <div className="grid grid-cols-2 gap-2 text-[11px] font-light text-white/70">
+                        <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Residential Property</div>
+                        <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Commercial Space</div>
+                        <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Hotels & Hospitality</div>
+                        <div className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#cfa24d]/70" /> Land & Business Deals</div>
                       </div>
                     </div>
                   </div>
@@ -276,8 +272,10 @@ export default function PresentationPage() {
             </div>
 
             {/* SLIDE 5: KEY FEATURES */}
-            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node">
-              <div className="space-y-6">
+            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node relative">
+              <div className="absolute bottom-10 right-10 w-[350px] h-[350px] rounded-full bg-gradient-to-bl from-[#cfa24d]/7 to-transparent blur-[90px] pointer-events-none z-0" />
+              
+              <div className="space-y-6 relative z-10">
                 <div className="text-center max-w-xl mx-auto">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">07. Platform Ecosystem</span>
                   <h3 className="font-display text-[26px] md:text-[32px] font-light text-white mt-1">
@@ -307,8 +305,10 @@ export default function PresentationPage() {
             </div>
 
             {/* SLIDE 6: HOW IT WORKS (FLOW CHART) */}
-            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node">
-              <div className="space-y-8">
+            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node relative">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[450px] h-[450px] rounded-full bg-gradient-to-r from-[#cfa24d]/8 to-transparent blur-[100px] pointer-events-none z-0" />
+              
+              <div className="space-y-8 relative z-10">
                 <div className="text-center max-w-xl mx-auto">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">08. Operational Flow</span>
                   <h3 className="font-display text-[26px] md:text-[32px] font-light text-white mt-1">
@@ -341,22 +341,18 @@ export default function PresentationPage() {
             </div>
 
             {/* SLIDE 7: NETWORK & PARTNERSHIP */}
-            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node relative">
+              <div className="absolute top-10 right-10 w-[350px] h-[350px] rounded-full bg-gradient-to-br from-[#cfa24d]/7 to-transparent blur-[90px] pointer-events-none z-0" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                 
                 <div className="space-y-4">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">09. Global Reach</span>
                   <h3 className="font-display text-[26px] font-light text-white leading-tight">
                     International Investor Network
                   </h3>
-                  
-                  {/* Network Map Image */}
-                  <div className="w-full h-32 rounded-xl border border-white/5 overflow-hidden relative my-3 max-md:hidden">
-                    <img src="/images/generated/ukraine_investment_gold_map.png" alt="Ukraine Investment Map" className="w-full h-full object-cover opacity-30 filter saturate-50 brightness-90" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#100f0d] to-transparent" />
-                  </div>
 
-                  <div className="grid grid-cols-3 gap-2.5 pt-1">
+                  <div className="grid grid-cols-3 gap-2.5 pt-4">
                     {[
                       { flag: "AU", label: "Australia" },
                       { flag: "QA", label: "Qatar" },
@@ -365,7 +361,7 @@ export default function PresentationPage() {
                       { flag: "EU", label: "Europe" },
                       { flag: "UA", label: "Ukraine" }
                     ].map((c, i) => (
-                      <div key={i} className="flex items-center gap-2 bg-white/[0.02] border border-white/5 rounded-xl px-3 py-1.5">
+                      <div key={i} className="flex items-center gap-2 bg-white/[0.02] border border-white/5 rounded-xl px-3 py-2.5">
                         <span className="text-[10px] font-bold text-[#cfa24d]">{c.flag}</span>
                         <span className="text-[11px] text-white/80 font-light">{c.label}</span>
                       </div>
@@ -399,8 +395,10 @@ export default function PresentationPage() {
             </div>
 
             {/* SLIDE 8: WHY US & FUTURE VISION (CTA) */}
-            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="w-full shrink-0 px-4 flex flex-col justify-center h-full slide-node relative">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-gradient-to-r from-[#cfa24d]/12 to-[#cfa24d]/2 blur-[80px] pointer-events-none z-0" />
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
                 
                 <div className="space-y-4">
                   <span className="text-[#cfa24d] text-[11px] font-bold tracking-[0.25em] uppercase block">11. Why Golden Land Invest?</span>
@@ -492,6 +490,15 @@ export default function PresentationPage() {
         .font-ui      { font-family: 'Manrope', system-ui, sans-serif; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .slide-container {
+          background-color: #0c0b0a !important;
+          background-image: 
+            radial-gradient(circle at 10% 20%, rgba(207, 162, 77, 0.05) 0%, transparent 40%),
+            radial-gradient(circle at 90% 80%, rgba(207, 162, 77, 0.04) 0%, transparent 45%),
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23cfa24d' stroke-width='0.5' stroke-opacity='0.02'/%3E%3C/svg%3E") !important;
+          background-size: auto, auto, 60px 60px !important;
+        }
 
         @media (max-width: 767px) {
           .slide-container {
