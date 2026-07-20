@@ -297,6 +297,62 @@ export default function MobileAppSimulator() {
     avatarUrl: "/images/generated/walid_dib.png"
   });
 
+  // ── expanded properties to match map counters ──────────────────────────────
+  const expandedProperties = useMemo(() => {
+    const result: AppProperty[] = [...ALL_PROPERTIES];
+    const byCity: Record<string, AppProperty[]> = {};
+    ALL_PROPERTIES.forEach(p => {
+      if (!byCity[p.city]) byCity[p.city] = [];
+      byCity[p.city].push(p);
+    });
+
+    CITIES.forEach(city => {
+      const currentList = byCity[city.id] || [];
+      if (currentList.length === 0) return;
+      let index = 0;
+      while (result.filter(p => p.city === city.id).length < city.count) {
+        const source = currentList[index % currentList.length];
+        const copyNum = Math.floor(result.filter(p => p.city === city.id).length / currentList.length) + 1;
+        result.push({
+          ...source,
+          slug: `${source.slug}-copy-${copyNum}`,
+          title: {
+            en: `${source.title.en} (Unit ${copyNum + 1})`,
+            ua: `${source.title.ua} (Блок ${copyNum + 1})`,
+            ar: `${source.title.ar} (الوحدة ${copyNum + 1})`,
+          },
+          price: source.price + (copyNum * 15_000),
+        });
+        index++;
+      }
+    });
+    return result;
+  }, []);
+
+  // ── explore filter ─────────────────────────────────────────────────────────
+  const filteredProperties = useMemo(() => {
+    const lang = appLang;
+    return expandedProperties.filter(p =>
+      searchQ === "" ||
+      p.title[lang].toLowerCase().includes(searchQ.toLowerCase()) ||
+      p.location[lang].toLowerCase().includes(searchQ.toLowerCase())
+    );
+  }, [searchQ, appLang, expandedProperties]);
+
+  // ── map helpers ────────────────────────────────────────────────────────────
+  const cityProperties = useMemo(
+    () => selectedCity ? expandedProperties.filter(p => p.city === selectedCity.id) : [],
+    [selectedCity, expandedProperties]
+  );
+  const filteredCities = useMemo(
+    () => CITIES.filter(c =>
+      mapSearch === "" ||
+      c.name.en.toLowerCase().includes(mapSearch.toLowerCase()) ||
+      c.name.ua.toLowerCase().includes(mapSearch.toLowerCase())
+    ),
+    [mapSearch]
+  );
+
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!userEmail) return;
@@ -415,9 +471,20 @@ export default function MobileAppSimulator() {
     }
   };
 
-  // ── Leaflet map integration ────────────────────────────────────────────────
+  // ── Leaflet map refs & integration ─────────────────────────────────────────
+  const mapRef = React.useRef<any>(null);
+  const markersRef = React.useRef<any[]>([]);
+
+  // 1. Initialize map container once
   React.useEffect(() => {
-    if (screen !== "map") return;
+    if (screen !== "map") {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+      markersRef.current = [];
+      return;
+    }
 
     let cssLink = document.getElementById("leaflet-css") as HTMLLinkElement;
     if (!cssLink) {
@@ -437,85 +504,32 @@ export default function MobileAppSimulator() {
       document.head.appendChild(jsScript);
     }
 
-    let mapInstance: any = null;
-
     const initMap = () => {
       const L = (window as any).L;
-      if (!L) return;
+      if (!L || mapRef.current) return;
 
       const mapContainer = document.getElementById("leaflet-map");
       if (!mapContainer) return;
 
-      mapInstance = L.map("leaflet-map", {
+      const map = L.map("leaflet-map", {
         zoomControl: false,
         attributionControl: false,
       }).setView([48.3794, 31.1656], 6);
 
       L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
         maxZoom: 19,
-      }).addTo(mapInstance);
+      }).addTo(map);
 
       L.control.zoom({
         position: 'topright'
-      }).addTo(mapInstance);
+      }).addTo(map);
 
-      const citiesCoords: Record<string, [number, number]> = {
-        kyiv: [50.4501, 30.5234],
-        kozyn: [50.2256, 30.6729],
-        odesa: [46.4825, 30.7233],
-        lviv: [49.8397, 24.0297],
-      };
-
-      filteredCities.forEach(city => {
-        const coords = citiesCoords[city.id];
-        if (!coords) return;
-
-        const isSelected = selectedCity?.id === city.id;
-
-        const iconHtml = `
-          <div class="custom-leaflet-marker transition-all duration-300 transform hover:scale-105 active:scale-95" style="transform: translate(-50%, -50%);">
-            <div class="bg-[#1e1c18] text-white border border-[#cfa24d]/20 px-3.5 py-1.5 rounded-full text-[12px] font-bold shadow-md flex items-center gap-1.5 whitespace-nowrap">
-              <span class="w-1.5 h-1.5 rounded-full bg-[#cfa24d]"></span>
-              ${city.name[appLang]} · ${city.count}
-            </div>
-          </div>
-        `;
-
-        const selectedIconHtml = `
-          <div class="custom-leaflet-marker transition-all duration-300 transform scale-105" style="transform: translate(-50%, -50%);">
-            <div class="bg-[#cfa24d] text-black border-none px-3.5 py-1.5 rounded-full text-[12px] font-bold shadow-[0_0_16px_rgba(207,162,77,.5)] flex items-center gap-1.5 whitespace-nowrap">
-              <span class="w-1.5 h-1.5 rounded-full bg-black/50"></span>
-              ${city.name[appLang]} · ${city.count}
-            </div>
-          </div>
-        `;
-
-        const markerIcon = L.divIcon({
-          className: '',
-          html: isSelected ? selectedIconHtml : iconHtml,
-          iconSize: [110, 30],
-          iconAnchor: [55, 15]
-        });
-
-        const marker = L.marker(coords, { icon: markerIcon }).addTo(mapInstance);
-
-        marker.on("click", (e: any) => {
-          L.DomEvent.stopPropagation(e);
-          setSelectedCity(city);
-          mapInstance.setView(coords, 9, { animate: true });
-        });
-      });
-
-      mapInstance.on("click", () => {
+      map.on("click", () => {
         setSelectedCity(null);
       });
 
-      if (selectedCity) {
-        const coords = citiesCoords[selectedCity.id];
-        if (coords) {
-          mapInstance.setView(coords, 9, { animate: false });
-        }
-      }
+      mapRef.current = map;
+      updateMarkers();
     };
 
     const handleScriptLoad = () => {
@@ -532,11 +546,81 @@ export default function MobileAppSimulator() {
       if (jsScript) {
         jsScript.removeEventListener("load", handleScriptLoad);
       }
-      if (mapInstance) {
-        mapInstance.remove();
-      }
     };
-  }, [screen, selectedCity, appLang, mapSearch]);
+  }, [screen]);
+
+  // 2. Update markers and center map dynamically without re-initializing the map container
+  const updateMarkers = React.useCallback(() => {
+    const L = (window as any).L;
+    const map = mapRef.current;
+    if (!L || !map) return;
+
+    // Clear existing markers
+    markersRef.current.forEach(m => m.remove());
+    markersRef.current = [];
+
+    const citiesCoords: Record<string, [number, number]> = {
+      kyiv: [50.4501, 30.5234],
+      kozyn: [50.2256, 30.6729],
+      odesa: [46.4825, 30.7233],
+      lviv: [49.8397, 24.0297],
+    };
+
+    filteredCities.forEach(city => {
+      const coords = citiesCoords[city.id];
+      if (!coords) return;
+
+      const isSelected = selectedCity?.id === city.id;
+
+      const iconHtml = `
+        <div class="custom-leaflet-marker transition-all duration-300" style="transform: translate(-50%, -50%);">
+          <div class="bg-[#1e1c18] text-white border border-[#cfa24d]/20 px-3.5 py-1.5 rounded-full text-[12px] font-bold shadow-md flex items-center gap-1.5 whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#cfa24d]"></span>
+            ${city.name[appLang]} · ${city.count}
+          </div>
+        </div>
+      `;
+
+      const selectedIconHtml = `
+        <div class="custom-leaflet-marker transition-all duration-300" style="transform: translate(-50%, -50%);">
+          <div class="bg-[#cfa24d] text-black border-none px-3.5 py-1.5 rounded-full text-[12px] font-bold shadow-[0_0_16px_rgba(207,162,77,.5)] flex items-center gap-1.5 whitespace-nowrap">
+            <span class="w-1.5 h-1.5 rounded-full bg-black/50"></span>
+            ${city.name[appLang]} · ${city.count}
+          </div>
+        </div>
+      `;
+
+      const markerIcon = L.divIcon({
+        className: '',
+        html: isSelected ? selectedIconHtml : iconHtml,
+        iconSize: [110, 30],
+        iconAnchor: [55, 15]
+      });
+
+      const marker = L.marker(coords, { icon: markerIcon }).addTo(map);
+
+      marker.on("click", (e: any) => {
+        L.DomEvent.stopPropagation(e);
+        setSelectedCity(city);
+        map.setView(coords, 9, { animate: true });
+      });
+
+      markersRef.current.push(marker);
+    });
+
+    if (selectedCity) {
+      const coords = citiesCoords[selectedCity.id];
+      if (coords) {
+        map.setView(coords, 9, { animate: true });
+      }
+    }
+  }, [selectedCity, appLang, mapSearch, filteredCities]);
+
+  React.useEffect(() => {
+    if (screen === "map" && mapRef.current) {
+      updateMarkers();
+    }
+  }, [screen, selectedCity, appLang, mapSearch, updateMarkers]);
 
   // ── navigation ──────────────────────────────────────────────────────────────
   const goTo = (s: Screen) => {
@@ -564,61 +648,7 @@ export default function MobileAppSimulator() {
     goTo(tab);
   };
 
-  // ── expanded properties to match map counters ──────────────────────────────
-  const expandedProperties = useMemo(() => {
-    const result: AppProperty[] = [...ALL_PROPERTIES];
-    const byCity: Record<string, AppProperty[]> = {};
-    ALL_PROPERTIES.forEach(p => {
-      if (!byCity[p.city]) byCity[p.city] = [];
-      byCity[p.city].push(p);
-    });
 
-    CITIES.forEach(city => {
-      const currentList = byCity[city.id] || [];
-      if (currentList.length === 0) return;
-      let index = 0;
-      while (result.filter(p => p.city === city.id).length < city.count) {
-        const source = currentList[index % currentList.length];
-        const copyNum = Math.floor(result.filter(p => p.city === city.id).length / currentList.length) + 1;
-        result.push({
-          ...source,
-          slug: `${source.slug}-copy-${copyNum}`,
-          title: {
-            en: `${source.title.en} (Unit ${copyNum + 1})`,
-            ua: `${source.title.ua} (Блок ${copyNum + 1})`,
-            ar: `${source.title.ar} (الوحدة ${copyNum + 1})`,
-          },
-          price: source.price + (copyNum * 15_000),
-        });
-        index++;
-      }
-    });
-    return result;
-  }, []);
-
-  // ── explore filter ─────────────────────────────────────────────────────────
-  const filteredProperties = useMemo(() => {
-    const lang = appLang;
-    return expandedProperties.filter(p =>
-      searchQ === "" ||
-      p.title[lang].toLowerCase().includes(searchQ.toLowerCase()) ||
-      p.location[lang].toLowerCase().includes(searchQ.toLowerCase())
-    );
-  }, [searchQ, appLang, expandedProperties]);
-
-  // ── map helpers ────────────────────────────────────────────────────────────
-  const cityProperties = useMemo(
-    () => selectedCity ? expandedProperties.filter(p => p.city === selectedCity.id) : [],
-    [selectedCity, expandedProperties]
-  );
-  const filteredCities = useMemo(
-    () => CITIES.filter(c =>
-      mapSearch === "" ||
-      c.name.en.toLowerCase().includes(mapSearch.toLowerCase()) ||
-      c.name.ua.toLowerCase().includes(mapSearch.toLowerCase())
-    ),
-    [mapSearch]
-  );
 
   const rtl = appLang === "ar";
 
