@@ -935,7 +935,7 @@ export default function MobileAppSimulator() {
                         <h3 className="font-display font-light text-[24px] text-white">{selectedCity.name[appLang]}, {T.ukraine[appLang]}</h3>
                         <span className="text-[12px] text-[#cfa24d] font-bold">{selectedCity.count} {T.properties[appLang]}</span>
                       </div>
-                      <div className="space-y-3">
+                      <div className="space-y-3 max-h-[250px] overflow-y-auto no-scrollbar pb-2">
                         {cityProperties.map(p => (
                           <button key={p.slug} onClick={() => goToProperty(p)}
                             className="w-full flex items-center gap-3.5 bg-[#1e1b17] hover:bg-[#252118] border border-white/5 hover:border-[#cfa24d]/20 rounded-2xl p-3 text-left transition-all cursor-pointer">
