@@ -37,7 +37,7 @@ function IPhoneMockup({ children }: { children: React.ReactNode }) {
   );
 }
 
-// ── Mockup Screen 1: Map View ──
+// ── Mockup Screen 1: Map View (Matching Leaflet CartoDB Dark Matter Grayscale Map & exact Custom Marker Pills) ──
 function MockupMapView() {
   return (
     <IPhoneMockup>
@@ -53,94 +53,139 @@ function MockupMapView() {
       <div className="px-3 pt-2 pb-1 bg-black/45 border-b border-white/5 z-20">
         <div className="flex items-center gap-1.5 bg-[#1a1816] border border-white/5 rounded-lg px-2 py-1 text-white/50 text-[8px]">
           <Search className="w-2.5 h-2.5 text-[#cfa24d]" />
-          <span>Search cities...</span>
+          <span>Search city or district</span>
         </div>
       </div>
       
       {/* Map Content Area */}
-      <div className="flex-1 relative bg-[#090807] overflow-hidden">
-        {/* Mock road grid lines */}
-        <div className="absolute inset-0 opacity-[0.05]" style={{ 
-          backgroundImage: "linear-gradient(rgba(207, 162, 77, 0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(207, 162, 77, 0.3) 1px, transparent 1px)", 
-          backgroundSize: "20px 20px" 
-        }} />
+      <div className="flex-1 relative bg-[#110f0d] overflow-hidden">
+        {/* Grayscale map background (CartoDB style) */}
+        <img 
+          src="/images/generated/ukraine_investment_gold_map.png" 
+          alt="Map" 
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.22] filter grayscale contrast-125 brightness-[0.25]" 
+        />
         
-        {/* City Marker Pills */}
-        <div className="absolute top-12 left-6 bg-[#12100e] border border-[#cfa24d]/40 rounded-full px-2 py-0.5 flex items-center gap-1 shadow-md scale-90">
-          <span className="w-1 h-1 rounded-full bg-[#cfa24d] animate-pulse" />
-          <span className="text-[7.5px] font-bold text-white tracking-wide">Kyiv (12)</span>
-        </div>
-
-        <div className="absolute top-24 right-4 bg-[#12100e] border border-[#cfa24d]/45 rounded-full px-2 py-0.5 flex items-center gap-1 shadow-md scale-95">
-          <span className="w-1 h-1 rounded-full bg-[#cfa24d] animate-pulse" />
-          <span className="text-[7.5px] font-bold text-white tracking-wide">Odesa (8)</span>
-        </div>
-
-        <div className="absolute bottom-16 left-12 bg-[#12100e] border border-[#cfa24d]/40 rounded-full px-2 py-0.5 flex items-center gap-1 shadow-md scale-90">
-          <span className="w-1 h-1 rounded-full bg-[#cfa24d] animate-pulse" />
-          <span className="text-[7.5px] font-bold text-white tracking-wide">Lviv (5)</span>
-        </div>
-
-        {/* Bottom Property Sheet */}
-        <div className="absolute bottom-2 left-2 right-2 bg-[#12100e]/95 border border-white/10 rounded-xl p-2 z-20 flex gap-2 items-center">
-          <img src="/images/generated/prop-odesa-beachfront-villa-1.webp" alt="Property" className="w-10 h-10 object-cover rounded-lg" />
-          <div className="flex-1 min-w-0">
-            <p className="text-[8px] font-bold text-white truncate">Beachfront Villa Odesa</p>
-            <p className="text-[7px] text-[#cfa24d] font-light mt-0.5">$2,400,000 • ROI: 8.5%</p>
+        {/* Kyiv City Marker Pill */}
+        <div className="absolute top-14 left-4 transition-all duration-300">
+          <div className="bg-[#1e1c18] text-white border border-[#cfa24d]/20 px-2.5 py-1 rounded-full text-[8px] font-bold shadow-md flex items-center gap-1 whitespace-nowrap">
+            <span className="w-1 h-1 rounded-full bg-[#cfa24d] animate-pulse" />
+            <span>Kyiv · 12</span>
           </div>
-          <ArrowRight className="w-3 h-3 text-[#cfa24d]" />
+        </div>
+
+        {/* Selected Odesa City Marker Pill */}
+        <div className="absolute top-28 right-2 transition-all duration-300">
+          <div className="bg-[#cfa24d] text-black border-none px-2.5 py-1 rounded-full text-[8px] font-bold shadow-[0_0_12px_rgba(207,162,77,.5)] flex items-center gap-1 whitespace-nowrap">
+            <span className="w-1 h-1 rounded-full bg-black/50" />
+            <span>Odesa · 8</span>
+          </div>
+        </div>
+
+        {/* Lviv City Marker Pill */}
+        <div className="absolute bottom-28 left-8 transition-all duration-300">
+          <div className="bg-[#1e1c18] text-white border border-[#cfa24d]/20 px-2.5 py-1 rounded-full text-[8px] font-bold shadow-md flex items-center gap-1 whitespace-nowrap">
+            <span className="w-1 h-1 rounded-full bg-[#cfa24d]" />
+            <span>Lviv · 5</span>
+          </div>
+        </div>
+
+        {/* Bottom Property Sheet (Matching app/page.tsx exactly) */}
+        <div className="absolute bottom-0 left-0 right-0 bg-[#141210] border-t border-[#cfa24d]/15 rounded-t-2xl p-2.5 z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.6)]">
+          <div className="w-6 h-0.5 bg-white/20 rounded-full mx-auto mb-2" />
+          <div className="flex justify-between items-center mb-2 px-1">
+            <span className="text-[9px] font-display font-light text-white">Odesa, Ukraine</span>
+            <span className="text-[8px] text-[#cfa24d] font-bold">8 properties</span>
+          </div>
+          <div className="space-y-1.5">
+            <div className="w-full flex items-center gap-2.5 bg-[#1e1b17] border border-white/5 rounded-xl p-2 text-left shadow-sm">
+              <div className="w-[32px] h-[32px] rounded-lg overflow-hidden shrink-0">
+                <img src="/images/generated/thumb_odesa_apartment.png" alt="Odesa Apartment" className="w-full h-full object-cover" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-ui font-semibold text-[8px] text-white leading-tight truncate">Beachfront Villa with Infinity Pool</p>
+                <p className="text-[6.5px] text-white/40 mt-0.5">From $2,200,000 • ROI 7.9%</p>
+              </div>
+              <ArrowRight className="w-3 h-3 text-[#cfa24d] shrink-0" />
+            </div>
+          </div>
         </div>
       </div>
     </IPhoneMockup>
   );
 }
 
-// ── Mockup Screen 2: Property Detail View ──
+// ── Mockup Screen 2: Property Detail View (Matching app/page.tsx details and layout exactly) ──
 function MockupDetailView() {
   return (
     <IPhoneMockup>
-      {/* Banner Image */}
-      <div className="h-32 bg-[url('/images/generated/thumb_kozyn_villa.png')] bg-cover bg-center relative">
-        <div className="absolute top-2.5 left-3 w-5 h-5 rounded-full bg-black/60 flex items-center justify-center text-white">
-          <span className="text-[7px] font-bold">←</span>
+      {/* Status Bar */}
+      <div className="h-8 pt-2.5 px-5 flex justify-between items-center text-[8px] text-white/60 bg-black/40 absolute top-0 left-0 right-0 z-30">
+        <span>9:41</span>
+        <div className="flex gap-1 items-center">
+          <span className="w-2.5 h-1.5 bg-white/60 rounded-xs" />
         </div>
-        <div className="absolute bottom-2 left-3 bg-black/65 px-2 py-0.5 rounded-full border border-white/10">
-          <span className="text-[6.5px] text-[#cfa24d] font-bold">RESIDENTIAL</span>
+      </div>
+
+      {/* Hero Banner Image */}
+      <div className="h-[150px] w-full shrink-0 relative bg-[url('/images/generated/prop-kozyn-forest-villa-1.webp')] bg-cover bg-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+        {/* Back button */}
+        <div className="absolute top-9 left-3 w-5 h-5 rounded-full bg-black/50 border border-white/10 flex items-center justify-center text-white text-[8px]">
+          ←
         </div>
       </div>
       
-      {/* Property specs details */}
-      <div className="flex-1 p-3 flex flex-col justify-between bg-[#0f0e0d]">
-        <div className="space-y-2">
-          <h4 className="text-[11px] font-display font-medium text-white">Kozyn Pine Villa</h4>
-          <p className="text-[7.5px] text-white/50 leading-relaxed font-light">
-            Luxury residence in pine forest. Features smart heating system, solar panels, and private access to the bay.
+      {/* Content */}
+      <div className="flex-1 bg-[#0e0d0b] p-3 flex flex-col justify-between overflow-y-auto no-scrollbar">
+        <div className="space-y-3">
+          {/* Badge Label */}
+          <span className="inline-flex items-center text-[6.5px] font-bold tracking-widest uppercase border border-[#cfa24d]/40 text-[#cfa24d] px-2 py-0.5 rounded-full">
+            OFF-PLAN • VERIFIED
+          </span>
+
+          {/* Title */}
+          <h4 className="font-display font-light text-[14px] text-white leading-tight">
+            Pine Forest Villa in Kozyn
+          </h4>
+          <p className="text-[7.5px] text-white/45 font-light leading-relaxed">
+            Kozyn, Kyiv Region • Dnipro Embankment
           </p>
 
-          <div className="grid grid-cols-3 gap-1.5 pt-1">
-            <div className="bg-[#181613] p-1.5 rounded-lg border border-white/5 text-center">
-              <p className="text-[6px] text-white/40">Area</p>
-              <p className="text-[8px] font-bold text-[#cfa24d] mt-0.5">450 m²</p>
+          {/* Price + ROI grid cards */}
+          <div className="grid grid-cols-2 gap-2">
+            <div className="bg-[#1a1713] border border-white/5 rounded-xl p-2.5">
+              <p className="text-[11px] font-bold text-[#cfa24d] leading-none">$1,650,000</p>
+              <p className="text-[5.5px] text-white/40 uppercase tracking-widest font-semibold mt-1">PRICE • $3,667 / m²</p>
             </div>
-            <div className="bg-[#181613] p-1.5 rounded-lg border border-white/5 text-center">
-              <p className="text-[6px] text-white/40">Est. Yield</p>
-              <p className="text-[8px] font-bold text-[#cfa24d] mt-0.5">8.9%</p>
+            <div className="bg-[#1a1713] border border-white/5 rounded-xl p-2.5">
+              <p className="text-[11px] font-bold text-[#cfa24d] leading-none">8.2%</p>
+              <p className="text-[5.5px] text-white/40 uppercase tracking-widest font-semibold mt-1">EXPECTED ROI</p>
             </div>
-            <div className="bg-[#181613] p-1.5 rounded-lg border border-white/5 text-center">
-              <p className="text-[6px] text-white/40">ROI</p>
-              <p className="text-[8px] font-bold text-[#cfa24d] mt-0.5">12.4%</p>
+          </div>
+
+          {/* Highlights */}
+          <p className="text-[6.5px] font-bold tracking-[0.18em] text-[#cfa24d] uppercase">INVESTMENT HIGHLIGHTS</p>
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#cfa24d]/15 border border-[#cfa24d]/30 flex items-center justify-center shrink-0">
+                <Check className="w-2 h-2 text-[#cfa24d]" />
+              </div>
+              <span className="text-[8px] text-white/80 font-light">Dnipro riverfront plot</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-[#cfa24d]/15 border border-[#cfa24d]/30 flex items-center justify-center shrink-0">
+                <Check className="w-2 h-2 text-[#cfa24d]" />
+              </div>
+              <span className="text-[8px] text-white/80 font-light">Private pine forest setting</span>
             </div>
           </div>
         </div>
 
-        {/* Action Button */}
-        <div className="pt-3 border-t border-white/5 flex items-center justify-between">
-          <div>
-            <p className="text-[6px] text-white/40 uppercase">Invest Price</p>
-            <p className="text-[9px] font-bold text-white">$1,850,000</p>
-          </div>
-          <button className="bg-[#cfa24d] text-black font-bold px-3 py-1.5 rounded-lg text-[7.5px] shadow-lg">
-            Consult Now
+        {/* Floating CTA bar */}
+        <div className="mt-4 pt-2.5 border-t border-white/5 flex gap-2">
+          <button className="flex-1 bg-[#cfa24d] text-black font-bold text-[8px] uppercase tracking-wider py-2.5 rounded-full border-none">
+            REQUEST CONSULTATION
           </button>
         </div>
       </div>
@@ -148,30 +193,47 @@ function MockupDetailView() {
   );
 }
 
-// ── Mockup Screen 3: Welcome Sign In Screen ──
+// ── Mockup Screen 3: Welcome Sign In Screen (Matching app/page.tsx Welcome layout exactly) ──
 function MockupWelcomeView() {
   return (
     <IPhoneMockup>
-      <div className="flex-1 p-4 flex flex-col justify-between items-center text-center bg-[#0f0e0d] relative">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] h-[180px] rounded-full bg-[#cfa24d]/10 blur-[40px] pointer-events-none" />
-        
-        <div className="pt-8 flex flex-col items-center">
-          <img src="/images/logo-golden-land.png" alt="Golden Land" className="h-10 object-contain mb-4 filter brightness-110" />
-          <h4 className="text-[12px] font-display font-medium text-white tracking-wider">GOLDEN LAND INVEST</h4>
-          <p className="text-[7.5px] text-[#cfa24d]/80 font-light mt-1 tracking-widest uppercase">PORTFOLIO PORTAL</p>
+      <div 
+        className="flex-1 p-4 flex flex-col justify-between items-center text-center bg-cover bg-center relative"
+        style={{ backgroundImage: "url('/images/burj_khalifa_bg.png')" }}
+      >
+        {/* Dark overlay & gold thin border */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/92 z-0" />
+        <div className="absolute inset-2 border border-[#cfa24d]/10 pointer-events-none z-10" />
+
+        {/* Status Bar */}
+        <div className="w-full h-4 pt-1 flex justify-between items-center text-[7px] text-white/60 z-20">
+          <span>9:41</span>
+          <div className="flex gap-1 items-center">
+            <span className="w-2 h-1 bg-white/60 rounded-xs" />
+          </div>
         </div>
 
-        <div className="space-y-2 w-full pb-6 relative z-10">
-          <p className="text-[7.5px] text-white/50 font-light leading-relaxed max-w-[150px] mx-auto mb-3">
-            Sign in to unlock exclusive investment offers and consult with top advisors.
-          </p>
+        {/* Content Logo & Titles */}
+        <div className="relative z-10 flex flex-col items-center pt-6">
+          <img src="/images/logo-golden-land.png" alt="Golden Land" className="h-12 w-12 object-contain mb-3 filter brightness-110" />
+          <h4 className="font-display font-medium text-[12px] tracking-[0.25em] text-[#cfa24d] uppercase leading-none">GOLDEN LAND</h4>
+          <p className="text-[6.5px] tracking-[0.38em] text-[#cfa24d]/90 uppercase mt-1.5 font-bold">PROPERTY INVESTMENT</p>
+          <p className="text-[8px] text-white/95 font-medium mt-3.5 px-2">Global Opportunities. Trusted Investments.</p>
+        </div>
 
-          <button className="w-full bg-white text-black font-bold py-2 rounded-xl text-[7.5px] flex items-center justify-center gap-1.5 shadow-md">
-            <span className="text-[9px]"></span> Sign in with Apple
+        {/* Action Buttons */}
+        <div className="relative z-10 flex flex-col items-center gap-2 w-full pb-4 px-2">
+          <button className="w-full bg-[#cfa24d] text-black font-semibold text-[8px] uppercase tracking-wider py-2.5 rounded-full border-none">
+            SIGN IN
           </button>
           
-          <button className="w-full bg-[#181613] border border-white/5 text-white/70 py-2 rounded-xl text-[7.5px]">
-            Continue with Email
+          <button className="w-full bg-transparent border border-[#cfa24d]/40 text-white font-semibold text-[7.5px] uppercase tracking-wider py-2.5 rounded-full">
+            CREATE ACCOUNT
+          </button>
+
+          <button className="w-full bg-white text-black font-semibold text-[8.5px] flex items-center justify-center gap-1.5 py-2.5 rounded-full border-none">
+            <svg className="w-2.5 h-2.5 fill-current shrink-0" viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.22.67-2.94 1.52-.63.73-1.18 1.9-1.04 3.01 1.12.09 2.27-.61 2.99-1.47z" /></svg>
+            <span>Sign in with Apple</span>
           </button>
         </div>
       </div>
@@ -560,7 +622,7 @@ export default function PresentationPage() {
             <div className="w-full shrink-0 p-6 md:p-10 pb-20 md:pb-24 flex flex-col justify-center h-full slide-node bg-[#0f0e0d] relative">
               {/* Premium Odesa luxury waterfront villa photo backdrop under gradient */}
               <div className="absolute inset-0 z-0 bg-[url('/images/generated/featured-odesa-villa.webp')] bg-cover bg-center opacity-[0.08] filter saturate-50 brightness-75 pointer-events-none" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-gradient-to-r from-[#cfa24d]/12 to-[#cfa24d]/2 blur-[80px] pointer-events-none z-0" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-gradient-to-r from-[#cfa24d]/12 to-transparent blur-[80px] pointer-events-none z-0" />
               
               <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10 w-full">
                 <div className="md:col-span-7 space-y-4">
