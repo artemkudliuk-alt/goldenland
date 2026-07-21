@@ -735,13 +735,17 @@ export default function PresentationPage() {
         }
 
         @media print {
+          @page {
+            size: A4 landscape;
+            margin: 0;
+          }
           body, html {
             background: #090807 !important;
             color: #ffffff !important;
             margin: 0 !important;
             padding: 0 !important;
-            height: auto !important;
-            width: auto !important;
+            height: 100% !important;
+            width: 100% !important;
             overflow: visible !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
@@ -755,6 +759,7 @@ export default function PresentationPage() {
           .presentation-page-wrapper {
             display: block !important;
             padding: 0 !important;
+            margin: 0 !important;
             height: auto !important;
             min-height: 0 !important;
             overflow: visible !important;
@@ -767,14 +772,22 @@ export default function PresentationPage() {
             height: auto !important;
             max-width: none !important;
             padding: 0 !important;
+            margin: 0 !important;
             border-radius: 0 !important;
             overflow: visible !important;
+          }
+          .slide-container > div {
+            display: block !important;
+            height: auto !important;
+            padding: 0 !important;
+            margin: 0 !important;
           }
           .slide-track {
             transform: none !important;
             display: flex !important;
             flex-direction: column !important;
             height: auto !important;
+            width: 100% !important;
           }
           .slide-node {
             display: flex !important;
@@ -783,9 +796,12 @@ export default function PresentationPage() {
             page-break-after: always !important;
             break-after: page !important;
             height: 100vh !important;
-            width: 100% !important;
+            width: 100vw !important;
             box-sizing: border-box !important;
             position: relative !important;
+            overflow: hidden !important;
+            margin: 0 !important;
+            padding: 2.5rem !important;
           }
           .slide-node:last-child {
             page-break-after: avoid !important;
