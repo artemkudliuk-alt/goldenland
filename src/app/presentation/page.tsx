@@ -259,7 +259,7 @@ export default function PresentationPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#090807] text-white font-ui flex flex-col items-center justify-center p-4 md:p-8 select-none relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#090807] text-white font-ui flex flex-col items-center justify-center p-4 md:p-8 select-none relative overflow-x-hidden presentation-page-wrapper">
       
       {/* ── Background Gradients (Desktop Screen Mode only) ── */}
       <div className="absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-[#cfa24d]/5 blur-[120px] pointer-events-none max-md:hidden" />
@@ -740,9 +740,9 @@ export default function PresentationPage() {
             color: #ffffff !important;
             margin: 0 !important;
             padding: 0 !important;
-            height: 100vh !important;
-            width: 100vw !important;
-            overflow: hidden !important;
+            height: auto !important;
+            width: auto !important;
+            overflow: visible !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
@@ -752,31 +752,40 @@ export default function PresentationPage() {
           .print-hide {
             display: none !important;
           }
+          .presentation-page-wrapper {
+            display: block !important;
+            padding: 0 !important;
+            height: auto !important;
+            min-height: 0 !important;
+            overflow: visible !important;
+          }
           .slide-container {
             border: none !important;
             box-shadow: none !important;
             background: #090807 !important;
-            width: 100vw !important;
-            height: 100vh !important;
+            width: 100% !important;
+            height: auto !important;
             max-width: none !important;
-            aspect-ratio: auto !important;
-            padding: 2.5rem !important;
+            padding: 0 !important;
             border-radius: 0 !important;
-            box-sizing: border-box !important;
-            page-break-after: always !important;
-            break-after: page !important;
+            overflow: visible !important;
           }
           .slide-track {
             transform: none !important;
-            display: block !important;
+            display: flex !important;
+            flex-direction: column !important;
+            height: auto !important;
           }
           .slide-node {
             display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
             page-break-after: always !important;
             break-after: page !important;
             height: 100vh !important;
-            width: 100vw !important;
+            width: 100% !important;
             box-sizing: border-box !important;
+            position: relative !important;
           }
         }
       `}</style>
