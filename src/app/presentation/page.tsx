@@ -255,7 +255,7 @@ export default function PresentationPage() {
   };
 
   const printPresentation = () => {
-    window.print();
+    window.open("/presentation/print", "_blank");
   };
 
   return (
