@@ -787,6 +787,10 @@ export default function PresentationPage() {
             box-sizing: border-box !important;
             position: relative !important;
           }
+          .slide-node:last-child {
+            page-break-after: avoid !important;
+            break-after: avoid !important;
+          }
         }
       `}</style>
 
