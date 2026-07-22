@@ -25,7 +25,7 @@ const translations = {
   cities: {
     en: "Major cities such as Kyiv, Odesa, and Lviv continue to demonstrate strong long-term investment potential due to increasing international interest, urban development, and tourism growth.",
     ua: "Такі міста, як Київ, Одеса та Львів, продовжують демонструвати високий потенціал для довгострокових інвестицій завдяки розвитку інфраструктури, туризму та зростаючому міжнародному інтересу.",
-    ru: "Такие города, как Киев, Одесса и Львов, продолжают демонстрировать высокий потенциал долгосрочных инвестиций благодаря развитию инфраструктуры, туризма и растущего международному интересу.",
+    ru: "Такие города, как Киев, Одесса и Львов, продолжают демонстрировать высокий потенциал долгосрочных инвестиций благодаря развитию инфраструктуры, туризма и растущему международному интересу.",
   },
   partnersLabel: {
     en: "Our Partners",
@@ -108,8 +108,6 @@ export function SunshineSection() {
   const { language } = useLanguage();
   const t = translations;
 
-  const [activeHoverPartner, setActiveHoverPartner] = useState<Partner | null>(null);
-  const [hoverPos, setHoverPos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
@@ -162,10 +160,10 @@ export function SunshineSection() {
         </div>
 
         {/* BOTTOM SECTION: OUR PARTNERS MARQUEE & POPUP */}
-        <div className="mt-20 md:mt-24 pt-12 border-t border-gray-100 relative">
+        <div className="mt-16 md:mt-20 pt-10 border-t border-gray-100 relative">
           
           {/* Label + Header line */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <div className="flex items-center gap-3">
               <span className="h-[2px] w-6 bg-[#D4AF37]" />
               <span className="text-[12px] font-bold tracking-[0.2em] uppercase text-[#D4AF37]">
@@ -181,16 +179,13 @@ export function SunshineSection() {
             </p>
           </div>
 
-          {/* INFINITE MARQUEE CAROUSEL CONTAINER */}
+          {/* INFINITE MARQUEE CAROUSEL CONTAINER (pt-28 allows top popover to render without clipping) */}
           <div
             ref={scrollContainerRef}
             onWheel={handleWheel}
             onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => {
-              setIsHovered(false);
-              setActiveHoverPartner(null);
-            }}
-            className="w-full overflow-x-auto no-scrollbar relative py-4 cursor-grab active:cursor-grabbing"
+            onMouseLeave={() => setIsHovered(false)}
+            className="w-full overflow-x-auto no-scrollbar relative pt-28 pb-4 cursor-grab active:cursor-grabbing"
           >
             <div
               className={`flex items-center gap-6 w-max transition-all ${
@@ -200,20 +195,12 @@ export function SunshineSection() {
               {marqueeList.map((partner, index) => (
                 <div
                   key={`${partner.id}-${index}`}
-                  onMouseEnter={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    setHoverPos({
-                      x: rect.left + rect.width / 2,
-                      y: rect.top,
-                    });
-                    setActiveHoverPartner(partner);
-                  }}
                   className="group relative flex items-center justify-center w-[180px] h-[100px] md:w-[210px] md:h-[115px] p-4 bg-white border border-gray-200/80 hover:border-[#D4AF37] rounded-2xl shadow-[0_4px_16px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_28px_rgba(212,175,55,0.15)] transition-all duration-300 transform hover:-translate-y-1.5 shrink-0 bg-gradient-to-b from-white to-[#fcfbfa]"
                 >
                   {/* Subtle Golden Touch Frame */}
                   <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-[#D4AF37]/30 transition-colors pointer-events-none" />
                   
-                  {/* FULL COLOR LOGO (Always in vibrant original brand colors) */}
+                  {/* FULL COLOR LOGO */}
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src={partner.logo}
@@ -223,54 +210,41 @@ export function SunshineSection() {
                       className="object-contain p-2 transition-all duration-300 group-hover:scale-105"
                     />
                   </div>
+
+                  {/* CALM POPUP TOOLTIP: Placed directly above THIS card (Zero flying effect) */}
+                  <div
+                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3.5 z-50 w-[290px] md:w-[320px] bg-[#0c0b0a]/95 text-white backdrop-blur-md border border-[#D4AF37]/40 rounded-2xl p-4 md:p-5 shadow-[0_25px_50px_rgba(0,0,0,0.5)] pointer-events-none opacity-0 scale-95 translate-y-1.5 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 transition-all duration-300 ease-out"
+                  >
+                    {/* Arrow pointing down to brand card */}
+                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-[#0c0b0a] border-r border-b border-[#D4AF37]/40 rotate-45" />
+
+                    {/* TOP ROW: Logo Left + Title Right */}
+                    <div className="flex items-center gap-3 mb-2.5">
+                      {/* Logo box */}
+                      <div className="relative w-12 h-10 shrink-0 bg-white rounded-xl p-1 flex items-center justify-center border border-[#D4AF37]/30 shadow-sm overflow-hidden">
+                        <Image
+                          src={partner.logo}
+                          alt={partner.name}
+                          fill
+                          sizes="48px"
+                          className="object-contain p-0.5"
+                        />
+                      </div>
+                      {/* Title */}
+                      <h4 className="text-[14px] md:text-[15px] font-bold text-[#D4AF37] tracking-wide font-display leading-tight flex-1 text-left">
+                        {partner.name}
+                      </h4>
+                    </div>
+
+                    {/* BOTTOM ROW: 2-Sentence Description */}
+                    <p className="text-[12px] leading-relaxed text-white/85 font-light border-t border-white/10 pt-2.5 text-left">
+                      {partner.description[language]}
+                    </p>
+                  </div>
+
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* SMOOTH HOVER TOOLTIP POP-UP MODAL (Logo Left, Title Right, Description Below) */}
-          <div
-            style={{
-              position: "fixed",
-              left: activeHoverPartner ? `${hoverPos.x}px` : "0px",
-              top: activeHoverPartner ? `${hoverPos.y - 14}px` : "0px",
-              transform: "translate(-50%, -100%)",
-            }}
-            className={`z-50 w-[300px] md:w-[340px] bg-[#0c0b0a]/95 text-white backdrop-blur-md border border-[#D4AF37]/40 rounded-2xl p-5 shadow-[0_25px_50px_rgba(0,0,0,0.5)] pointer-events-none transition-all duration-300 ease-out ${
-              activeHoverPartner
-                ? "opacity-100 scale-100 translate-y-0"
-                : "opacity-0 scale-95 translate-y-2 pointer-events-none"
-            }`}
-          >
-            {/* Top pointer arrow */}
-            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0c0b0a] border-r border-b border-[#D4AF37]/40 rotate-45" />
-
-            {/* TOP ROW: Logo Left + Title Right */}
-            {activeHoverPartner && (
-              <>
-                <div className="flex items-center gap-3.5 mb-3">
-                  {/* Logo Container (Left) */}
-                  <div className="relative w-14 h-11 shrink-0 bg-white rounded-xl p-1 flex items-center justify-center border border-[#D4AF37]/30 shadow-sm overflow-hidden">
-                    <Image
-                      src={activeHoverPartner.logo}
-                      alt={activeHoverPartner.name}
-                      fill
-                      sizes="56px"
-                      className="object-contain p-0.5"
-                    />
-                  </div>
-                  {/* Title (Right) */}
-                  <h4 className="text-[15px] font-bold text-[#D4AF37] tracking-wide font-display leading-tight flex-1">
-                    {activeHoverPartner.name}
-                  </h4>
-                </div>
-
-                {/* BOTTOM ROW: Description */}
-                <p className="text-[12.5px] leading-relaxed text-white/85 font-light border-t border-white/10 pt-2.5">
-                  {activeHoverPartner.description[language]}
-                </p>
-              </>
-            )}
           </div>
 
         </div>
