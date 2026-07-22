@@ -179,13 +179,13 @@ export function SunshineSection() {
             </p>
           </div>
 
-          {/* INFINITE MARQUEE CAROUSEL CONTAINER (pt-28 allows top popover to render without clipping) */}
+          {/* INFINITE MARQUEE CAROUSEL CONTAINER (pb-44 provides ample bottom padding for popups to render cleanly below cards) */}
           <div
             ref={scrollContainerRef}
             onWheel={handleWheel}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="w-full overflow-x-auto no-scrollbar relative pt-28 pb-4 cursor-grab active:cursor-grabbing"
+            className="w-full overflow-x-auto no-scrollbar relative pt-4 pb-44 cursor-grab active:cursor-grabbing"
           >
             <div
               className={`flex items-center gap-6 w-max transition-all ${
@@ -211,12 +211,12 @@ export function SunshineSection() {
                     />
                   </div>
 
-                  {/* CALM POPUP TOOLTIP: Placed directly above THIS card (Zero flying effect) */}
+                  {/* CALM POPUP TOOLTIP: Placed directly BELOW THIS card (Never clipped by top boundary) */}
                   <div
-                    className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3.5 z-50 w-[290px] md:w-[320px] bg-[#0c0b0a]/95 text-white backdrop-blur-md border border-[#D4AF37]/40 rounded-2xl p-4 md:p-5 shadow-[0_25px_50px_rgba(0,0,0,0.5)] pointer-events-none opacity-0 scale-95 translate-y-1.5 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 transition-all duration-300 ease-out"
+                    className="absolute top-full left-1/2 -translate-x-1/2 mt-3.5 z-50 w-[290px] md:w-[320px] bg-[#0c0b0a]/95 text-white backdrop-blur-md border border-[#D4AF37]/40 rounded-2xl p-4 md:p-5 shadow-[0_25px_50px_rgba(0,0,0,0.5)] pointer-events-none opacity-0 scale-95 -translate-y-1.5 group-hover:opacity-100 group-hover:scale-100 group-hover:translate-y-0 transition-all duration-300 ease-out"
                   >
-                    {/* Arrow pointing down to brand card */}
-                    <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-[#0c0b0a] border-r border-b border-[#D4AF37]/40 rotate-45" />
+                    {/* Upward pointing arrow */}
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-3.5 h-3.5 bg-[#0c0b0a] border-l border-t border-[#D4AF37]/40 rotate-45" />
 
                     {/* TOP ROW: Logo Left + Title Right */}
                     <div className="flex items-center gap-3 mb-2.5">
