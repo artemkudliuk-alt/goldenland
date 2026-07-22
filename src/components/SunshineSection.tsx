@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/context/LanguageContext";
 import { SectionEyebrow } from "@/components/SectionEyebrow";
@@ -25,7 +25,7 @@ const translations = {
   cities: {
     en: "Major cities such as Kyiv, Odesa, and Lviv continue to demonstrate strong long-term investment potential due to increasing international interest, urban development, and tourism growth.",
     ua: "Такі міста, як Київ, Одеса та Львів, продовжують демонструвати високий потенціал для довгострокових інвестицій завдяки розвитку інфраструктури, туризму та зростаючому міжнародному інтересу.",
-    ru: "Такие города, как Киев, Одесса и Львов, продолжают демонстрировать высокий потенциал долгосрочных инвестиций благодаря развитию инфраструктуры, туризма и растущему международному интересу.",
+    ru: "Такие города, как Киев, Одесса и Львов, продолжают демонстрировать высокий потенциал долгосрочных инвестиций благодаря развитию инфраструктуры, туризма и растущего международному интересу.",
   },
   partnersLabel: {
     en: "Our Partners",
@@ -161,7 +161,7 @@ export function SunshineSection() {
 
         </div>
 
-        {/* BOTTOM SECTION: OUR PARTNERS MARQUEE & POPUP (Expanded Vertically) */}
+        {/* BOTTOM SECTION: OUR PARTNERS MARQUEE & POPUP */}
         <div className="mt-20 md:mt-24 pt-12 border-t border-gray-100 relative">
           
           {/* Label + Header line */}
@@ -213,13 +213,14 @@ export function SunshineSection() {
                   {/* Subtle Golden Touch Frame */}
                   <div className="absolute inset-0 rounded-2xl border border-transparent group-hover:border-[#D4AF37]/30 transition-colors pointer-events-none" />
                   
+                  {/* FULL COLOR LOGO (Always in vibrant original brand colors) */}
                   <div className="relative w-full h-full flex items-center justify-center">
                     <Image
                       src={partner.logo}
                       alt={partner.name}
                       fill
                       sizes="210px"
-                      className="object-contain p-2 filter grayscale group-hover:grayscale-0 contrast-125 transition-all duration-500 group-hover:scale-105"
+                      className="object-contain p-2 transition-all duration-300 group-hover:scale-105"
                     />
                   </div>
                 </div>
@@ -227,42 +228,50 @@ export function SunshineSection() {
             </div>
           </div>
 
-          {/* HOVER TOOLTIP POP-UP MODAL */}
-          {activeHoverPartner && (
-            <div
-              style={{
-                position: "fixed",
-                left: `${hoverPos.x}px`,
-                top: `${hoverPos.y - 12}px`,
-                transform: "translate(-50%, -100%)",
-              }}
-              className="z-50 w-[290px] md:w-[320px] bg-[#0c0b0a]/95 text-white backdrop-blur-md border border-[#D4AF37]/40 rounded-2xl p-5 shadow-[0_20px_40px_rgba(0,0,0,0.4)] pointer-events-none animate-in fade-in zoom-in-95 duration-200"
-            >
-              {/* Top pointer arrow */}
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0c0b0a] border-r border-b border-[#D4AF37]/40 rotate-45" />
+          {/* SMOOTH HOVER TOOLTIP POP-UP MODAL (Logo Left, Title Right, Description Below) */}
+          <div
+            style={{
+              position: "fixed",
+              left: activeHoverPartner ? `${hoverPos.x}px` : "0px",
+              top: activeHoverPartner ? `${hoverPos.y - 14}px` : "0px",
+              transform: "translate(-50%, -100%)",
+            }}
+            className={`z-50 w-[300px] md:w-[340px] bg-[#0c0b0a]/95 text-white backdrop-blur-md border border-[#D4AF37]/40 rounded-2xl p-5 shadow-[0_25px_50px_rgba(0,0,0,0.5)] pointer-events-none transition-all duration-300 ease-out ${
+              activeHoverPartner
+                ? "opacity-100 scale-100 translate-y-0"
+                : "opacity-0 scale-95 translate-y-2 pointer-events-none"
+            }`}
+          >
+            {/* Top pointer arrow */}
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 bg-[#0c0b0a] border-r border-b border-[#D4AF37]/40 rotate-45" />
 
-              {/* Logo preview */}
-              <div className="w-full h-12 relative bg-white/90 rounded-xl p-2 mb-3 flex items-center justify-center">
-                <Image
-                  src={activeHoverPartner.logo}
-                  alt={activeHoverPartner.name}
-                  fill
-                  sizes="200px"
-                  className="object-contain p-1"
-                />
-              </div>
+            {/* TOP ROW: Logo Left + Title Right */}
+            {activeHoverPartner && (
+              <>
+                <div className="flex items-center gap-3.5 mb-3">
+                  {/* Logo Container (Left) */}
+                  <div className="relative w-14 h-11 shrink-0 bg-white rounded-xl p-1 flex items-center justify-center border border-[#D4AF37]/30 shadow-sm overflow-hidden">
+                    <Image
+                      src={activeHoverPartner.logo}
+                      alt={activeHoverPartner.name}
+                      fill
+                      sizes="56px"
+                      className="object-contain p-0.5"
+                    />
+                  </div>
+                  {/* Title (Right) */}
+                  <h4 className="text-[15px] font-bold text-[#D4AF37] tracking-wide font-display leading-tight flex-1">
+                    {activeHoverPartner.name}
+                  </h4>
+                </div>
 
-              {/* Partner Title */}
-              <h4 className="text-[15px] font-bold text-[#D4AF37] tracking-wide mb-1.5 font-display">
-                {activeHoverPartner.name}
-              </h4>
-
-              {/* 2-Sentence Description */}
-              <p className="text-[12px] leading-relaxed text-white/80 font-light">
-                {activeHoverPartner.description[language]}
-              </p>
-            </div>
-          )}
+                {/* BOTTOM ROW: Description */}
+                <p className="text-[12.5px] leading-relaxed text-white/85 font-light border-t border-white/10 pt-2.5">
+                  {activeHoverPartner.description[language]}
+                </p>
+              </>
+            )}
+          </div>
 
         </div>
 
