@@ -51,11 +51,19 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       });
       const data = await res.json();
       if (data.success) {
-        // Focus back to editor
-        editorRef.current?.focus();
-        // Insert image at cursor
-        executeCommand("insertImage", data.url);
-        // Reset file input
+        if (editorRef.current) {
+          editorRef.current.focus();
+          const prevHTML = editorRef.current.innerHTML;
+          document.execCommand("insertImage", false, data.url);
+          // Fallback if execCommand didn't insert
+          if (editorRef.current.innerHTML === prevHTML) {
+            const img = document.createElement("img");
+            img.src = data.url;
+            img.className = "max-w-full h-auto my-2 rounded-sm border border-white/10";
+            editorRef.current.appendChild(img);
+          }
+          onChange(editorRef.current.innerHTML);
+        }
         e.target.value = "";
       } else {
         alert("Image upload failed: " + (data.error || "Unknown error"));

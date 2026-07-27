@@ -2,6 +2,15 @@ import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { getCustomProperties, saveCustomProperties, type PropertyData } from "@/lib/properties-store";
 
+function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 export async function GET() {
   if (!(await isAdminAuthenticated())) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -30,38 +39,67 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing properties array" }, { status: 400 });
     }
 
-    // Validate properties structure
-    for (const p of properties) {
-      if (typeof p.id !== "string" || !p.id) {
-        return NextResponse.json({ error: "Invalid property id" }, { status: 400 });
-      }
-      if (typeof p.slug !== "string" || !p.slug) {
-        return NextResponse.json({ error: "Invalid property slug" }, { status: 400 });
-      }
-      if (!p.title || typeof p.title !== "object" || !p.location || typeof p.location !== "object" || !p.description || typeof p.description !== "object") {
-        return NextResponse.json({ error: "Title, location, and description translations must be objects" }, { status: 400 });
-      }
-      if (typeof p.title.en !== "string" || typeof p.title.ua !== "string" || typeof p.title.ru !== "string" ||
-          typeof p.location.en !== "string" || typeof p.location.ua !== "string" || typeof p.location.ru !== "string" ||
-          typeof p.description.en !== "string" || typeof p.description.ua !== "string" || typeof p.description.ru !== "string") {
-        return NextResponse.json({ error: "Translation values must be strings" }, { status: 400 });
-      }
-      if (!Array.isArray(p.gallery)) {
-        return NextResponse.json({ error: "Gallery must be an array of strings" }, { status: 400 });
-      }
-      if (p.gallery.length > 15) {
-        return NextResponse.json({ error: "Gallery exceeds limit of 15 images" }, { status: 400 });
-      }
-    }
+    const sanitizedProperties: PropertyData[] = properties.map((p: any, idx: number) => {
+      const id = typeof p?.id === "string" && p.id.trim().length > 0 ? p.id : `prop_${Date.now()}_${idx}`;
 
-    const ok = await saveCustomProperties(properties);
+      const titleObj = {
+        en: typeof p?.title === "object" ? (p.title.en || "") : (typeof p?.title === "string" ? p.title : ""),
+        ua: typeof p?.title === "object" ? (p.title.ua || p.title.en || "") : "",
+        ru: typeof p?.title === "object" ? (p.title.ru || p.title.en || "") : "",
+      };
+
+      let slug = typeof p?.slug === "string" ? p.slug.trim().toLowerCase().replace(/[^a-z0-9-]/g, "") : "";
+      if (!slug) {
+        slug = slugify(titleObj.en || titleObj.ua || titleObj.ru || `property-${idx + 1}`);
+      }
+
+      const locationObj = {
+        en: typeof p?.location === "object" ? (p?.location?.en || "") : (typeof p?.location === "string" ? p.location : ""),
+        ua: typeof p?.location === "object" ? (p?.location?.ua || p?.location?.en || "") : "",
+        ru: typeof p?.location === "object" ? (p?.location?.ru || p?.location?.en || "") : "",
+      };
+
+      const descriptionObj = {
+        en: typeof p?.description === "object" ? (p?.description?.en || "") : (typeof p?.description === "string" ? p.description : ""),
+        ua: typeof p?.description === "object" ? (p?.description?.ua || p?.description?.en || "") : "",
+        ru: typeof p?.description === "object" ? (p?.description?.ru || p?.description?.en || "") : "",
+      };
+
+      const galleryArray = Array.isArray(p?.gallery)
+        ? p.gallery.filter((g: any) => typeof g === "string" && g.trim().length > 0)
+        : [];
+
+      const validTypes = ["apartments", "villas", "hotels", "commercial"];
+      const propType = validTypes.includes(p?.type) ? p.type : "apartments";
+
+      return {
+        id,
+        slug,
+        title: titleObj,
+        location: locationObj,
+        city: typeof p?.city === "string" ? p.city : "kyiv",
+        type: propType as any,
+        price: typeof p?.price === "number" ? p.price : (Number(p?.price) || 0),
+        area: typeof p?.area === "number" ? p.area : (Number(p?.area) || 0),
+        bedrooms: typeof p?.bedrooms === "number" ? p.bedrooms : (Number(p?.bedrooms) || 0),
+        roi: typeof p?.roi === "string" ? p.roi : (p?.roi ? String(p.roi) : ""),
+        gallery: galleryArray,
+        video: typeof p?.video === "string" ? p.video : "",
+        status: typeof p?.status === "string" ? p.status : "ready",
+        address: typeof p?.address === "string" ? p.address : "",
+        description: descriptionObj,
+        specs: p?.specs && typeof p.specs === "object" ? p.specs : undefined,
+      };
+    });
+
+    const ok = await saveCustomProperties(sanitizedProperties);
     if (!ok) {
       return NextResponse.json({ error: "Failed to save properties" }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true });
-  } catch (error) {
+    return NextResponse.json({ success: true, properties: sanitizedProperties });
+  } catch (error: any) {
     console.error("Error saving properties for admin:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
   }
 }

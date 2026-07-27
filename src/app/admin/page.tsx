@@ -159,12 +159,22 @@ export default function AdminDashboard() {
 
   const handleSavePage = async (page: any) => {
     setPagesSaving(true);
+    const fallbackSlug = (page.title?.en || page.title?.ua || "page")
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-");
+    const cleanPage = {
+      ...page,
+      slug: page.slug && page.slug.trim() ? page.slug.trim() : fallbackSlug,
+    };
+
     let updatedPages = [...customPages];
-    const index = updatedPages.findIndex((p) => p.slug === page.slug);
+    const index = updatedPages.findIndex((p) => p.slug === cleanPage.slug);
     if (index >= 0) {
-      updatedPages[index] = page;
+      updatedPages[index] = cleanPage;
     } else {
-      updatedPages.push(page);
+      updatedPages.push(cleanPage);
     }
 
     try {
@@ -174,10 +184,12 @@ export default function AdminDashboard() {
         body: JSON.stringify({ pages: updatedPages }),
       });
       if (res.ok) {
-        setCustomPages(updatedPages);
+        const data = await res.json().catch(() => ({}));
+        setCustomPages(data.pages || updatedPages);
         setEditingPage(null);
       } else {
-        alert("Failed to save page. Please check slug uniqueness.");
+        const data = await res.json().catch(() => ({}));
+        alert(data.error || "Failed to save page.");
       }
     } catch (err) {
       console.error("Error saving page:", err);
@@ -211,12 +223,26 @@ export default function AdminDashboard() {
 
   const handleSaveProperty = async (property: any) => {
     setPropertiesSaving(true);
+    const cleanGallery = Array.isArray(property.gallery)
+      ? property.gallery.filter((g: string) => typeof g === "string" && g.trim().length > 0)
+      : [];
+    const fallbackSlug = (property.title?.en || property.title?.ua || "property")
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-");
+    const cleanProp = {
+      ...property,
+      gallery: cleanGallery,
+      slug: property.slug && property.slug.trim() ? property.slug.trim() : fallbackSlug,
+    };
+
     let updatedProps = [...customProperties];
-    const index = updatedProps.findIndex((p) => p.id === property.id);
+    const index = updatedProps.findIndex((p) => p.id === cleanProp.id);
     if (index >= 0) {
-      updatedProps[index] = property;
+      updatedProps[index] = cleanProp;
     } else {
-      updatedProps.push(property);
+      updatedProps.push(cleanProp);
     }
 
     try {
@@ -226,7 +252,8 @@ export default function AdminDashboard() {
         body: JSON.stringify({ properties: updatedProps }),
       });
       if (res.ok) {
-        setCustomProperties(updatedProps);
+        const data = await res.json().catch(() => ({}));
+        setCustomProperties(data.properties || updatedProps);
         setEditingProperty(null);
       } else {
         const data = await res.json().catch(() => ({}));
