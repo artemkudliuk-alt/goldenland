@@ -34,23 +34,36 @@ export async function POST(req: Request) {
         });
       } catch (blobErr: any) {
         console.error("Vercel Blob upload failed:", blobErr);
-        // Fall back to local filesystem if Blob fails (e.g. invalid token during local testing)
       }
     }
 
-    // 2. Local filesystem storage (/public/uploads)
+    // 2. Storage fallback (works on both local dev AND Vercel Serverless)
     const buffer = Buffer.from(await file.arrayBuffer());
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
+
+    let uploadDir = path.join(process.cwd(), "public", "uploads");
+    if (process.env.VERCEL) {
+      uploadDir = path.join("/tmp", "uploads");
     }
 
-    const filePath = path.join(uploadDir, filename);
-    fs.writeFileSync(filePath, buffer);
+    try {
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+      const filePath = path.join(uploadDir, filename);
+      fs.writeFileSync(filePath, buffer);
+    } catch (fsErr: any) {
+      // If public/uploads fails due to read-only filesystem on Vercel, fallback to /tmp/uploads
+      uploadDir = path.join("/tmp", "uploads");
+      if (!fs.existsSync(uploadDir)) {
+        fs.mkdirSync(uploadDir, { recursive: true });
+      }
+      const filePath = path.join(uploadDir, filename);
+      fs.writeFileSync(filePath, buffer);
+    }
 
     return NextResponse.json({
       success: true,
-      url: `/uploads/${filename}`,
+      url: `/api/uploads/${filename}`,
     });
   } catch (error: any) {
     console.error("Upload error:", error);
