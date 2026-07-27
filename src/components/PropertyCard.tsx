@@ -33,13 +33,19 @@ export function PropertyCard({ property }: { property: Property }) {
       <Link href={`/properties/${p.slug}`} className="absolute inset-0 z-10 cursor-pointer" aria-label={p.title[language]} />
 
       <div className="relative block aspect-[4/3] w-full overflow-hidden bg-black">
-        <Image
-          src={p.gallery[0]}
-          alt={p.title[language]}
-          fill
-          sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
-          className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
-        />
+        {p.gallery && p.gallery.length > 0 ? (
+          <Image
+            src={p.gallery[0]}
+            alt={p.title[language]}
+            fill
+            sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
+            className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0a]/80">
+            <span className="text-[#D4AF37]/40 text-[11px] tracking-[0.2em] uppercase">No Image</span>
+          </div>
+        )}
         <div className="absolute inset-x-0 top-0 flex justify-between p-4">
           {p.status !== "exclusive" && (
             <span className="bg-[#0a0a0a]/90 border border-[#D4AF37]/40 px-3 py-1 text-[10px] font-medium tracking-[0.15em] uppercase text-white shadow-md">
@@ -87,9 +93,11 @@ export function PropertyCard({ property }: { property: Property }) {
                   {p.baths} {t.keys[language]}
                 </span>
               )}
-              <span className="border border-gray-200 bg-gray-50/80 px-2.5 py-1 rounded-xs">
-                {p.area.toLocaleString("en-US")} {t.area[language]}
-              </span>
+              {p.area > 0 && (
+                <span className="border border-gray-200 bg-gray-50/80 px-2.5 py-1 rounded-xs">
+                  {p.area.toLocaleString("en-US")} {t.area[language]}
+                </span>
+              )}
             </div>
           </div>
 
