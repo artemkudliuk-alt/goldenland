@@ -228,11 +228,14 @@ export default function PropertyDetailPage() {
   const tgHref = `https://t.me/${telegram}`;
 
   // Horizontal gallery scroll actions
+  const galleryImages: string[] = Array.isArray(p.gallery) ? p.gallery.filter(Boolean) : [];
+  const hasGallery = galleryImages.length > 0;
+
   const nextSlide = () => {
-    setActiveImg((prev) => (prev === p.gallery.length - 1 ? 0 : prev + 1));
+    setActiveImg((prev) => (prev === galleryImages.length - 1 ? 0 : prev + 1));
   };
   const prevSlide = () => {
-    setActiveImg((prev) => (prev === 0 ? p.gallery.length - 1 : prev - 1));
+    setActiveImg((prev) => (prev === 0 ? galleryImages.length - 1 : prev - 1));
   };
 
   return (
@@ -259,16 +262,26 @@ export default function PropertyDetailPage() {
                 {/* 1. Large Wide Photo Slider */}
                 <div>
                   <div
-                    onClick={() => setIsLightboxOpen(true)}
+                    onClick={() => hasGallery && setIsLightboxOpen(true)}
                     className="relative aspect-[16/9] w-full overflow-hidden bg-[#111] shadow-sm group cursor-zoom-in hover:opacity-95 transition-opacity"
                   >
-                    <Image
-                      src={p.gallery[activeImg]}
-                      alt={p.title[language]}
-                      fill
-                      priority
-                      className="object-cover transition-all duration-700"
-                    />
+                    {hasGallery ? (
+                      <Image
+                        src={galleryImages[activeImg] || galleryImages[0]}
+                        alt={p.title[language]}
+                        fill
+                        priority
+                        className="object-cover transition-all duration-700"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#111] gap-3">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" strokeWidth="1" className="h-16 w-16 opacity-20">
+                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                          <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        <span className="text-[#D4AF37]/30 text-[11px] tracking-[0.2em] uppercase">No photos yet</span>
+                      </div>
+                    )}
 
                     {/* Status and ROI overlay tags */}
                     <div className="absolute left-6 top-6 flex gap-2">
@@ -305,15 +318,17 @@ export default function PropertyDetailPage() {
                     </button>
 
                     {/* Photos Count overlay Badge */}
-                    <div className="absolute right-6 bottom-6 flex items-center gap-2 bg-[#0a0a0a]/80 backdrop-blur-md px-3.5 py-1.5 text-[11px] font-medium tracking-wider text-white border border-white/10 rounded-sm">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 text-[#D4AF37]">
-                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                        <circle cx="12" cy="13" r="4"/>
-                      </svg>
-                      <span>
-                        {activeImg + 1} / {p.gallery.length} {language === "en" ? "photos" : language === "ua" ? "фотографій" : "фотографий"}
-                      </span>
-                    </div>
+                    {hasGallery && (
+                      <div className="absolute right-6 bottom-6 flex items-center gap-2 bg-[#0a0a0a]/80 backdrop-blur-md px-3.5 py-1.5 text-[11px] font-medium tracking-wider text-white border border-white/10 rounded-sm">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="h-4 w-4 text-[#D4AF37]">
+                          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                          <circle cx="12" cy="13" r="4"/>
+                        </svg>
+                        <span>
+                          {activeImg + 1} / {galleryImages.length} {language === "en" ? "photos" : language === "ua" ? "фотографій" : "фотографий"}
+                        </span>
+                      </div>
+                    )}
 
                     {/* Play Video overlay Badge */}
                     {p.video && (
@@ -335,19 +350,21 @@ export default function PropertyDetailPage() {
                   </div>
 
                   {/* Horizontal Scrollable Thumbnails Strip */}
-                  <div className="mt-4 flex gap-3 overflow-x-auto pb-2 snap-x scrollbar-thin">
-                    {p.gallery.map((src: string, i: number) => (
-                      <button
-                        key={i}
-                        onClick={() => setActiveImg(i)}
-                        className={`relative aspect-[16/10] w-[130px] sm:w-[150px] shrink-0 snap-start overflow-hidden bg-black transition-all duration-300 ${
-                          activeImg === i ? "ring-2 ring-[#D4AF37] opacity-100" : "opacity-60 hover:opacity-100"
-                        }`}
-                      >
-                        <Image src={src} alt="" fill sizes="150px" className="object-cover" />
-                      </button>
-                    ))}
-                  </div>
+                  {hasGallery && (
+                    <div className="mt-4 flex gap-3 overflow-x-auto pb-2 snap-x scrollbar-thin">
+                      {galleryImages.map((src: string, i: number) => (
+                        <button
+                          key={i}
+                          onClick={() => setActiveImg(i)}
+                          className={`relative aspect-[16/10] w-[130px] sm:w-[150px] shrink-0 snap-start overflow-hidden bg-black transition-all duration-300 ${
+                            activeImg === i ? "ring-2 ring-[#D4AF37] opacity-100" : "opacity-60 hover:opacity-100"
+                          }`}
+                        >
+                          <Image src={src} alt="" fill sizes="150px" className="object-cover" />
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* 2. Core info with custom inline icons */}
@@ -653,13 +670,15 @@ export default function PropertyDetailPage() {
             onClick={(e) => e.stopPropagation()} 
             className="relative w-full h-[65vh] md:h-[80vh] max-w-[95vw] md:max-w-[85vw]"
           >
-            <Image
-              src={p.gallery[activeImg]}
-              alt={p.title[language]}
-              fill
-              className="object-contain select-none"
-              priority
-            />
+            {hasGallery ? (
+              <Image
+                src={galleryImages[activeImg] || galleryImages[0]}
+                alt={p.title[language]}
+                fill
+                className="object-contain select-none"
+                priority
+              />
+            ) : null}
 
             {/* Slider navigation arrows inside Lightbox */}
             <button
@@ -687,7 +706,7 @@ export default function PropertyDetailPage() {
             onClick={(e) => e.stopPropagation()}
             className="mt-8 flex gap-2 overflow-x-auto max-w-[95vw] pb-2 scrollbar-none snap-x"
           >
-            {p.gallery.map((src: string, i: number) => (
+            {galleryImages.map((src: string, i: number) => (
               <button
                 key={i}
                 onClick={() => setActiveImg(i)}
@@ -702,7 +721,7 @@ export default function PropertyDetailPage() {
 
           {/* Counter text */}
           <div className="mt-4 text-[12px] font-medium tracking-[0.1em] uppercase text-white/50">
-            {activeImg + 1} / {p.gallery.length}
+            {activeImg + 1} / {galleryImages.length}
           </div>
         </div>
       )}
