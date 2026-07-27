@@ -1154,41 +1154,74 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-[13px] font-light">
-                  {customPages.map((page) => (
-                    <tr key={page.slug} className="hover:bg-white/2 transition-colors">
-                      <td className="px-6 py-4 font-normal text-white">{page.title.en || "(No Title)"}</td>
-                      <td className="px-6 py-4 text-[#D4AF37] font-mono">/{page.slug}</td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2 py-0.5 text-[10px] rounded-xs font-medium uppercase tracking-wider ${page.showInHeader ? "bg-emerald-950/40 text-emerald-400 border border-emerald-800/40" : "bg-white/5 text-white/30"}`}>
-                          {page.showInHeader ? "Yes" : "No"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`px-2 py-0.5 text-[10px] rounded-xs font-medium uppercase tracking-wider ${page.showInFooter ? "bg-emerald-950/40 text-emerald-400 border border-emerald-800/40" : "bg-white/5 text-white/30"}`}>
-                          {page.showInFooter ? "Yes" : "No"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-3">
-                          <button
-                            onClick={() => {
-                              setEditingPage(page);
-                              setFormLang("en");
-                            }}
-                            className="text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors"
+                  {customPages.map((page) => {
+                    const pageUrl = `/${page.slug}`;
+                    return (
+                      <tr key={page.slug} className="hover:bg-white/2 transition-colors">
+                        <td className="px-6 py-4 font-normal text-white">
+                          <a
+                            href={pageUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1.5"
+                            title="Open page in new tab"
                           >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeletePage(page.slug)}
-                            className="text-[12px] uppercase tracking-wider text-rose-400 hover:text-rose-300 transition-colors"
+                            <span>{page.title.en || "(No Title)"}</span>
+                            <svg className="w-3.5 h-3.5 text-[#D4AF37]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        </td>
+                        <td className="px-6 py-4 text-[#D4AF37] font-mono">
+                          <a
+                            href={pageUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:underline inline-flex items-center gap-1"
                           >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                            {pageUrl}
+                          </a>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`px-2 py-0.5 text-[10px] rounded-xs font-medium uppercase tracking-wider ${page.showInHeader ? "bg-emerald-950/40 text-emerald-400 border border-emerald-800/40" : "bg-white/5 text-white/30"}`}>
+                            {page.showInHeader ? "Yes" : "No"}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`px-2 py-0.5 text-[10px] rounded-xs font-medium uppercase tracking-wider ${page.showInFooter ? "bg-emerald-950/40 text-emerald-400 border border-emerald-800/40" : "bg-white/5 text-white/30"}`}>
+                            {page.showInFooter ? "Yes" : "No"}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-3">
+                            <a
+                              href={pageUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[12px] uppercase tracking-wider text-[#D4AF37] hover:text-[#f3e3a4] transition-colors inline-flex items-center gap-1 font-medium"
+                            >
+                              View ↗
+                            </a>
+                            <button
+                              onClick={() => {
+                                setEditingPage(page);
+                                setFormLang("en");
+                              }}
+                              className="text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeletePage(page.slug)}
+                              className="text-[12px] uppercase tracking-wider text-rose-400 hover:text-rose-300 transition-colors"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
@@ -1263,47 +1296,71 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-white/5 text-[13px] font-light">
-                  {customProperties.map((p) => (
-                    <tr key={p.id} className="hover:bg-white/2 transition-colors">
-                      <td className="px-6 py-4 font-normal text-white">{p.title.en || "(No Title)"}</td>
-                      <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.city}</td>
-                      <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.type}</td>
-                      <td className="px-6 py-4 text-[#D4AF37]">${p.price?.toLocaleString()}</td>
-                      <td className="px-6 py-4 text-white/80">{p.area} m²</td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-3">
-                          <button
-                            onClick={() => {
-                              setEditingProperty({
-                                ...p,
-                                specs: p.specs || {
-                                  rooms: "",
-                                  layout: "",
-                                  floor: "",
-                                  renovation: "",
-                                  newBuild: "",
-                                  construction: "",
-                                  heating: "",
-                                  ceilings: "",
-                                  yearBuilt: ""
-                                }
-                              });
-                              setFormLang("en");
-                            }}
-                            className="text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors"
+                  {customProperties.map((p) => {
+                    const propUrl = `/properties/${p.slug}`;
+                    return (
+                      <tr key={p.id} className="hover:bg-white/2 transition-colors">
+                        <td className="px-6 py-4 font-normal text-white">
+                          <a
+                            href={propUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1.5"
+                            title="Open property page on site in new tab"
                           >
-                            Edit
-                          </button>
-                          <button
-                            onClick={() => handleDeleteProperty(p.id)}
-                            className="text-[12px] uppercase tracking-wider text-rose-400 hover:text-rose-300 transition-colors"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
+                            <span>{p.title.en || "(No Title)"}</span>
+                            <svg className="w-3.5 h-3.5 text-[#D4AF37]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                          </a>
+                        </td>
+                        <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.city}</td>
+                        <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.type}</td>
+                        <td className="px-6 py-4 text-[#D4AF37]">${p.price?.toLocaleString()}</td>
+                        <td className="px-6 py-4 text-white/80">{p.area} m²</td>
+                        <td className="px-6 py-4 text-right">
+                          <div className="flex items-center justify-end gap-3">
+                            <a
+                              href={propUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[12px] uppercase tracking-wider text-[#D4AF37] hover:text-[#f3e3a4] transition-colors inline-flex items-center gap-1 font-medium"
+                            >
+                              View ↗
+                            </a>
+                            <button
+                              onClick={() => {
+                                setEditingProperty({
+                                  ...p,
+                                  specs: p.specs || {
+                                    rooms: "",
+                                    layout: "",
+                                    floor: "",
+                                    renovation: "",
+                                    newBuild: "",
+                                    construction: "",
+                                    heating: "",
+                                    ceilings: "",
+                                    yearBuilt: ""
+                                  }
+                                });
+                                setFormLang("en");
+                              }}
+                              className="text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteProperty(p.id)}
+                              className="text-[12px] uppercase tracking-wider text-rose-400 hover:text-rose-300 transition-colors"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
