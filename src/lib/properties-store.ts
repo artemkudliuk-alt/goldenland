@@ -17,6 +17,8 @@ export interface PropertyData {
   video?: string;
   status?: string;
   address?: string;
+  managerName?: string;
+  managerInitials?: string;
   description: { en: string; ua: string; ru: string };
   specs?: {
     rooms?: string;

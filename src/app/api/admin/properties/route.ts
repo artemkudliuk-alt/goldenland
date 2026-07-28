@@ -87,6 +87,8 @@ export async function POST(request: Request) {
         video: typeof p?.video === "string" ? p.video : "",
         status: typeof p?.status === "string" ? p.status : "ready",
         address: typeof p?.address === "string" ? p.address : "",
+        managerName: typeof p?.managerName === "string" ? p.managerName.trim() : "",
+        managerInitials: typeof p?.managerInitials === "string" ? p.managerInitials.trim().toUpperCase().slice(0, 3) : "",
         description: descriptionObj,
         specs: p?.specs && typeof p.specs === "object" ? p.specs : undefined,
       };
