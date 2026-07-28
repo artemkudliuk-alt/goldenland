@@ -1258,6 +1258,7 @@ export default function AdminDashboard() {
                 address: "",
                 managerName: "",
                 managerInitials: "",
+                managerPhoto: "",
                 managerWhatsapp: "",
                 managerTelegram: "",
                 description: { en: "", ua: "", ru: "" },
@@ -1632,48 +1633,102 @@ export default function AdminDashboard() {
               </div>
 
               {/* Manager / Advisor Info */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-white/5 pt-4">
-                <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager / Advisor Name</label>
-                  <input
-                    type="text"
-                    value={editingProperty.managerName || ""}
-                    onChange={(e) => setEditingProperty({ ...editingProperty, managerName: e.target.value })}
-                    placeholder="e.g. Іван Петренко"
-                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
-                  />
+              <div className="border-t border-white/5 pt-4 space-y-3">
+                <span className="block text-[10px] font-semibold uppercase tracking-wider text-[#D4AF37]">Manager / Advisor</span>
+                
+                {/* Manager Photo Upload */}
+                <div className="flex items-start gap-4">
+                  <div className="relative shrink-0">
+                    <div className="w-16 h-16 rounded-full border-2 border-white/20 bg-black/50 flex items-center justify-center overflow-hidden">
+                      {editingProperty.managerPhoto ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={editingProperty.managerPhoto} alt="manager" className="w-full h-full object-cover" />
+                      ) : (
+                        <span className="text-white/30 text-xl font-light">
+                          {editingProperty.managerInitials || "?"}
+                        </span>
+                      )}
+                    </div>
+                    <label className="absolute -bottom-1 -right-1 bg-[#D4AF37] rounded-full p-1.5 cursor-pointer hover:bg-white transition-colors" title="Upload photo">
+                      <svg className="w-3 h-3 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" /></svg>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={async (e) => {
+                          const file = e.target.files?.[0];
+                          if (!file) return;
+                          try {
+                            const formData = new FormData();
+                            formData.append("file", file);
+                            const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+                            const data = await res.json();
+                            if (data.success) {
+                              setEditingProperty({ ...editingProperty, managerPhoto: data.url });
+                            } else {
+                              alert("Photo upload failed: " + (data.error || "Unknown error"));
+                            }
+                          } catch (err: any) {
+                            alert("Photo upload error: " + err.message);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="flex-1 grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Name</label>
+                      <input
+                        type="text"
+                        value={editingProperty.managerName || ""}
+                        onChange={(e) => setEditingProperty({ ...editingProperty, managerName: e.target.value })}
+                        placeholder="e.g. Іван Петренко"
+                        className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Initials (if no photo)</label>
+                      <input
+                        type="text"
+                        value={editingProperty.managerInitials || ""}
+                        onChange={(e) => setEditingProperty({ ...editingProperty, managerInitials: e.target.value.toUpperCase().slice(0, 3) })}
+                        placeholder="e.g. ІП"
+                        maxLength={3}
+                        className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">WhatsApp (з кодом країни)</label>
+                      <input
+                        type="text"
+                        value={editingProperty.managerWhatsapp || ""}
+                        onChange={(e) => setEditingProperty({ ...editingProperty, managerWhatsapp: e.target.value })}
+                        placeholder="380991234567"
+                        className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Telegram (@username)</label>
+                      <input
+                        type="text"
+                        value={editingProperty.managerTelegram || ""}
+                        onChange={(e) => setEditingProperty({ ...editingProperty, managerTelegram: e.target.value.replace(/^@/, "") })}
+                        placeholder="ivanpetrenko"
+                        className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                      />
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Initials (2-3 letters)</label>
-                  <input
-                    type="text"
-                    value={editingProperty.managerInitials || ""}
-                    onChange={(e) => setEditingProperty({ ...editingProperty, managerInitials: e.target.value.toUpperCase().slice(0, 3) })}
-                    placeholder="e.g. ІП"
-                    maxLength={3}
-                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager WhatsApp (with country code)</label>
-                  <input
-                    type="text"
-                    value={editingProperty.managerWhatsapp || ""}
-                    onChange={(e) => setEditingProperty({ ...editingProperty, managerWhatsapp: e.target.value })}
-                    placeholder="e.g. 380991234567"
-                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Telegram (@username)</label>
-                  <input
-                    type="text"
-                    value={editingProperty.managerTelegram || ""}
-                    onChange={(e) => setEditingProperty({ ...editingProperty, managerTelegram: e.target.value.replace(/^@/, "") })}
-                    placeholder="e.g. ivanpetrenko (без @)"
-                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
-                  />
-                </div>
+                {editingProperty.managerPhoto && (
+                  <button
+                    type="button"
+                    onClick={() => setEditingProperty({ ...editingProperty, managerPhoto: "" })}
+                    className="text-[11px] text-rose-400 hover:text-rose-300 uppercase tracking-wider"
+                  >
+                    × Remove photo
+                  </button>
+                )}
               </div>
             </div>
 

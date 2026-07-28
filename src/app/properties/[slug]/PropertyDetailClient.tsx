@@ -416,8 +416,13 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
 
                   {/* Broker */}
                   <div className="flex items-center gap-4 py-5 border-b border-gray-100">
-                    <div className="relative grid h-12 w-12 place-items-center rounded-full bg-[#0a0a0a] text-white border border-[#D4AF37]/45 text-[15px] font-light shrink-0">
-                      <span>{managerInitials || "GL"}</span>
+                    <div className="relative grid h-12 w-12 place-items-center rounded-full bg-[#0a0a0a] text-white border border-[#D4AF37]/45 text-[15px] font-light shrink-0 overflow-hidden">
+                      {p.managerPhoto ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={p.managerPhoto} alt={managerName} className="w-full h-full object-cover" />
+                      ) : (
+                        <span>{managerInitials || "GL"}</span>
+                      )}
                       <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full bg-emerald-500 border-2 border-white" />
                     </div>
                     <div className="flex flex-col">
