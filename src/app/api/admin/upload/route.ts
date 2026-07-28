@@ -6,17 +6,6 @@ import path from "path";
 
 export const maxDuration = 60;
 
-/** Find any BLOB_READ_WRITE_TOKEN* env var — Vercel may suffix it with store name */
-function getBlobToken(): string | undefined {
-  // Try the standard name first
-  if (process.env.BLOB_READ_WRITE_TOKEN) return process.env.BLOB_READ_WRITE_TOKEN;
-  // Search all env vars that start with BLOB_READ_WRITE_TOKEN
-  for (const [key, val] of Object.entries(process.env)) {
-    if (key.startsWith("BLOB_READ_WRITE_TOKEN") && val) return val;
-  }
-  return undefined;
-}
-
 function getContentType(ext: string, mimeType?: string): string {
   if (mimeType && mimeType.startsWith("image/")) return mimeType;
   const map: Record<string, string> = {
@@ -32,10 +21,9 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Unauthorized. Please log in to admin." }, { status: 401 });
   }
 
-  let file: File | null = null;
   try {
     const formData = await req.formData();
-    file = formData.get("file") as File | null;
+    const file = formData.get("file") as File | null;
 
     if (!file || typeof file === "string") {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
@@ -47,68 +35,66 @@ export async function POST(req: Request) {
       .replace(/\.[^.]+$/, "")
       .replace(/[^a-zA-Z0-9]/g, "_")
       .slice(0, 40);
-    const filename = `gl-uploads/${Date.now()}_${safeName}.${ext}`;
+    const blobPath = `gl-uploads/${Date.now()}_${safeName}.${ext}`;
     const contentType = getContentType(ext, file.type);
 
-    // Convert file once to avoid stream-already-consumed errors
+    // Read file into buffer ONCE to avoid stream-consumed errors
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // ── 1. Try Vercel Blob Storage ────────────────────────────────────────
-    const blobToken = getBlobToken();
-    if (blobToken) {
-      try {
-        const blob = await put(filename, buffer, {
-          access: "public",
-          contentType,
-          token: blobToken,
-        });
-        console.log("[upload] Blob upload success:", blob.url);
-        return NextResponse.json({ success: true, url: blob.url, storage: "blob" });
-      } catch (blobErr: any) {
-        console.error("[upload] Vercel Blob upload failed:", blobErr?.message ?? blobErr);
-        // Fall through to /tmp
-      }
-    } else {
-      console.warn("[upload] BLOB_READ_WRITE_TOKEN not found — falling back to /tmp");
+    // ── 1. Try Vercel Blob (SDK auto-reads BLOB_READ_WRITE_TOKEN from env) ─
+    try {
+      const blob = await put(blobPath, buffer, {
+        access: "public",
+        contentType,
+      });
+      console.log("[upload] ✅ Vercel Blob success:", blob.url);
+      return NextResponse.json({ success: true, url: blob.url, storage: "blob" });
+    } catch (blobErr: any) {
+      // Log the REAL blob error so we can see it in Vercel logs
+      console.error("[upload] ❌ Vercel Blob failed:", blobErr?.message ?? String(blobErr));
     }
 
-    // ── 2. /tmp fallback (works on Vercel, but files are ephemeral!) ──────
-    // Note: files in /tmp disappear when the serverless function is recycled.
-    // To make images permanent, go to Vercel Dashboard → Project → Settings →
-    // Environment Variables and verify BLOB_READ_WRITE_TOKEN is set.
-    const tmpDir = path.join("/tmp", "uploads");
+    // ── 2. /tmp fallback ──────────────────────────────────────────────────
+    // Works within the same Lambda instance but NOT across cold starts.
+    // Files uploaded here will disappear when the serverless function restarts.
+    // Solution: connect Blob store to project in Vercel Dashboard.
+    const localFilename = `${Date.now()}_${safeName}.${ext}`;
+    const tmpDir = "/tmp/uploads";
     try {
       if (!fs.existsSync(tmpDir)) fs.mkdirSync(tmpDir, { recursive: true });
-    } catch {
-      // ignore mkdir errors on read-only systems
-    }
-
-    const localFilename = `${Date.now()}_${safeName}.${ext}`;
-    const filePath = path.join(tmpDir, localFilename);
-
-    try {
-      fs.writeFileSync(filePath, buffer);
+      fs.writeFileSync(path.join(tmpDir, localFilename), buffer);
+      console.warn("[upload] ⚠️  Saved to /tmp (ephemeral):", localFilename);
+      return NextResponse.json({
+        success: true,
+        url: `/api/uploads/${localFilename}`,
+        storage: "tmp",
+      });
     } catch (fsErr: any) {
       console.error("[upload] /tmp write failed:", fsErr?.message);
-      return NextResponse.json(
-        { error: "Upload failed: Vercel Blob not configured and /tmp is unavailable. Please add BLOB_READ_WRITE_TOKEN to your Vercel environment variables." },
-        { status: 500 }
-      );
     }
 
-    console.warn("[upload] Saved to /tmp (ephemeral!) →", filePath);
-    return NextResponse.json({
-      success: true,
-      url: `/api/uploads/${localFilename}`,
-      storage: "tmp",
-      warning: "⚠️ Image saved to temporary storage. Add BLOB_READ_WRITE_TOKEN to Vercel env vars for permanent storage.",
-    });
-  } catch (error: any) {
-    console.error("[upload] Unexpected error:", error);
+    // ── 3. Last resort: local public/uploads (dev only) ───────────────────
+    try {
+      const devDir = path.join(process.cwd(), "public", "uploads");
+      if (!fs.existsSync(devDir)) fs.mkdirSync(devDir, { recursive: true });
+      fs.writeFileSync(path.join(devDir, localFilename), buffer);
+      return NextResponse.json({
+        success: true,
+        url: `/uploads/${localFilename}`,
+        storage: "local",
+      });
+    } catch {
+      // ignore
+    }
+
     return NextResponse.json(
-      { error: error.message || "Upload failed" },
+      { error: "All upload methods failed. Check Vercel logs for details." },
       { status: 500 }
     );
+
+  } catch (error: any) {
+    console.error("[upload] Unexpected error:", error);
+    return NextResponse.json({ error: error.message || "Upload failed" }, { status: 500 });
   }
 }
