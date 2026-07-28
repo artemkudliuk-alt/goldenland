@@ -154,7 +154,14 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
         const data = await res.json();
         const raw = data?.result;
         if (raw) {
-          const parsed = JSON.parse(raw);
+          let parsed: any = raw;
+          if (typeof raw === "string") {
+            try {
+              parsed = JSON.parse(raw);
+            } catch (e) {
+              console.error("[properties-store] JSON parse error:", e);
+            }
+          }
           if (Array.isArray(parsed) && parsed.length > 0) {
             propertiesList = parsed as PropertyData[];
             loaded = true;

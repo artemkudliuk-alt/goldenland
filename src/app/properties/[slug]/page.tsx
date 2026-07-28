@@ -210,7 +210,33 @@ export default function PropertyDetailPage() {
   }
 
   if (!p) {
-    notFound();
+    return (
+      <>
+        <Header />
+        <main className="flex-1 bg-[#FDFDFD] pt-[140px] pb-24 text-center">
+          <div className="mx-auto max-w-[600px] px-4">
+            <h1 className="text-[28px] md:text-[36px] font-light text-[#0a0a0a] mb-4 uppercase tracking-wider">
+              {language === "en" ? "Property Not Found" : language === "ua" ? "Об'єкт не знайдено" : "Объект не найден"}
+            </h1>
+            <p className="text-gray-500 font-light text-[15px] mb-8">
+              {language === "en"
+                ? `The property "/${slug || ""}" could not be loaded or may still be synchronizing.`
+                : language === "ua"
+                ? `Об'єкт "/${slug || ""}" не вдалося завантажити або він ще синхронізується.`
+                : `Объект "/${slug || ""}" не удалось загрузить или он ещё синхронизируется.`}
+            </p>
+            <Link
+              href="/catalog"
+              className="inline-block bg-[#D4AF37] text-[#0a0a0a] px-6 py-3 text-[12px] font-medium tracking-[0.14em] uppercase hover:bg-[#b8972e] transition-colors rounded-xs shadow-sm font-semibold"
+            >
+              {t.backCatalog[language]}
+            </Link>
+          </div>
+        </main>
+        <Footer />
+        <BackToTop />
+      </>
+    );
   }
 
   const isHotel = p.type === "hotels";

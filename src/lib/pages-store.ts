@@ -152,7 +152,14 @@ export async function getCustomPages(): Promise<CustomPage[]> {
         const data = await res.json();
         const raw = data?.result;
         if (raw) {
-          const parsed = JSON.parse(raw);
+          let parsed: any = raw;
+          if (typeof raw === "string") {
+            try {
+              parsed = JSON.parse(raw);
+            } catch (e) {
+              console.error("[pages-store] JSON parse error:", e);
+            }
+          }
           if (Array.isArray(parsed) && parsed.length > 0) {
             pagesList = parsed as CustomPage[];
             loaded = true;
