@@ -190,11 +190,9 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
     }
   }
 
-  // If both empty, seed them with defaults
+  // If both empty, return defaults WITHOUT saving to prevent overwriting KV on transient errors
   if (!loaded || propertiesList.length === 0) {
-    const seeded = getSeededProperties();
-    await saveCustomProperties(seeded);
-    return seeded;
+    return getSeededProperties();
   }
 
   return propertiesList;
