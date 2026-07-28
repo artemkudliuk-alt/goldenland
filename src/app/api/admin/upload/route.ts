@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import fs from "fs";
-import path from "path";
 import { put } from "@vercel/blob";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 
@@ -14,59 +12,59 @@ export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
+
     if (!file || typeof file === "string") {
-      return NextResponse.json({ error: "No file provided in form data" }, { status: 400 });
+      return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    const originalName = file.name || "upload_file";
-    const sanitizedName = originalName.replace(/[^a-zA-Z0-9.-]/g, "_");
-    const filename = `${Date.now()}_${sanitizedName}`;
+    const originalName = file.name || "upload";
+    const ext = originalName.split(".").pop()?.toLowerCase() || "jpg";
+    const safeName = originalName
+      .replace(/\.[^.]+$/, "")
+      .replace(/[^a-zA-Z0-9]/g, "_")
+      .slice(0, 40);
+    const filename = `gl-uploads/${Date.now()}_${safeName}.${ext}`;
 
-    // 1. If Vercel Blob token is set, upload to Vercel CDN
+    // ─── Production: Vercel Blob Storage ────────────────────────────────────
     if (process.env.BLOB_READ_WRITE_TOKEN) {
-      try {
-        const blob = await put(filename, file, {
-          access: "public",
-        });
-        return NextResponse.json({
-          success: true,
-          url: blob.url,
-        });
-      } catch (blobErr: any) {
-        console.error("Vercel Blob upload failed:", blobErr);
-      }
+      // Convert File to ArrayBuffer first — prevents stream-already-consumed errors
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
+
+      const blob = await put(filename, buffer, {
+        access: "public",
+        contentType: file.type || `image/${ext}`,
+      });
+
+      return NextResponse.json({ success: true, url: blob.url });
     }
 
-    // 2. Storage fallback (works on both local dev AND Vercel Serverless)
+    // ─── Local Development: public/uploads folder ────────────────────────────
+    const fs = await import("fs");
+    const path = await import("path");
     const buffer = Buffer.from(await file.arrayBuffer());
+    const uploadDir = path.join(process.cwd(), "public", "uploads");
 
-    let uploadDir = path.join(process.cwd(), "public", "uploads");
-    if (process.env.VERCEL) {
-      uploadDir = path.join("/tmp", "uploads");
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
     }
 
-    try {
-      if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true });
-      }
-      const filePath = path.join(uploadDir, filename);
-      fs.writeFileSync(filePath, buffer);
-    } catch (fsErr: any) {
-      // If public/uploads fails due to read-only filesystem on Vercel, fallback to /tmp/uploads
-      uploadDir = path.join("/tmp", "uploads");
-      if (!fs.existsSync(uploadDir)) {
-        fs.mkdirSync(uploadDir, { recursive: true });
-      }
-      const filePath = path.join(uploadDir, filename);
-      fs.writeFileSync(filePath, buffer);
-    }
+    const localFilename = `${Date.now()}_${safeName}.${ext}`;
+    fs.writeFileSync(path.join(uploadDir, localFilename), buffer);
 
     return NextResponse.json({
       success: true,
-      url: `/api/uploads/${filename}`,
+      url: `/uploads/${localFilename}`,
     });
   } catch (error: any) {
-    console.error("Upload error:", error);
-    return NextResponse.json({ error: error.message || "Failed to process file upload" }, { status: 500 });
+    console.error("[upload] Error:", error);
+    return NextResponse.json(
+      {
+        error:
+          error.message ||
+          "Upload failed. Make sure Vercel Blob Store is connected to this project.",
+      },
+      { status: 500 }
+    );
   }
 }

@@ -89,6 +89,8 @@ export async function POST(request: Request) {
         address: typeof p?.address === "string" ? p.address : "",
         managerName: typeof p?.managerName === "string" ? p.managerName.trim() : "",
         managerInitials: typeof p?.managerInitials === "string" ? p.managerInitials.trim().toUpperCase().slice(0, 3) : "",
+        managerWhatsapp: typeof p?.managerWhatsapp === "string" ? p.managerWhatsapp.trim() : "",
+        managerTelegram: typeof p?.managerTelegram === "string" ? p.managerTelegram.trim() : "",
         description: descriptionObj,
         specs: p?.specs && typeof p.specs === "object" ? p.specs : undefined,
       };

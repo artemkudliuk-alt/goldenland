@@ -157,12 +157,16 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
     return 0;
   }, [priceNum, areaNum]);
 
-  const cleanWhatsapp = (whatsapp || "").replace(/[^0-9]/g, "");
+  // Property-specific manager contacts override global contacts
+  const effectiveWhatsapp = p.managerWhatsapp || whatsapp || "";
+  const effectiveTelegram = p.managerTelegram || telegram || "";
+
+  const cleanWhatsapp = effectiveWhatsapp.replace(/[^0-9]/g, "");
   const waText = encodeURIComponent(
     `Hello Golden Land! I would like to schedule a viewing or request info for "${titleEn}" (${locationEn}).`
   );
   const waHref = `https://wa.me/${cleanWhatsapp}?text=${waText}`;
-  const tgHref = `https://t.me/${telegram || ""}`;
+  const tgHref = `https://t.me/${effectiveTelegram || ""}`;
 
   const galleryImages: string[] = Array.isArray(p.gallery) ? p.gallery.filter(Boolean) : [];
   const hasGallery = galleryImages.length > 0;

@@ -1258,6 +1258,8 @@ export default function AdminDashboard() {
                 address: "",
                 managerName: "",
                 managerInitials: "",
+                managerWhatsapp: "",
+                managerTelegram: "",
                 description: { en: "", ua: "", ru: "" },
                 specs: {
                   rooms: "",
@@ -1642,13 +1644,33 @@ export default function AdminDashboard() {
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Initials (2-3 letters for avatar)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Initials (2-3 letters)</label>
                   <input
                     type="text"
                     value={editingProperty.managerInitials || ""}
                     onChange={(e) => setEditingProperty({ ...editingProperty, managerInitials: e.target.value.toUpperCase().slice(0, 3) })}
                     placeholder="e.g. ІП"
                     maxLength={3}
+                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager WhatsApp (with country code)</label>
+                  <input
+                    type="text"
+                    value={editingProperty.managerWhatsapp || ""}
+                    onChange={(e) => setEditingProperty({ ...editingProperty, managerWhatsapp: e.target.value })}
+                    placeholder="e.g. 380991234567"
+                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Telegram (@username)</label>
+                  <input
+                    type="text"
+                    value={editingProperty.managerTelegram || ""}
+                    onChange={(e) => setEditingProperty({ ...editingProperty, managerTelegram: e.target.value.replace(/^@/, "") })}
+                    placeholder="e.g. ivanpetrenko (без @)"
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>

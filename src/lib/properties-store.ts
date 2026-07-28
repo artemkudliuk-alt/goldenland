@@ -19,6 +19,8 @@ export interface PropertyData {
   address?: string;
   managerName?: string;
   managerInitials?: string;
+  managerWhatsapp?: string;
+  managerTelegram?: string;
   description: { en: string; ua: string; ru: string };
   specs?: {
     rooms?: string;
