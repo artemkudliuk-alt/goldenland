@@ -1256,6 +1256,8 @@ export default function AdminDashboard() {
                 video: "",
                 status: "ready",
                 address: "",
+                managerName: "",
+                managerInitials: "",
                 description: { en: "", ua: "", ru: "" },
                 specs: {
                   rooms: "",
@@ -1622,6 +1624,31 @@ export default function AdminDashboard() {
                     value={editingProperty.slug}
                     onChange={(e) => setEditingProperty({ ...editingProperty, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "") })}
                     placeholder="e.g. kiev-pechersk-penthouse"
+                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Manager / Advisor Info */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-white/5 pt-4">
+                <div>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager / Advisor Name</label>
+                  <input
+                    type="text"
+                    value={editingProperty.managerName || ""}
+                    onChange={(e) => setEditingProperty({ ...editingProperty, managerName: e.target.value })}
+                    placeholder="e.g. Іван Петренко"
+                    className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Initials (2-3 letters for avatar)</label>
+                  <input
+                    type="text"
+                    value={editingProperty.managerInitials || ""}
+                    onChange={(e) => setEditingProperty({ ...editingProperty, managerInitials: e.target.value.toUpperCase().slice(0, 3) })}
+                    placeholder="e.g. ІП"
+                    maxLength={3}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>

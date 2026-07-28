@@ -146,6 +146,9 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
   const statusText = getText(statusMap, language, "Ready");
 
   const broker = brokers[p.city as keyof typeof brokers] || brokers.kyiv;
+  // Use property-level manager name if set, otherwise fall back to city default
+  const managerName = p.managerName || getText(broker.name, language);
+  const managerInitials = p.managerInitials || broker.initials;
 
   const priceNum = Number(p.price) || 0;
   const areaNum = Number(p.area) || 0;
@@ -410,11 +413,11 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
                   {/* Broker */}
                   <div className="flex items-center gap-4 py-5 border-b border-gray-100">
                     <div className="relative grid h-12 w-12 place-items-center rounded-full bg-[#0a0a0a] text-white border border-[#D4AF37]/45 text-[15px] font-light shrink-0">
-                      <span>{broker.initials}</span>
+                      <span>{managerInitials || "GL"}</span>
                       <span className="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full bg-emerald-500 border-2 border-white" />
                     </div>
                     <div className="flex flex-col">
-                      <span className="text-[14.5px] font-medium text-gray-900 leading-none">{getText(broker.name, language)}</span>
+                      <span className="text-[14.5px] font-medium text-gray-900 leading-none">{managerName}</span>
                       <span className="text-[11px] text-gray-400 mt-1 uppercase tracking-wider">{t.verifiedAdvisor[language]}</span>
                     </div>
                   </div>
