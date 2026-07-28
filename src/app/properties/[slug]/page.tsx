@@ -157,6 +157,15 @@ function getPropertyMapAddress(p: any): string {
   return addresses[p.slug] || "Kyiv, Ukraine";
 }
 
+function getText(val: any, lang: "en" | "ua" | "ru", fallback = ""): string {
+  if (!val) return fallback;
+  if (typeof val === "string") return val;
+  if (typeof val === "object") {
+    return val[lang] || val.en || val.ua || val.ru || fallback;
+  }
+  return String(val);
+}
+
 export default function PropertyDetailPage() {
   const params = useParams<{ slug: string }>();
   const slug = params?.slug;
@@ -207,25 +216,51 @@ export default function PropertyDetailPage() {
   const isHotel = p.type === "hotels";
   const isCommercial = p.type === "commercial";
 
-  const specs = p.specs || getPropertyDetails(p.slug, language);
+  const defaultDetails = getPropertyDetails(p.slug, language);
+  const rawSpecs = p.specs || {};
+  const specs = {
+    rooms: rawSpecs.rooms || defaultDetails.rooms || "3 Rooms",
+    layout: rawSpecs.layout || defaultDetails.layout || `${p.area || 100} m²`,
+    floor: rawSpecs.floor || defaultDetails.floor || "Floor 1",
+    renovation: rawSpecs.renovation || defaultDetails.renovation || "Designer finish",
+    newBuild: rawSpecs.newBuild || defaultDetails.newBuild || "New building",
+    construction: rawSpecs.construction || defaultDetails.construction || "Monolithic Frame",
+    heating: rawSpecs.heating || defaultDetails.heating || "Autonomous",
+    ceilings: rawSpecs.ceilings || defaultDetails.ceilings || "3.0 m",
+    yearBuilt: rawSpecs.yearBuilt || defaultDetails.yearBuilt || "2024",
+  };
+
   const broker = brokers[p.city as keyof typeof brokers] || brokers.kyiv;
+
+  const titleText = getText(p.title, language, "Property");
+  const titleEn = getText(p.title, "en", "Property");
+  const locationText = getText(p.location, language, "Ukraine");
+  const locationEn = getText(p.location, "en", "Ukraine");
+  const descriptionText = getText(p.description, language, "");
+
+  const statusMap = (t.status as any)[p.status] || {
+    en: p.status || "Ready",
+    ua: p.status || "Готовий",
+    ru: p.status || "Готов",
+  };
+  const statusText = getText(statusMap, language, "Ready");
 
   // Price calculations
   const pricePerSqm = useMemo(() => {
-    if (p.price && p.area) {
+    if (p.price && p.area && p.area > 0) {
       return Math.round(p.price / p.area);
     }
     return 0;
   }, [p.price, p.area]);
 
   const { whatsapp, telegram } = useContacts();
-  const cleanMainWhatsapp = whatsapp.replace(/[^0-9]/g, "");
+  const cleanMainWhatsapp = (whatsapp || "").replace(/[^0-9]/g, "");
 
   const waText = encodeURIComponent(
-    `Hello Golden Land! I would like to schedule a viewing or request info for "${p.title.en}" (${p.location.en}).`,
+    `Hello Golden Land! I would like to schedule a viewing or request info for "${titleEn}" (${locationEn}).`,
   );
   const waHref = `https://wa.me/${cleanMainWhatsapp}?text=${waText}`;
-  const tgHref = `https://t.me/${telegram}`;
+  const tgHref = `https://t.me/${telegram || ""}`;
 
   // Horizontal gallery scroll actions
   const galleryImages: string[] = Array.isArray(p.gallery) ? p.gallery.filter(Boolean) : [];
@@ -287,7 +322,7 @@ export default function PropertyDetailPage() {
                     <div className="absolute left-6 top-6 flex gap-2">
                       {p.status !== "exclusive" && (
                         <span className="bg-[#0a0a0a]/90 backdrop-blur-md px-3 py-1.5 text-[11px] font-medium tracking-[0.15em] uppercase text-white border border-white/10 rounded-sm">
-                          {((t.status as any)[p.status] || { en: p.status, ua: p.status, ru: p.status })[language]}
+                          {statusText}
                         </span>
                       )}
                       {p.roi && (
@@ -371,10 +406,10 @@ export default function PropertyDetailPage() {
                 <div className="bg-[#FAF9F6] border border-gray-100 p-6 md:p-8 rounded-sm">
                   <div className="flex flex-col gap-1">
                     <span className="text-[12px] tracking-[0.2em] uppercase text-[#D4AF37] font-medium">
-                      {p.location[language]}
+                      {locationText}
                     </span>
                     <h1 className="text-[28px] font-light leading-[1.2] tracking-tight text-[#0a0a0a] md:text-[36px] mt-1">
-                      {p.title[language]}
+                      {titleText}
                     </h1>
                   </div>
 
@@ -443,7 +478,7 @@ export default function PropertyDetailPage() {
                         isDescExpanded ? "max-h-[1000px]" : "max-h-[135px]"
                       }`}
                     >
-                      <p>{p.description[language]}</p>
+                      <p>{descriptionText}</p>
                       
                       {/* Fake descriptions extension for high realism */}
                       <p className="mt-4">
@@ -479,7 +514,7 @@ export default function PropertyDetailPage() {
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="h-4.5 w-4.5 text-[#D4AF37] shrink-0">
                           <polyline points="20 6 9 17 4 12" />
                         </svg>
-                        <span>{a[language]}</span>
+                        <span>{getText(a, language, "")}</span>
                       </li>
                     ))}
                   </ul>
@@ -595,7 +630,7 @@ export default function PropertyDetailPage() {
                           const data = {
                             formType: "Property Inquiry",
                             propertyId: p.slug,
-                            propertyTitle: p.title.en,
+                            propertyTitle: titleEn,
                             name: formData.get("name") as string,
                             phone: formData.get("phone") as string,
                             email: formData.get("email") as string || undefined,

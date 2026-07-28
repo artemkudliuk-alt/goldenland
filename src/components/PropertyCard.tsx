@@ -6,6 +6,15 @@ import { useLanguage } from "@/context/LanguageContext";
 import { ArrowRightIcon } from "@/components/icons";
 import { formatPrice, type Property } from "@/lib/properties";
 
+function getText(val: any, lang: "en" | "ua" | "ru", fallback = ""): string {
+  if (!val) return fallback;
+  if (typeof val === "string") return val;
+  if (typeof val === "object") {
+    return val[lang] || val.en || val.ua || val.ru || fallback;
+  }
+  return String(val);
+}
+
 const t = {
   viewDetails: { en: "View Details", ua: "Детальніше", ru: "Подробнее" },
   fromLabel: { en: "From", ua: "Від", ru: "От" },
@@ -27,16 +36,26 @@ export function PropertyCard({ property }: { property: Property }) {
   const isHotel = p.type === "hotels";
   const isCommercial = p.type === "commercial";
 
+  const titleText = getText(p.title, language, "Property");
+  const locationText = getText(p.location, language, "Ukraine");
+
+  const statusMap = (t.status as any)[p.status] || {
+    en: p.status || "Ready",
+    ua: p.status || "Готовий",
+    ru: p.status || "Готов",
+  };
+  const statusText = getText(statusMap, language, "Ready");
+
   return (
     <article className="group flex flex-col bg-white border border-[#D4AF37]/25 shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-500 hover:-translate-y-1.5 hover:border-[#D4AF37] hover:shadow-[0_16px_36px_rgba(212,175,55,0.14)] rounded-sm overflow-hidden h-full relative">
       {/* Full card clickable overlay */}
-      <Link href={`/properties/${p.slug}`} className="absolute inset-0 z-10 cursor-pointer" aria-label={p.title[language]} />
+      <Link href={`/properties/${p.slug}`} className="absolute inset-0 z-10 cursor-pointer" aria-label={titleText} />
 
       <div className="relative block aspect-[4/3] w-full overflow-hidden bg-black">
         {p.gallery && p.gallery.length > 0 ? (
           <Image
             src={p.gallery[0]}
-            alt={p.title[language]}
+            alt={titleText}
             fill
             sizes="(min-width: 1024px) 32vw, (min-width: 640px) 48vw, 100vw"
             className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
@@ -49,7 +68,7 @@ export function PropertyCard({ property }: { property: Property }) {
         <div className="absolute inset-x-0 top-0 flex justify-between p-4">
           {p.status !== "exclusive" && (
             <span className="bg-[#0a0a0a]/90 border border-[#D4AF37]/40 px-3 py-1 text-[10px] font-medium tracking-[0.15em] uppercase text-white shadow-md">
-              {t.status[p.status][language]}
+              {statusText}
             </span>
           )}
           {p.roi && (
@@ -63,11 +82,11 @@ export function PropertyCard({ property }: { property: Property }) {
       <div className="p-6 flex flex-col flex-1 justify-between bg-white">
         <div>
           <p className="text-[11px] font-semibold tracking-[0.2em] uppercase text-[#D4AF37] mb-2">
-            {p.location[language]}
+            {locationText}
           </p>
           <h3 className="text-[20px] font-light leading-[1.3] text-[#0a0a0a]">
             <Link href={`/properties/${p.slug}`} className="transition-colors hover:text-[#D4AF37]">
-              {p.title[language]}
+              {titleText}
             </Link>
           </h3>
         </div>
