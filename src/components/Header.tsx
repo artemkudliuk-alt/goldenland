@@ -9,12 +9,47 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useLeadModal } from "@/context/LeadModalContext";
 
 const menuTranslations = {
+  home: { en: "Home", ua: "Головна", ru: "Главная" },
+  navHome: { en: "Home", ua: "Головна", ru: "Главная" },
   catalog: { en: "Catalog", ua: "Каталог", ru: "Каталог" },
+  navCatalog: { en: "Catalog", ua: "Каталог", ru: "Каталог" },
   services: { en: "Services", ua: "Послуги", ru: "Услуги" },
+  navServices: { en: "Services", ua: "Послуги", ru: "Услуги" },
   about: { en: "About Us", ua: "Про нас", ru: "О компании" },
+  navAbout: { en: "About Us", ua: "Про нас", ru: "О компании" },
   contacts: { en: "Contacts", ua: "Контакти", ru: "Контакты" },
+  navContacts: { en: "Contacts", ua: "Контакти", ru: "Контакты" },
   contactUsBtn: { en: "Contact Us", ua: "Зв'язатися", ru: "Связаться" }
 };
+
+function FlagIcon({ code, className = "w-5 h-3.5" }: { code: "en" | "ua" | "ru"; className?: string }) {
+  if (code === "en") {
+    return (
+      <svg viewBox="0 0 640 480" className={`${className} rounded-[2px] object-cover shadow-xs border border-white/20 shrink-0`}>
+        <path fill="#012169" d="M0 0h640v480H0z"/>
+        <path fill="#FFF" d="m0 0 640 480M640 0 0 480" stroke="#FFF" strokeWidth="60"/>
+        <path stroke="#C8102E" strokeWidth="40" d="m0 0 640 480M640 0 0 480"/>
+        <path fill="#FFF" d="M280 0h80v480h-80zM0 200h640v80H0z"/>
+        <path fill="#C8102E" d="M300 0h40v480h-40zM0 220h640v40H0z"/>
+      </svg>
+    );
+  }
+  if (code === "ua") {
+    return (
+      <svg viewBox="0 0 640 480" className={`${className} rounded-[2px] object-cover shadow-xs border border-white/20 shrink-0`}>
+        <path fill="#0057B7" d="M0 0h640v240H0z"/>
+        <path fill="#FFD700" d="M0 240h640v240H0z"/>
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-4 h-4 shrink-0 text-[#D4AF37]">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      <path d="M2 12h20"/>
+    </svg>
+  );
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -140,98 +175,79 @@ export function Header() {
             >
               {t.contactUsBtn[language]}
             </button>
-
-            <div className="flex items-center gap-1.5 border-l border-white/20 pl-4">
-              {[
-                { code: "en", flag: "🇬🇧", label: "EN" },
-                { code: "ua", flag: "🇺🇦", label: "UA" },
-                { code: "ru", flag: "🌐", label: "RU" },
-              ].map((item) => (
+            <div className="flex items-center gap-2 border-l border-white/20 pl-4">
+              {(["en", "ua", "ru"] as const).map((lng) => (
                 <button
-                  key={item.code}
-                  onClick={() => setLanguage(item.code as any)}
+                  key={lng}
+                  onClick={() => setLanguage(lng)}
                   className={[
-                    "inline-flex items-center gap-1 text-[12px] font-medium uppercase tracking-[0.05em] transition-all px-2 py-1 rounded-sm border",
-                    language === item.code
-                      ? "text-[#D4AF37] border-[#D4AF37]/50 bg-[#D4AF37]/10 font-semibold"
-                      : "text-white/60 border-transparent hover:text-white hover:bg-white/5"
+                    "p-1.5 rounded-xs transition-all border flex items-center justify-center cursor-pointer",
+                    language === lng
+                      ? "border-[#D4AF37] bg-[#D4AF37]/20 shadow-[0_0_8px_rgba(212,175,55,0.4)] scale-105"
+                      : "border-white/10 bg-black/40 hover:border-white/40 hover:bg-white/10 opacity-60 hover:opacity-100"
                   ].join(" ")}
-                  title={`Switch to ${item.label}`}
+                  title={`Switch language: ${lng.toUpperCase()}`}
                 >
-                  <span className="text-[14px] leading-none">{item.flag}</span>
-                  <span>{item.label}</span>
+                  <FlagIcon code={lng} className="w-5 h-3.5" />
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Мобильная кнопка меню */}
           <button
             onClick={() => setIsMenuOpen(true)}
             className="lg:hidden p-2 text-white"
-            aria-label="Open menu"
+            aria-label="Open Menu"
           >
-            <span>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <line x1="4" y1="7" x2="20" y2="7" />
-                <line x1="4" y1="12" x2="20" y2="12" />
-                <line x1="4" y1="17" x2="20" y2="17" />
-              </svg>
-            </span>
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
           </button>
         </div>
       </header>
 
-      {/* Мобильное меню (Overlay / Drawer) */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-50 flex flex-col bg-[#0a0a0a] text-white p-6 lg:hidden animate-[fade-in_0.2s_ease-out]">
-          <div className="flex items-center justify-between">
-            <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 select-none">
-              <Image
-                src="/images/logo-golden-land.png"
-                alt="Golden Land Logo"
-                width={40}
-                height={40}
-                className="object-contain"
-              />
-              <div className="flex flex-col text-left">
-                <span className="font-display text-[18px] font-light tracking-[0.25em] uppercase text-white leading-none">
-                  Golden Land
-                </span>
-                <span className="mt-1 text-[8px] font-light tracking-[0.32em] uppercase text-[#D4AF37]">
-                  Property Investment
-                </span>
-              </div>
+        <div className="fixed inset-0 z-50 flex flex-col bg-[#0a0a0a] px-6 py-8 text-white lg:hidden animate-fade-in">
+          <div className="flex items-center justify-between border-b border-white/10 pb-6">
+            <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3">
+              <span className="font-display text-[20px] tracking-[0.25em] text-[#D4AF37] uppercase font-light">
+                Golden Land
+              </span>
             </Link>
             <button
               onClick={() => setIsMenuOpen(false)}
-              className="p-2 text-white/80 hover:text-white"
-              aria-label="Close menu"
+              className="p-2 text-white/70 hover:text-white"
+              aria-label="Close Menu"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
-          <nav className="mt-16 flex flex-col gap-6 text-[22px] font-light tracking-[0.05em] uppercase">
-            {dynamicNavItems.map((l) => (
-              <Link
-                key={l.label}
-                href={l.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="transition-colors hover:text-[#D4AF37]"
-              >
-                {l.label}
-              </Link>
-            ))}
+          <nav className="my-auto flex flex-col gap-6 py-8">
+            <Link href="/" onClick={() => setIsMenuOpen(false)} className={`text-[16px] tracking-[0.15em] uppercase transition-colors ${pathname === "/" ? "text-[#D4AF37]" : "text-white/80 hover:text-white"}`}>
+              {t.navHome[language]}
+            </Link>
+            <Link href="/catalog" onClick={() => setIsMenuOpen(false)} className={`text-[16px] tracking-[0.15em] uppercase transition-colors ${pathname === "/catalog" ? "text-[#D4AF37]" : "text-white/80 hover:text-white"}`}>
+              {t.navCatalog[language]}
+            </Link>
+            <Link href="/services" onClick={() => setIsMenuOpen(false)} className={`text-[16px] tracking-[0.15em] uppercase transition-colors ${pathname === "/services" ? "text-[#D4AF37]" : "text-white/80 hover:text-white"}`}>
+              {t.navServices[language]}
+            </Link>
+            <Link href="/about" onClick={() => setIsMenuOpen(false)} className={`text-[16px] tracking-[0.15em] uppercase transition-colors ${pathname === "/about" ? "text-[#D4AF37]" : "text-white/80 hover:text-white"}`}>
+              {t.navAbout[language]}
+            </Link>
+            <Link href="/contacts" onClick={() => setIsMenuOpen(false)} className={`text-[16px] tracking-[0.15em] uppercase transition-colors ${pathname === "/contacts" ? "text-[#D4AF37]" : "text-white/80 hover:text-white"}`}>
+              {t.navContacts[language]}
+            </Link>
+
             <button
               onClick={() => {
                 setIsMenuOpen(false);
                 openModal(t.contactUsBtn[language]);
               }}
-              className="mt-4 border border-[#D4AF37] px-6 py-3 text-center text-[14px] font-medium tracking-[0.15em] text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0a0a0a] transition-colors uppercase cursor-pointer"
+              className="mt-4 border border-[#D4AF37] bg-[#D4AF37] py-3 text-[13px] tracking-[0.1em] uppercase font-medium text-[#0a0a0a]"
             >
               {t.contactUsBtn[language]}
             </button>
@@ -240,25 +256,21 @@ export function Header() {
           <div className="mt-auto border-t border-white/10 pt-6">
             <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mb-3">Language</p>
             <div className="flex items-center gap-3">
-              {[
-                { code: "en", flag: "🇬🇧", label: "EN" },
-                { code: "ua", flag: "🇺🇦", label: "UA" },
-                { code: "ru", flag: "🌐", label: "RU" },
-              ].map((item) => (
+              {(["en", "ua", "ru"] as const).map((lng) => (
                 <button
-                  key={item.code}
+                  key={lng}
                   onClick={() => {
-                    setLanguage(item.code as any);
+                    setLanguage(lng);
                     setIsMenuOpen(false);
                   }}
-                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm border text-[13px] uppercase tracking-[0.08em] transition-colors ${
-                    language === item.code
-                      ? "border-[#D4AF37] text-[#D4AF37] bg-[#D4AF37]/10 font-semibold"
-                      : "border-white/10 text-white/60 hover:text-white"
+                  className={`p-2 rounded-xs border transition-all flex items-center justify-center ${
+                    language === lng
+                      ? "border-[#D4AF37] bg-[#D4AF37]/20 shadow-[0_0_8px_rgba(212,175,55,0.4)]"
+                      : "border-white/10 bg-black/40 opacity-60 hover:opacity-100"
                   }`}
+                  title={`Switch language: ${lng.toUpperCase()}`}
                 >
-                  <span className="text-[16px]">{item.flag}</span>
-                  <span>{item.label}</span>
+                  <FlagIcon code={lng} className="w-6 h-4" />
                 </button>
               ))}
             </div>

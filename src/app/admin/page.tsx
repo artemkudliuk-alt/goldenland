@@ -8,6 +8,35 @@ import { Logo } from "@/components/Logo";
 import { type ContactSettings, type OfficeData } from "@/lib/contacts-types";
 import { RichTextEditor } from "@/components/RichTextEditor";
 
+function FlagIcon({ code, className = "w-5 h-3.5" }: { code: "en" | "ua" | "ru"; className?: string }) {
+  if (code === "en") {
+    return (
+      <svg viewBox="0 0 640 480" className={`${className} rounded-[2px] object-cover shadow-xs border border-white/20 shrink-0`}>
+        <path fill="#012169" d="M0 0h640v480H0z"/>
+        <path fill="#FFF" d="m0 0 640 480M640 0 0 480" stroke="#FFF" strokeWidth="60"/>
+        <path stroke="#C8102E" strokeWidth="40" d="m0 0 640 480M640 0 0 480"/>
+        <path fill="#FFF" d="M280 0h80v480h-80zM0 200h640v80H0z"/>
+        <path fill="#C8102E" d="M300 0h40v480h-40zM0 220h640v40H0z"/>
+      </svg>
+    );
+  }
+  if (code === "ua") {
+    return (
+      <svg viewBox="0 0 640 480" className={`${className} rounded-[2px] object-cover shadow-xs border border-white/20 shrink-0`}>
+        <path fill="#0057B7" d="M0 0h640v240H0z"/>
+        <path fill="#FFD700" d="M0 240h640v240H0z"/>
+      </svg>
+    );
+  }
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="w-4 h-4 shrink-0 text-[#D4AF37]">
+      <circle cx="12" cy="12" r="10"/>
+      <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      <path d="M2 12h20"/>
+    </svg>
+  );
+}
+
 type LeadStatus = "new" | "in_progress" | "completed" | "declined";
 
 interface Lead {
@@ -1442,22 +1471,20 @@ export default function AdminDashboard() {
             </h3>
             
             {/* Form Language Switcher in Right Corner */}
-            <div className="flex items-center gap-1.5 bg-black/40 border border-white/10 p-1 rounded-sm">
-              {[
-                { code: "en", flag: "🇬🇧", label: "EN" },
-                { code: "ua", flag: "🇺🇦", label: "UA" },
-                { code: "ru", flag: "🌐", label: "RU" },
-              ].map((item) => (
+            <div className="flex items-center gap-1.5 bg-black/60 border border-white/15 p-1 rounded-sm">
+              {(["en", "ua", "ru"] as const).map((lang) => (
                 <button
-                  key={item.code}
+                  key={lang}
                   type="button"
-                  onClick={() => setFormLang(item.code as any)}
-                  className={`inline-flex items-center gap-1 px-3 py-1 text-[11px] font-medium uppercase tracking-wider transition-colors rounded-xs ${
-                    formLang === item.code ? "bg-[#D4AF37] text-[#0a0a0a] font-semibold" : "text-white/60 hover:text-white"
+                  onClick={() => setFormLang(lang)}
+                  className={`p-1.5 rounded-xs transition-all border flex items-center justify-center cursor-pointer ${
+                    formLang === lang
+                      ? "border-[#D4AF37] bg-[#D4AF37]/20 shadow-[0_0_8px_rgba(212,175,55,0.4)] scale-105"
+                      : "border-white/10 bg-black/40 hover:border-white/40 opacity-60 hover:opacity-100"
                   }`}
+                  title={`Switch language tab: ${lang.toUpperCase()}`}
                 >
-                  <span className="text-[13px]">{item.flag}</span>
-                  <span>{item.label}</span>
+                  <FlagIcon code={lang} className="w-5 h-3.5" />
                 </button>
               ))}
             </div>
@@ -1573,22 +1600,20 @@ export default function AdminDashboard() {
             </h3>
             
             {/* Form Language Switcher in Right Corner */}
-            <div className="flex items-center gap-1.5 bg-black/40 border border-white/10 p-1 rounded-sm">
-              {[
-                { code: "en", flag: "🇬🇧", label: "EN" },
-                { code: "ua", flag: "🇺🇦", label: "UA" },
-                { code: "ru", flag: "🌐", label: "RU" },
-              ].map((item) => (
+            <div className="flex items-center gap-1.5 bg-black/60 border border-white/15 p-1 rounded-sm">
+              {(["en", "ua", "ru"] as const).map((lang) => (
                 <button
-                  key={item.code}
+                  key={lang}
                   type="button"
-                  onClick={() => setFormLang(item.code as any)}
-                  className={`inline-flex items-center gap-1 px-3 py-1 text-[11px] font-medium uppercase tracking-wider transition-colors rounded-xs ${
-                    formLang === item.code ? "bg-[#D4AF37] text-[#0a0a0a] font-semibold" : "text-white/60 hover:text-white"
+                  onClick={() => setFormLang(lang)}
+                  className={`p-1.5 rounded-xs transition-all border flex items-center justify-center cursor-pointer ${
+                    formLang === lang
+                      ? "border-[#D4AF37] bg-[#D4AF37]/20 shadow-[0_0_8px_rgba(212,175,55,0.4)] scale-105"
+                      : "border-white/10 bg-black/40 hover:border-white/40 opacity-60 hover:opacity-100"
                   }`}
+                  title={`Switch language tab: ${lang.toUpperCase()}`}
                 >
-                  <span className="text-[13px]">{item.flag}</span>
-                  <span>{item.label}</span>
+                  <FlagIcon code={lang} className="w-5 h-3.5" />
                 </button>
               ))}
             </div>
