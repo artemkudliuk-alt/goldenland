@@ -1443,16 +1443,21 @@ export default function AdminDashboard() {
             
             {/* Form Language Switcher in Right Corner */}
             <div className="flex items-center gap-1.5 bg-black/40 border border-white/10 p-1 rounded-sm">
-              {(["en", "ua", "ru"] as const).map((lang) => (
+              {[
+                { code: "en", flag: "🇬🇧", label: "EN" },
+                { code: "ua", flag: "🇺🇦", label: "UA" },
+                { code: "ru", flag: "🌐", label: "RU" },
+              ].map((item) => (
                 <button
-                  key={lang}
+                  key={item.code}
                   type="button"
-                  onClick={() => setFormLang(lang)}
-                  className={`px-3 py-1 text-[11px] font-medium uppercase tracking-wider transition-colors rounded-xs ${
-                    formLang === lang ? "bg-[#D4AF37] text-[#0a0a0a]" : "text-white/60 hover:text-white"
+                  onClick={() => setFormLang(item.code as any)}
+                  className={`inline-flex items-center gap-1 px-3 py-1 text-[11px] font-medium uppercase tracking-wider transition-colors rounded-xs ${
+                    formLang === item.code ? "bg-[#D4AF37] text-[#0a0a0a] font-semibold" : "text-white/60 hover:text-white"
                   }`}
                 >
-                  {lang}
+                  <span className="text-[13px]">{item.flag}</span>
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>
@@ -1569,16 +1574,21 @@ export default function AdminDashboard() {
             
             {/* Form Language Switcher in Right Corner */}
             <div className="flex items-center gap-1.5 bg-black/40 border border-white/10 p-1 rounded-sm">
-              {(["en", "ua", "ru"] as const).map((lang) => (
+              {[
+                { code: "en", flag: "🇬🇧", label: "EN" },
+                { code: "ua", flag: "🇺🇦", label: "UA" },
+                { code: "ru", flag: "🌐", label: "RU" },
+              ].map((item) => (
                 <button
-                  key={lang}
+                  key={item.code}
                   type="button"
-                  onClick={() => setFormLang(lang)}
-                  className={`px-3 py-1 text-[11px] font-medium uppercase tracking-wider transition-colors rounded-xs ${
-                    formLang === lang ? "bg-[#D4AF37] text-[#0a0a0a]" : "text-white/60 hover:text-white"
+                  onClick={() => setFormLang(item.code as any)}
+                  className={`inline-flex items-center gap-1 px-3 py-1 text-[11px] font-medium uppercase tracking-wider transition-colors rounded-xs ${
+                    formLang === item.code ? "bg-[#D4AF37] text-[#0a0a0a] font-semibold" : "text-white/60 hover:text-white"
                   }`}
                 >
-                  {lang}
+                  <span className="text-[13px]">{item.flag}</span>
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>

@@ -141,19 +141,25 @@ export function Header() {
               {t.contactUsBtn[language]}
             </button>
 
-            <div className="flex items-center gap-2 border-l border-white/20 pl-4">
-              {(["en", "ua", "ru"] as const).map((lng) => (
+            <div className="flex items-center gap-1.5 border-l border-white/20 pl-4">
+              {[
+                { code: "en", flag: "🇬🇧", label: "EN" },
+                { code: "ua", flag: "🇺🇦", label: "UA" },
+                { code: "ru", flag: "🌐", label: "RU" },
+              ].map((item) => (
                 <button
-                  key={lng}
-                  onClick={() => setLanguage(lng)}
+                  key={item.code}
+                  onClick={() => setLanguage(item.code as any)}
                   className={[
-                    "text-[12px] font-medium uppercase tracking-[0.05em] transition-colors px-1",
-                    language === lng
-                      ? "text-[#D4AF37] font-semibold"
-                      : "text-white/50 hover:text-white"
+                    "inline-flex items-center gap-1 text-[12px] font-medium uppercase tracking-[0.05em] transition-all px-2 py-1 rounded-sm border",
+                    language === item.code
+                      ? "text-[#D4AF37] border-[#D4AF37]/50 bg-[#D4AF37]/10 font-semibold"
+                      : "text-white/60 border-transparent hover:text-white hover:bg-white/5"
                   ].join(" ")}
+                  title={`Switch to ${item.label}`}
                 >
-                  {lng}
+                  <span className="text-[14px] leading-none">{item.flag}</span>
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>
@@ -233,19 +239,26 @@ export function Header() {
 
           <div className="mt-auto border-t border-white/10 pt-6">
             <p className="text-[10px] uppercase tracking-[0.25em] text-white/40 mb-3">Language</p>
-            <div className="flex items-center gap-4">
-              {(["en", "ua", "ru"] as const).map((lng) => (
+            <div className="flex items-center gap-3">
+              {[
+                { code: "en", flag: "🇬🇧", label: "EN" },
+                { code: "ua", flag: "🇺🇦", label: "UA" },
+                { code: "ru", flag: "🌐", label: "RU" },
+              ].map((item) => (
                 <button
-                  key={lng}
+                  key={item.code}
                   onClick={() => {
-                    setLanguage(lng);
+                    setLanguage(item.code as any);
                     setIsMenuOpen(false);
                   }}
-                  className={`text-[14px] uppercase tracking-[0.1em] ${
-                    language === lng ? "text-[#D4AF37] font-semibold" : "text-white/40"
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-sm border text-[13px] uppercase tracking-[0.08em] transition-colors ${
+                    language === item.code
+                      ? "border-[#D4AF37] text-[#D4AF37] bg-[#D4AF37]/10 font-semibold"
+                      : "border-white/10 text-white/60 hover:text-white"
                   }`}
                 >
-                  {lng}
+                  <span className="text-[16px]">{item.flag}</span>
+                  <span>{item.label}</span>
                 </button>
               ))}
             </div>
