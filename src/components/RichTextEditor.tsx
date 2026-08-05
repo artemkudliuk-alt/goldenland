@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 interface RichTextEditorProps {
   value: string;
@@ -11,6 +11,8 @@ interface RichTextEditorProps {
 export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorProps) {
   const editorRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const replaceImgInputRef = useRef<HTMLInputElement>(null);
+  const [selectedImg, setSelectedImg] = useState<HTMLImageElement | null>(null);
 
   // Sync value from props to editor HTML once on mount or when value changes externally
   useEffect(() => {
@@ -55,11 +57,10 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
           editorRef.current.focus();
           const prevHTML = editorRef.current.innerHTML;
           document.execCommand("insertImage", false, data.url);
-          // Fallback if execCommand didn't insert
           if (editorRef.current.innerHTML === prevHTML) {
             const img = document.createElement("img");
             img.src = data.url;
-            img.className = "max-w-full h-auto my-2 rounded-sm border border-white/10";
+            img.className = "max-w-full h-auto my-3 rounded-sm border border-white/10 shadow-md";
             editorRef.current.appendChild(img);
           }
           onChange(editorRef.current.innerHTML);
@@ -70,6 +71,32 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       }
     } catch (err: any) {
       alert("Image upload error: " + err.message);
+    }
+  };
+
+  const handleReplaceImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !selectedImg) return;
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success) {
+        selectedImg.src = data.url;
+        handleInput();
+        setSelectedImg(null);
+        e.target.value = "";
+      } else {
+        alert("Replace failed: " + (data.error || "Unknown error"));
+      }
+    } catch (err: any) {
+      alert("Replace error: " + err.message);
     }
   };
 
@@ -85,9 +112,29 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
     }
   };
 
+  // Handle image clicks in editor for interactive replace/remove controls
+  const handleEditorClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === "IMG") {
+      const img = target as HTMLImageElement;
+      setSelectedImg(img);
+    } else {
+      setSelectedImg(null);
+    }
+  };
+
+  const handleClearAll = () => {
+    if (confirm("Are you sure you want to clear all content in this editor?")) {
+      if (editorRef.current) {
+        editorRef.current.innerHTML = "";
+        handleInput();
+      }
+    }
+  };
+
   return (
-    <div className="border border-white/15 bg-black rounded-xs flex flex-col overflow-hidden focus-within:border-[#D4AF37] transition-colors">
-      {/* Hidden File Input for Image Upload */}
+    <div className="border border-white/20 bg-black rounded-sm flex flex-col overflow-hidden focus-within:border-[#D4AF37] transition-all shadow-xl">
+      {/* Hidden File Inputs */}
       <input
         type="file"
         ref={fileInputRef}
@@ -95,13 +142,39 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         className="hidden"
         onChange={handleImageUpload}
       />
+      <input
+        type="file"
+        ref={replaceImgInputRef}
+        accept="image/*"
+        className="hidden"
+        onChange={handleReplaceImageUpload}
+      />
 
-      {/* Toolbar - Top Row: Text Formatting */}
-      <div className="flex flex-wrap gap-1 border-b border-white/10 p-2 bg-[#151515] select-none">
+      {/* Primary Toolbar - Text & History Actions */}
+      <div className="flex flex-wrap items-center gap-1 border-b border-white/10 p-2 bg-[#121212] select-none text-[12px]">
+        <button
+          type="button"
+          onClick={() => executeCommand("undo")}
+          className="px-2 py-1 text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
+          title="Undo (Ctrl+Z)"
+        >
+          ↺ Undo
+        </button>
+        <button
+          type="button"
+          onClick={() => executeCommand("redo")}
+          className="px-2 py-1 text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
+          title="Redo (Ctrl+Y)"
+        >
+          ↻ Redo
+        </button>
+
+        <div className="h-4 w-px bg-white/15 my-auto mx-1" />
+
         <button
           type="button"
           onClick={() => executeCommand("bold")}
-          className="px-2.5 py-1 text-[12px] font-bold text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 font-bold text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Bold"
         >
           B
@@ -109,7 +182,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         <button
           type="button"
           onClick={() => executeCommand("italic")}
-          className="px-2.5 py-1 text-[12px] italic text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 italic text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Italic"
         >
           I
@@ -117,16 +190,18 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         <button
           type="button"
           onClick={() => executeCommand("underline")}
-          className="px-2.5 py-1 text-[12px] underline text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 underline text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Underline"
         >
           U
         </button>
-        <div className="h-4 w-px bg-white/10 my-auto mx-1" />
+
+        <div className="h-4 w-px bg-white/15 my-auto mx-1" />
+
         <button
           type="button"
           onClick={() => executeCommand("formatBlock", "<h2>")}
-          className="px-2.5 py-1 text-[11px] font-semibold text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 font-semibold text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Heading 2"
         >
           H2
@@ -134,7 +209,7 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         <button
           type="button"
           onClick={() => executeCommand("formatBlock", "<h3>")}
-          className="px-2.5 py-1 text-[11px] font-semibold text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 font-semibold text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Heading 3"
         >
           H3
@@ -142,16 +217,18 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         <button
           type="button"
           onClick={() => executeCommand("formatBlock", "<p>")}
-          className="px-2.5 py-1 text-[11px] text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Paragraph"
         >
           P
         </button>
-        <div className="h-4 w-px bg-white/10 my-auto mx-1" />
+
+        <div className="h-4 w-px bg-white/15 my-auto mx-1" />
+
         <button
           type="button"
           onClick={() => executeCommand("insertUnorderedList")}
-          className="px-2.5 py-1 text-[12px] text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Bullet List"
         >
           • List
@@ -159,114 +236,181 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         <button
           type="button"
           onClick={() => executeCommand("insertOrderedList")}
-          className="px-2.5 py-1 text-[12px] text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Numbered List"
         >
           1. List
         </button>
-        <div className="h-4 w-px bg-white/10 my-auto mx-1" />
+
+        <div className="h-4 w-px bg-white/15 my-auto mx-1" />
+
         <button
           type="button"
           onClick={handleLink}
-          className="px-2.5 py-1 text-[11px] text-white/80 hover:text-white hover:bg-white/10 rounded-sm transition-colors"
+          className="px-2.5 py-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
           title="Insert Link"
         >
-          Link
+          🔗 Link
         </button>
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className="px-2.5 py-1 text-[11px] text-[#D4AF37] hover:text-[#e5bf4c] hover:bg-white/10 rounded-sm transition-colors font-medium"
+          className="px-2.5 py-1 text-[#D4AF37] hover:text-black hover:bg-[#D4AF37] border border-[#D4AF37]/40 rounded transition-colors font-medium ml-1"
           title="Upload & Insert Image"
         >
-          + Image
+          📷 + Upload Image
         </button>
-        <button
-          type="button"
-          onClick={() => executeCommand("removeFormat")}
-          className="px-2.5 py-1 text-[11px] text-white/50 hover:text-white hover:bg-white/10 rounded-sm transition-colors ml-auto"
-          title="Clear Formatting"
-        >
-          Clear
-        </button>
+
+        <div className="ml-auto flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => executeCommand("removeFormat")}
+            className="px-2 py-1 text-[11px] text-white/50 hover:text-white hover:bg-white/10 rounded transition-colors"
+            title="Clear Text Formatting"
+          >
+            Clean Text
+          </button>
+          <button
+            type="button"
+            onClick={handleClearAll}
+            className="px-2 py-1 text-[11px] text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded transition-colors font-medium border border-rose-500/20"
+            title="Clear entire editor content"
+          >
+            🗑 Clear All
+          </button>
+        </div>
       </div>
 
-      {/* Toolbar - Second Row: Layout Blocks */}
-      <div className="flex flex-wrap items-center gap-1.5 border-b border-white/10 px-2 py-1.5 bg-[#0d0d0d] select-none text-[11px]">
-        <span className="text-white/40 uppercase tracking-wider text-[9px] font-semibold mr-1">Page Layout Blocks:</span>
-        
+      {/* Visual Block Builder Toolbar */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-white/10 p-2 bg-[#090909] select-none text-[11px]">
+        <div className="flex items-center gap-1 text-[#D4AF37] font-semibold uppercase tracking-wider text-[10px] mr-1">
+          <span>✨ Insert Visual Block:</span>
+        </div>
+
         <button
           type="button"
           onClick={() => insertLayoutBlock(`
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center; margin: 1.5rem 0;">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center; margin: 1.5rem 0; background: rgba(255,255,255,0.02); padding: 1.25rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08);">
   <div>
-    <h3 style="color: #D4AF37; font-size: 1.25rem; font-weight: 400; margin-bottom: 0.5rem;">Section Title</h3>
-    <p style="line-height: 1.7; color: #4a4a4a;">Write your detailed text content here. Describe the property details, location advantages, or service features in full detail.</p>
+    <h3 style="color: #D4AF37; font-size: 1.25rem; font-weight: 500; margin-bottom: 0.5rem;">Section Title</h3>
+    <p style="line-height: 1.7; color: #e0e0e0;">Write your paragraph text here. Describe the property details, location advantages, or service features in full detail.</p>
   </div>
-  <div>
-    <img src="/images/generated/kyiv_luxury_business_center.png" alt="Property image" style="width: 100%; height: auto; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);" />
+  <div style="text-align: center;">
+    <img src="/images/generated/kyiv_luxury_business_center.png" alt="Property image" style="width: 100%; max-height: 280px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);" />
   </div>
 </div>
 <p><br></p>`)}
-          className="px-2 py-1 bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/80 rounded-xs transition-colors border border-white/10"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
           title="Insert 2 Columns: Text on Left, Image on Right"
         >
-          ◧ Text + Img (Right)
+          <span>🖼️</span>
+          <span>Text + Image Right</span>
         </button>
 
         <button
           type="button"
           onClick={() => insertLayoutBlock(`
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center; margin: 1.5rem 0;">
-  <div>
-    <img src="/images/generated/kyiv_panoramic_banner.png" alt="Property image" style="width: 100%; height: auto; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);" />
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center; margin: 1.5rem 0; background: rgba(255,255,255,0.02); padding: 1.25rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.08);">
+  <div style="text-align: center;">
+    <img src="/images/generated/kyiv_panoramic_banner.png" alt="Property image" style="width: 100%; max-height: 280px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);" />
   </div>
   <div>
-    <h3 style="color: #D4AF37; font-size: 1.25rem; font-weight: 400; margin-bottom: 0.5rem;">Section Title</h3>
-    <p style="line-height: 1.7; color: #4a4a4a;">Write your detailed text content here. Describe the property details, location advantages, or service features in full detail.</p>
+    <h3 style="color: #D4AF37; font-size: 1.25rem; font-weight: 500; margin-bottom: 0.5rem;">Section Title</h3>
+    <p style="line-height: 1.7; color: #e0e0e0;">Write your paragraph text here. Describe the property details, location advantages, or service features in full detail.</p>
   </div>
 </div>
 <p><br></p>`)}
-          className="px-2 py-1 bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/80 rounded-xs transition-colors border border-white/10"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
           title="Insert 2 Columns: Image on Left, Text on Right"
         >
-          ◨ Img (Left) + Text
+          <span>🖼️</span>
+          <span>Image Left + Text</span>
         </button>
 
         <button
           type="button"
           onClick={() => insertLayoutBlock(`
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-  <img src="/images/generated/kyiv_luxury_business_center.png" alt="Photo 1" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);" />
-  <img src="/images/generated/kyiv_panoramic_banner.png" alt="Photo 2" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);" />
+  <img src="/images/generated/kyiv_luxury_business_center.png" alt="Photo 1" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);" />
+  <img src="/images/generated/kyiv_panoramic_banner.png" alt="Photo 2" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);" />
 </div>
 <p><br></p>`)}
-          className="px-2 py-1 bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/80 rounded-xs transition-colors border border-white/10"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
           title="Insert 2 Photos Side-by-Side"
         >
-          ☵ 2 Photo Grid
+          <span>📸</span>
+          <span>2-Photo Gallery</span>
         </button>
 
         <button
           type="button"
           onClick={() => insertLayoutBlock(`
-<blockquote style="border-left: 3px solid #D4AF37; background: rgba(212, 175, 55, 0.08); padding: 1rem 1.25rem; margin: 1.5rem 0; font-style: italic; color: #222222; border-radius: 0 4px 4px 0;">
+<blockquote style="border-left: 4px solid #D4AF37; background: rgba(212, 175, 55, 0.1); padding: 1.25rem 1.5rem; margin: 1.5rem 0; font-style: italic; color: #f5f5f5; border-radius: 0 6px 6px 0;">
   "Golden Land Property Investment — Exclusive investment allocations and direct developer terms for qualified buyers."
 </blockquote>
 <p><br></p>`)}
-          className="px-2 py-1 bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/80 rounded-xs transition-colors border border-white/10"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
           title="Insert Gold Highlight Box"
         >
-          💬 Gold Quote Card
+          <span>💬</span>
+          <span>Gold Quote Card</span>
         </button>
       </div>
+
+      {/* Selected Image Context Action Bar (appears when user clicks an image inside editor) */}
+      {selectedImg && (
+        <div className="flex items-center gap-3 bg-[#D4AF37]/15 border-b border-[#D4AF37]/40 px-3 py-2 text-[12px] text-white">
+          <span className="text-[#D4AF37] font-semibold flex items-center gap-1">
+            <span>🖼️ Selected Image Actions:</span>
+          </span>
+          <button
+            type="button"
+            onClick={() => replaceImgInputRef.current?.click()}
+            className="bg-[#D4AF37] text-black hover:bg-white font-medium px-2.5 py-1 rounded text-[11px] transition-colors"
+          >
+            🔄 Replace Image File
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              const newUrl = prompt("Enter new image URL:", selectedImg.src);
+              if (newUrl) {
+                selectedImg.src = newUrl;
+                handleInput();
+              }
+            }}
+            className="bg-white/10 hover:bg-white/20 text-white px-2.5 py-1 rounded text-[11px] transition-colors"
+          >
+            🔗 Change Image URL
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              selectedImg.remove();
+              setSelectedImg(null);
+              handleInput();
+            }}
+            className="bg-rose-600/80 hover:bg-rose-500 text-white px-2.5 py-1 rounded text-[11px] transition-colors ml-auto"
+          >
+            🗑 Delete Image
+          </button>
+          <button
+            type="button"
+            onClick={() => setSelectedImg(null)}
+            className="text-white/40 hover:text-white text-[14px] px-1"
+          >
+            ✕
+          </button>
+        </div>
+      )}
 
       {/* Editor Content Area */}
       <div
         ref={editorRef}
         contentEditable
         onInput={handleInput}
-        className="min-h-[280px] max-h-[550px] overflow-y-auto p-4 text-[14px] leading-relaxed text-white font-light outline-none bg-black/40 style-editor-content"
+        onClick={handleEditorClick}
+        className="min-h-[320px] max-h-[580px] overflow-y-auto p-5 text-[14px] leading-relaxed text-white font-light outline-none bg-black/60 style-editor-content"
       />
     </div>
   );
