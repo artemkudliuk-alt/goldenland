@@ -62,6 +62,228 @@ const STATUS_OPTIONS: { value: LeadStatus; label: string; className: string }[] 
   { value: "declined", label: "Declined", className: "bg-zinc-800/60 text-zinc-400 border-zinc-700" },
 ];
 
+const FORM_I18N = {
+  en: {
+    addProperty: "Add New Property",
+    editProperty: "Edit Property",
+    addPage: "Create New Custom Page",
+    editPage: "Edit Custom Page",
+    basicInfo: "Basic Specifications",
+    city: "City",
+    category: "Category / Type",
+    price: "Price ($)",
+    area: "Area (m²)",
+    bedrooms: "Bedrooms",
+    expectedRoi: "Expected ROI (%)",
+    statusTag: "Status Tag",
+    urlSlug: "URL Slug",
+    managerAdvisor: "Manager / Advisor",
+    managerName: "Manager Name",
+    initials: "Initials (if no photo)",
+    whatsapp: "WhatsApp (with country code)",
+    telegram: "Telegram (@username)",
+    multilingualSection: "Multilingual Content",
+    translatingInto: "Currently editing in language:",
+    title: "Property Title",
+    location: "Location / Neighborhood",
+    physicalAddress: "Physical Address / Map Query",
+    description: "Property Description",
+    galleryPhotos: "Media Gallery",
+    videoPresentation: "Video Presentation Link / File Upload",
+    uploadVideo: "Upload Video",
+    googleMapVerification: "Google Map Verification",
+    mapQuery: "Current Map Query",
+    testMapLink: "Test Map Link ↗",
+    techSpecs: "Technical Specifications (Optional)",
+    rooms: "Rooms",
+    layout: "Layout",
+    floor: "Floor",
+    renovation: "Renovation",
+    buildingType: "Building Type",
+    structure: "Structure / Framing",
+    heating: "Heating System",
+    ceilingHeight: "Ceiling Height",
+    yearBuilt: "Year Built",
+    resetChanges: "↺ Reset Changes",
+    cancel: "Cancel",
+    saveProperty: "Save Property",
+    savingProperty: "Saving Property...",
+    savePage: "Save Page",
+    savingPage: "Saving Page...",
+
+    placeholders: {
+      price: "e.g. 550,000",
+      area: "e.g. 120",
+      bedrooms: "e.g. 3",
+      roi: "e.g. 8.5",
+      slug: "e.g. kiev-pechersk-penthouse",
+      managerName: "e.g. John Smith",
+      initials: "e.g. JS",
+      whatsapp: "380991234567",
+      telegram: "johnsmith",
+      title: "Luxury Penthouse in Pechersk Skyline",
+      location: "Pechersk District, Kyiv",
+      address: "56/2 Khreschatyk Street, Kyiv",
+      rooms: "e.g. 4 Rooms",
+      layout: "e.g. 120 / 72 / 20 m²",
+      floor: "e.g. Floor 5 of 12",
+      renovation: "e.g. Author's designer renovation",
+      buildingType: "e.g. New premium residential complex",
+      structure: "e.g. Monolithic frame",
+      heating: "e.g. Autonomous gas heating",
+      ceilings: "e.g. 3.2 m",
+      yearBuilt: "e.g. 2024",
+      video: "YouTube URL or direct video MP4 URL (e.g. /videos/tour.mp4)"
+    }
+  },
+  ua: {
+    addProperty: "Додати новий об'єкт",
+    editProperty: "Редагування об'єкта",
+    addPage: "Створити нову сторінку",
+    editPage: "Редагування сторінки",
+    basicInfo: "Основні характеристики",
+    city: "Місто",
+    category: "Категорія / Тип",
+    price: "Ціна ($)",
+    area: "Площа (м²)",
+    bedrooms: "Спальні",
+    expectedRoi: "Очікуваний ROI (%)",
+    statusTag: "Статус бейдж",
+    urlSlug: "URL посилання (Slug)",
+    managerAdvisor: "Менеджер / Консультант",
+    managerName: "Ім'я менеджера",
+    initials: "Ініціали (якщо немає фото)",
+    whatsapp: "WhatsApp (з кодом країни)",
+    telegram: "Telegram (@username)",
+    multilingualSection: "Мультиязычний контент",
+    translatingInto: "Редагування мовою:",
+    title: "Назва об'єкта",
+    location: "Район / Локація",
+    physicalAddress: "Фізична адреса / Пошук на карті",
+    description: "Опис об'єкта",
+    galleryPhotos: "Галерея медіа",
+    videoPresentation: "Посилання на відеопрезентацію / Завантаження файлу",
+    uploadVideo: "Завантажити відео",
+    googleMapVerification: "Перевірка Google Карт",
+    mapQuery: "Поточний запит адреси",
+    testMapLink: "Тест Карти ↗",
+    techSpecs: "Технічні характеристики (Опціонально)",
+    rooms: "Кількість кімнат",
+    layout: "Планування",
+    floor: "Поверх",
+    renovation: "Ремонт",
+    buildingType: "Тип будинку",
+    structure: "Конструкція / Каркас",
+    heating: "Опалення",
+    ceilingHeight: "Висота стелі",
+    yearBuilt: "Рік побудови",
+    resetChanges: "↺ Скинути зміни",
+    cancel: "Скасувати",
+    saveProperty: "Зберегти об'єкт",
+    savingProperty: "Збереження...",
+    savePage: "Зберегти сторінку",
+    savingPage: "Збереження...",
+
+    placeholders: {
+      price: "напр. 550 000",
+      area: "напр. 120",
+      bedrooms: "напр. 3",
+      roi: "напр. 8.5",
+      slug: "напр. kiev-pechersk-penthouse",
+      managerName: "напр. Іван Петренко",
+      initials: "напр. ІП",
+      whatsapp: "380991234567",
+      telegram: "ivanpetrenko",
+      title: "Розкішний пентхаус на Печерську",
+      location: "Печерський район, Київ",
+      address: "вул. Хрещатик, 56/2, Київ",
+      rooms: "напр. 4 кімнати",
+      layout: "напр. 120 / 72 / 20 м²",
+      floor: "напр. 5 поверх з 12",
+      renovation: "напр. Авторський дизайнерський ремонт",
+      buildingType: "напр. Преміальний новобуд",
+      structure: "напр. Монолітно-каркасний",
+      heating: "напр. Автономне газове",
+      ceilings: "напр. 3.2 м",
+      yearBuilt: "напр. 2024",
+      video: "Ссылка YouTube або пряме відео MP4 (напр. /videos/tour.mp4)"
+    }
+  },
+  ru: {
+    addProperty: "Добавить новый объект",
+    editProperty: "Редактирование объекта",
+    addPage: "Создать новую страницу",
+    editPage: "Редактирование страницы",
+    basicInfo: "Основные характеристики",
+    city: "Город",
+    category: "Категория / Тип",
+    price: "Цена ($)",
+    area: "Площадь (м²)",
+    bedrooms: "Спальни",
+    expectedRoi: "Ожидаемый ROI (%)",
+    statusTag: "Статус бейдж",
+    urlSlug: "URL ссылка (Slug)",
+    managerAdvisor: "Менеджер / Консультант",
+    managerName: "Имя менеджера",
+    initials: "Инициалы (если нет фото)",
+    whatsapp: "WhatsApp (с кодом страны)",
+    telegram: "Telegram (@username)",
+    multilingualSection: "Мультиязычный контент",
+    translatingInto: "Редактирование на языке:",
+    title: "Название объекта",
+    location: "Район / Локация",
+    physicalAddress: "Физический адрес / Поиск на карте",
+    description: "Описание объекта",
+    galleryPhotos: "Галерея медиа",
+    videoPresentation: "Ссылка на видеопрезентацию / Загрузка файла",
+    uploadVideo: "Загрузить видео",
+    googleMapVerification: "Проверка Google Карт",
+    mapQuery: "Текущий запрос адреса",
+    testMapLink: "Тест Карты ↗",
+    techSpecs: "Технические характеристики (Опционально)",
+    rooms: "Количество комнат",
+    layout: "Планировка",
+    floor: "Этаж",
+    renovation: "Ремонт",
+    buildingType: "Тип дома",
+    structure: "Конструкция / Каркас",
+    heating: "Отопление",
+    ceilingHeight: "Высота потолков",
+    yearBuilt: "Год постройки",
+    resetChanges: "↺ Сбросить изменения",
+    cancel: "Отмена",
+    saveProperty: "Сохранить объект",
+    savingProperty: "Сохранение...",
+    savePage: "Сохранить страницу",
+    savingPage: "Сохранение...",
+
+    placeholders: {
+      price: "напр. 550 000",
+      area: "напр. 120",
+      bedrooms: "напр. 3",
+      roi: "напр. 8.5",
+      slug: "напр. kiev-pechersk-penthouse",
+      managerName: "напр. Иван Петренко",
+      initials: "напр. ИП",
+      whatsapp: "380991234567",
+      telegram: "ivanpetrenko",
+      title: "Роскошный пентхаус на Печерске",
+      location: "Печерский район, Киев",
+      address: "ул. Крещатик, 56/2, Киев",
+      rooms: "напр. 4 комнаты",
+      layout: "напр. 120 / 72 / 20 м²",
+      floor: "напр. 5 этаж из 12",
+      renovation: "напр. Авторский дизайнерский ремонт",
+      buildingType: "напр. Премиальный новострой",
+      structure: "напр. Монолитно-каркасный",
+      heating: "напр. Автономное газовое",
+      ceilings: "напр. 3.2 м",
+      yearBuilt: "напр. 2024",
+      video: "Ссылка YouTube или прямое видео MP4 (напр. /videos/tour.mp4)"
+    }
+  }
+};
+
 export default function AdminDashboard() {
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -1467,7 +1689,7 @@ export default function AdminDashboard() {
         <div className="w-full max-w-2xl border border-white/20 bg-[#121212] p-6 text-white shadow-xl max-h-[90vh] overflow-y-auto">
           <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
             <h3 className="text-[18px] font-light text-[#D4AF37] uppercase tracking-wider">
-              {editingPage.slug ? "Edit Custom Page" : "Create New Custom Page"}
+              {editingPage.slug ? FORM_I18N[formLang].editPage : FORM_I18N[formLang].addPage}
             </h3>
             
             {/* Form Language Switcher in Right Corner */}
@@ -1532,13 +1754,13 @@ export default function AdminDashboard() {
             <div className="border border-white/5 bg-white/2 p-4 rounded-xs space-y-4">
               <div className="flex items-center justify-between border-b border-white/5 pb-2">
                 <span className="text-[11px] font-medium uppercase tracking-wider text-[#D4AF37]">
-                  Translating into: <span className="underline">{formLang.toUpperCase()}</span>
+                  {FORM_I18N[formLang].translatingInto} <span className="underline">{formLang.toUpperCase()}</span>
                 </span>
               </div>
 
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-wider text-white/50 mb-1">
-                  Page Title ({formLang.toUpperCase()})
+                  {FORM_I18N[formLang].title} ({formLang.toUpperCase()})
                 </label>
                 <input
                   type="text"
@@ -1548,14 +1770,14 @@ export default function AdminDashboard() {
                     ...editingPage,
                     title: { ...editingPage.title, [formLang]: e.target.value }
                   })}
-                  placeholder={`Enter title in ${formLang.toUpperCase()}`}
+                  placeholder={`${FORM_I18N[formLang].title} (${formLang.toUpperCase()})`}
                   className="w-full border border-white/15 bg-black/40 px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                 />
               </div>
 
               <div>
                 <label className="block text-[11px] font-medium uppercase tracking-wider text-white/50 mb-1.5">
-                  Page Content / Body ({formLang.toUpperCase()})
+                  {FORM_I18N[formLang].description} ({formLang.toUpperCase()})
                 </label>
                 <RichTextEditor
                   value={editingPage.content[formLang] || ""}
@@ -1563,7 +1785,7 @@ export default function AdminDashboard() {
                     ...editingPage,
                     content: { ...editingPage.content, [formLang]: html }
                   })}
-                  placeholder={`Write page content in ${formLang.toUpperCase()}... Use heading formatting, lists, links and upload images.`}
+                  placeholder={`Write page content in ${formLang.toUpperCase()}...`}
                 />
               </div>
             </div>
@@ -1575,7 +1797,7 @@ export default function AdminDashboard() {
               onClick={() => setEditingPage(null)}
               className="px-4 py-2 text-[12px] font-light text-white/60 hover:text-white"
             >
-              Cancel
+              {FORM_I18N[formLang].cancel}
             </button>
             <button
               type="button"
@@ -1583,7 +1805,7 @@ export default function AdminDashboard() {
               onClick={() => handleSavePage(editingPage)}
               className="bg-[#D4AF37] px-6 py-2.5 text-[12px] font-medium uppercase text-[#0a0a0a] hover:bg-white transition-all disabled:opacity-40"
             >
-              {pagesSaving ? "Saving..." : "Save Page"}
+              {pagesSaving ? FORM_I18N[formLang].savingPage : FORM_I18N[formLang].savePage}
             </button>
           </div>
         </div>
@@ -1596,7 +1818,7 @@ export default function AdminDashboard() {
         <div className="w-full max-w-4xl border border-white/20 bg-[#121212] p-6 text-white shadow-xl max-h-[90vh] overflow-y-auto">
           <div className="flex items-center justify-between border-b border-white/10 pb-4 mb-6">
             <h3 className="text-[18px] font-light text-[#D4AF37] uppercase tracking-wider">
-              {editingProperty.slug ? "Edit Property" : "Add New Property"}
+              {editingProperty.slug ? FORM_I18N[formLang].editProperty : FORM_I18N[formLang].addProperty}
             </h3>
             
             {/* Form Language Switcher in Right Corner */}
@@ -1622,55 +1844,65 @@ export default function AdminDashboard() {
           <div className="space-y-6">
             {/* Common Specifications Card */}
             <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">
-              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Basic Information</h4>
+              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">
+                {FORM_I18N[formLang].basicInfo}
+              </h4>
               
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">City</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].city}
+                  </label>
                   <select
                     value={editingProperty.city}
                     onChange={(e) => setEditingProperty({ ...editingProperty, city: e.target.value })}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   >
-                    <option value="kyiv">Kyiv</option>
-                    <option value="lviv">Lviv</option>
-                    <option value="odesa">Odesa</option>
-                    <option value="dubai">Dubai</option>
+                    <option value="kyiv">Kyiv ({formLang === "en" ? "Kyiv" : formLang === "ua" ? "Київ" : "Киев"})</option>
+                    <option value="lviv">Lviv ({formLang === "en" ? "Lviv" : formLang === "ua" ? "Львів" : "Львов"})</option>
+                    <option value="odesa">Odesa ({formLang === "en" ? "Odesa" : formLang === "ua" ? "Одеса" : "Одесса"})</option>
+                    <option value="dubai">Dubai ({formLang === "en" ? "Dubai" : "Дубай"})</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Category / Type</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].category}
+                  </label>
                   <select
                     value={editingProperty.type}
                     onChange={(e) => setEditingProperty({ ...editingProperty, type: e.target.value as any })}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   >
-                    <option value="apartments">Apartments</option>
-                    <option value="villas">Villas & Houses</option>
-                    <option value="hotels">Hotels</option>
-                    <option value="commercial">Commercial</option>
+                    <option value="apartments">{formLang === "en" ? "Apartments" : formLang === "ua" ? "Квартири та Апартаменти" : "Квартиры и Апартаменты"}</option>
+                    <option value="villas">{formLang === "en" ? "Villas & Houses" : formLang === "ua" ? "Вілли та Будинки" : "Виллы и Дома"}</option>
+                    <option value="hotels">{formLang === "en" ? "Hotels & Resorts" : formLang === "ua" ? "Готелі та Резорти" : "Отели и Ресорты"}</option>
+                    <option value="commercial">{formLang === "en" ? "Commercial Property" : formLang === "ua" ? "Комерційна нерухомість" : "Коммерческая недвижимость"}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Price ($)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].price}
+                  </label>
                   <input
                     type="number"
                     value={editingProperty.price || ""}
                     onChange={(e) => setEditingProperty({ ...editingProperty, price: Number(e.target.value) })}
-                    placeholder="e.g. 550000"
+                    placeholder={FORM_I18N[formLang].placeholders.price}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Area (m²)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].area}
+                  </label>
                   <input
                     type="number"
                     value={editingProperty.area || ""}
                     onChange={(e) => setEditingProperty({ ...editingProperty, area: Number(e.target.value) })}
-                    placeholder="e.g. 120"
+                    placeholder={FORM_I18N[formLang].placeholders.area}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
@@ -1678,49 +1910,57 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Bedrooms</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].bedrooms}
+                  </label>
                   <input
                     type="number"
                     value={editingProperty.bedrooms || ""}
                     onChange={(e) => setEditingProperty({ ...editingProperty, bedrooms: Number(e.target.value) })}
-                    placeholder="e.g. 3"
+                    placeholder={FORM_I18N[formLang].placeholders.bedrooms}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Expected ROI (%)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].expectedRoi}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.roi || ""}
                     onChange={(e) => setEditingProperty({ ...editingProperty, roi: e.target.value })}
-                    placeholder="e.g. 8.5"
+                    placeholder={FORM_I18N[formLang].placeholders.roi}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Status Tag</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].statusTag}
+                  </label>
                   <select
                     value={editingProperty.status}
                     onChange={(e) => setEditingProperty({ ...editingProperty, status: e.target.value })}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   >
-                    <option value="exclusive">Exclusive</option>
-                    <option value="hot">Hot Deal</option>
-                    <option value="ready">Ready Move-In</option>
-                    <option value="off-plan">Off-Plan</option>
-                    <option value="investment">Investment</option>
+                    <option value="exclusive">{formLang === "en" ? "Exclusive" : formLang === "ua" ? "Ексклюзив" : "Эксклюзив"}</option>
+                    <option value="hot">{formLang === "en" ? "Hot Deal" : formLang === "ua" ? "Гаряча пропозиція" : "Горячее предложение"}</option>
+                    <option value="ready">{formLang === "en" ? "Ready Move-In" : formLang === "ua" ? "Готовий до заселення" : "Готов к заселению"}</option>
+                    <option value="off-plan">{formLang === "en" ? "Off-Plan" : formLang === "ua" ? "На стадії будівництва" : "На стадии строительства"}</option>
+                    <option value="investment">{formLang === "en" ? "Investment" : formLang === "ua" ? "Інвестиційний" : "Инвестиционный"}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">URL Slug</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].urlSlug}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.slug}
                     onChange={(e) => setEditingProperty({ ...editingProperty, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, "") })}
-                    placeholder="e.g. kiev-pechersk-penthouse"
+                    placeholder={FORM_I18N[formLang].placeholders.slug}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
@@ -1728,7 +1968,9 @@ export default function AdminDashboard() {
 
               {/* Manager / Advisor Info */}
               <div className="border-t border-white/5 pt-4 space-y-3">
-                <span className="block text-[10px] font-semibold uppercase tracking-wider text-[#D4AF37]">Manager / Advisor</span>
+                <span className="block text-[10px] font-semibold uppercase tracking-wider text-[#D4AF37]">
+                  {FORM_I18N[formLang].managerAdvisor}
+                </span>
                 
                 {/* Manager Photo Upload */}
                 <div className="flex items-start gap-4">
@@ -1772,43 +2014,51 @@ export default function AdminDashboard() {
 
                   <div className="flex-1 grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Manager Name</label>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                        {FORM_I18N[formLang].managerName}
+                      </label>
                       <input
                         type="text"
                         value={editingProperty.managerName || ""}
                         onChange={(e) => setEditingProperty({ ...editingProperty, managerName: e.target.value })}
-                        placeholder="e.g. Іван Петренко"
+                        placeholder={FORM_I18N[formLang].placeholders.managerName}
                         className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Initials (if no photo)</label>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                        {FORM_I18N[formLang].initials}
+                      </label>
                       <input
                         type="text"
                         value={editingProperty.managerInitials || ""}
                         onChange={(e) => setEditingProperty({ ...editingProperty, managerInitials: e.target.value.toUpperCase().slice(0, 3) })}
-                        placeholder="e.g. ІП"
+                        placeholder={FORM_I18N[formLang].placeholders.initials}
                         maxLength={3}
                         className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">WhatsApp (з кодом країни)</label>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                        {FORM_I18N[formLang].whatsapp}
+                      </label>
                       <input
                         type="text"
                         value={editingProperty.managerWhatsapp || ""}
                         onChange={(e) => setEditingProperty({ ...editingProperty, managerWhatsapp: e.target.value })}
-                        placeholder="380991234567"
+                        placeholder={FORM_I18N[formLang].placeholders.whatsapp}
                         className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                       />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Telegram (@username)</label>
+                      <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                        {FORM_I18N[formLang].telegram}
+                      </label>
                       <input
                         type="text"
                         value={editingProperty.managerTelegram || ""}
                         onChange={(e) => setEditingProperty({ ...editingProperty, managerTelegram: e.target.value.replace(/^@/, "") })}
-                        placeholder="ivanpetrenko"
+                        placeholder={FORM_I18N[formLang].placeholders.telegram}
                         className="w-full border border-white/15 bg-black px-3 py-2 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                       />
                     </div>
@@ -1830,12 +2080,14 @@ export default function AdminDashboard() {
             <div className="border border-white/10 bg-white/2 p-5 rounded-xs space-y-4">
               <div className="flex items-center justify-between border-b border-white/5 pb-2">
                 <span className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">
-                  Translating into: <span className="underline">{formLang.toUpperCase()}</span>
+                  {FORM_I18N[formLang].translatingInto} <span className="underline">{formLang.toUpperCase()}</span>
                 </span>
               </div>
 
               <div>
-                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Title ({formLang.toUpperCase()})</label>
+                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                  {FORM_I18N[formLang].title} ({formLang.toUpperCase()})
+                </label>
                 <input
                   type="text"
                   value={editingProperty.title[formLang] || ""}
@@ -1843,13 +2095,15 @@ export default function AdminDashboard() {
                     ...editingProperty,
                     title: { ...editingProperty.title, [formLang]: e.target.value }
                   })}
-                  placeholder={`Property Title in ${formLang.toUpperCase()}`}
+                  placeholder={`${FORM_I18N[formLang].placeholders.title}`}
                   className="w-full border border-white/15 bg-black/40 px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Location ({formLang.toUpperCase()})</label>
+                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                  {FORM_I18N[formLang].location} ({formLang.toUpperCase()})
+                </label>
                 <input
                   type="text"
                   value={editingProperty.location[formLang] || ""}
@@ -1857,13 +2111,15 @@ export default function AdminDashboard() {
                     ...editingProperty,
                     location: { ...editingProperty.location, [formLang]: e.target.value }
                   })}
-                  placeholder={`Address/Neighborhood in ${formLang.toUpperCase()}`}
+                  placeholder={`${FORM_I18N[formLang].placeholders.location}`}
                   className="w-full border border-white/15 bg-black/40 px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Physical Address / Map Query ({formLang.toUpperCase()})</label>
+                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                  {FORM_I18N[formLang].physicalAddress} ({formLang.toUpperCase()})
+                </label>
                 <input
                   type="text"
                   value={
@@ -1880,13 +2136,15 @@ export default function AdminDashboard() {
                       address: { ...currentObj, [formLang]: e.target.value }
                     });
                   }}
-                  placeholder={`Full Address in ${formLang.toUpperCase()} (e.g. Lomakivska St, 56/2, Kyiv)`}
+                  placeholder={`${FORM_I18N[formLang].placeholders.address}`}
                   className="w-full border border-white/15 bg-black/40 px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none mb-3"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Description ({formLang.toUpperCase()})</label>
+                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                  {FORM_I18N[formLang].description} ({formLang.toUpperCase()})
+                </label>
                 <RichTextEditor
                   value={
                     typeof editingProperty.description === "object" && editingProperty.description !== null
@@ -1902,27 +2160,31 @@ export default function AdminDashboard() {
                       description: { ...currentObj, [formLang]: html }
                     });
                   }}
-                  placeholder={`Full Property Description in ${formLang.toUpperCase()}... Format text, insert headings, lists, and images.`}
+                  placeholder={`${FORM_I18N[formLang].description} (${formLang.toUpperCase()})...`}
                 />
               </div>
             </div>
 
             {/* Gallery Photos & Video Presentation */}
             <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">
-              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Media Gallery</h4>
+              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">
+                {FORM_I18N[formLang].galleryPhotos}
+              </h4>
               
               <div>
-                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Video Presentation Link / File Upload</label>
+                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                  {FORM_I18N[formLang].videoPresentation}
+                </label>
                 <div className="flex gap-2">
                   <input
                     type="text"
                     value={editingProperty.video || ""}
                     onChange={(e) => setEditingProperty({ ...editingProperty, video: e.target.value })}
-                    placeholder="YouTube URL or direct video MP4 URL (e.g. /videos/tour.mp4)"
+                    placeholder={FORM_I18N[formLang].placeholders.video}
                     className="flex-1 border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                   <label className="bg-white/10 hover:bg-white/20 px-3.5 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-white rounded-sm cursor-pointer transition-colors shrink-0 flex items-center justify-center">
-                    Upload Video
+                    {FORM_I18N[formLang].uploadVideo}
                     <input
                       type="file"
                       accept="video/*"
@@ -2090,12 +2352,14 @@ export default function AdminDashboard() {
                 : (typeof editingProperty.address === "string" ? editingProperty.address : "");
               return (
                 <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">
-                  <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Google Map Verification</h4>
+                  <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">
+                    {FORM_I18N[formLang].googleMapVerification}
+                  </h4>
                   <div>
                     <div className="flex items-center justify-between gap-4">
                       <div>
                         <p className="text-[12px] text-white/80 font-mono">
-                          Current Map Query ({formLang.toUpperCase()}): <span className="text-[#D4AF37]">{testAddress || "(No address entered)"}</span>
+                          {FORM_I18N[formLang].mapQuery} ({formLang.toUpperCase()}): <span className="text-[#D4AF37]">{testAddress || "(No address entered)"}</span>
                         </p>
                         <p className="text-[10px] text-white/40 mt-0.5">
                           Address is managed in the Multilingual Information section above for each language tab.
@@ -2108,7 +2372,7 @@ export default function AdminDashboard() {
                           rel="noopener noreferrer"
                           className="bg-[#D4AF37] hover:bg-[#c5a030] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-black rounded-sm transition-colors shrink-0 flex items-center justify-center"
                         >
-                          Test Map Link ↗
+                          {FORM_I18N[formLang].testMapLink}
                         </a>
                       )}
                     </div>
@@ -2119,11 +2383,15 @@ export default function AdminDashboard() {
 
             {/* Detailed Specs */}
             <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">
-              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Technical Specifications (Optional)</h4>
+              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">
+                {FORM_I18N[formLang].techSpecs}
+              </h4>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Rooms (e.g. 4 Rooms)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].rooms}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.rooms || ""}
@@ -2131,12 +2399,15 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, rooms: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.rooms}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Layout (e.g. 120 / 72 / 20 m²)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].layout}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.layout || ""}
@@ -2144,12 +2415,15 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, layout: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.layout}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Floor (e.g. Floor 3 of 5)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].floor}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.floor || ""}
@@ -2157,6 +2431,7 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, floor: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.floor}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
@@ -2164,7 +2439,9 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Renovation (e.g. Designer finish)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].renovation}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.renovation || ""}
@@ -2172,12 +2449,15 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, renovation: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.renovation}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Building Type (e.g. New building)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].buildingType}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.newBuild || ""}
@@ -2185,12 +2465,15 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, newBuild: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.buildingType}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Structure (e.g. Monolithic frame)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].structure}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.construction || ""}
@@ -2198,6 +2481,7 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, construction: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.structure}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
@@ -2205,7 +2489,9 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Heating (e.g. Autonomous gas)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].heating}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.heating || ""}
@@ -2213,12 +2499,15 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, heating: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.heating}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Ceiling Height (e.g. 3.0 m)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].ceilingHeight}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.ceilings || ""}
@@ -2226,12 +2515,15 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, ceilings: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.ceilings}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Year Built (e.g. 2023)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
+                    {FORM_I18N[formLang].yearBuilt}
+                  </label>
                   <input
                     type="text"
                     value={editingProperty.specs?.yearBuilt || ""}
@@ -2239,6 +2531,7 @@ export default function AdminDashboard() {
                       ...editingProperty,
                       specs: { ...editingProperty.specs, yearBuilt: e.target.value }
                     })}
+                    placeholder={FORM_I18N[formLang].placeholders.yearBuilt}
                     className="w-full border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
                   />
                 </div>
@@ -2253,7 +2546,7 @@ export default function AdminDashboard() {
               className="px-4 py-2 text-[12px] font-medium uppercase tracking-wider text-amber-400/80 hover:text-amber-300 transition-colors border border-amber-500/20 rounded-xs"
               title="Revert form back to original state"
             >
-              ↺ Reset Changes
+              {FORM_I18N[formLang].resetChanges}
             </button>
 
             <div className="flex items-center gap-3">
@@ -2262,7 +2555,7 @@ export default function AdminDashboard() {
                 onClick={() => setEditingProperty(null)}
                 className="px-4 py-2 text-[12px] font-light text-white/60 hover:text-white"
               >
-                Cancel
+                {FORM_I18N[formLang].cancel}
               </button>
               <button
                 type="button"
@@ -2270,7 +2563,7 @@ export default function AdminDashboard() {
                 onClick={() => handleSaveProperty(editingProperty)}
                 className="bg-[#D4AF37] px-6 py-2.5 text-[12px] font-medium uppercase text-[#0a0a0a] hover:bg-white transition-all disabled:opacity-40"
               >
-                {propertiesSaving ? "Saving Property..." : "Save Property"}
+                {propertiesSaving ? FORM_I18N[formLang].savingProperty : FORM_I18N[formLang].saveProperty}
               </button>
             </div>
           </div>
