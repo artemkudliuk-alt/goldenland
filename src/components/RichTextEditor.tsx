@@ -151,22 +151,22 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
       />
 
       {/* Primary Toolbar - Text & History Actions */}
-      <div className="flex flex-wrap items-center gap-1 border-b border-white/10 p-2 bg-[#121212] select-none text-[12px]">
+      <div className="flex flex-wrap items-center gap-1.5 border-b border-white/10 p-2.5 bg-[#121212] select-none text-[12px]">
         <button
           type="button"
           onClick={() => executeCommand("undo")}
-          className="px-2 py-1 text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
+          className="px-2.5 py-1 text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors text-[11px] font-medium uppercase tracking-wider"
           title="Undo (Ctrl+Z)"
         >
-          ↺ Undo
+          Undo
         </button>
         <button
           type="button"
           onClick={() => executeCommand("redo")}
-          className="px-2 py-1 text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
+          className="px-2.5 py-1 text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors text-[11px] font-medium uppercase tracking-wider"
           title="Redo (Ctrl+Y)"
         >
-          ↻ Redo
+          Redo
         </button>
 
         <div className="h-4 w-px bg-white/15 my-auto mx-1" />
@@ -247,45 +247,45 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
         <button
           type="button"
           onClick={handleLink}
-          className="px-2.5 py-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
+          className="px-2.5 py-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors text-[11px] font-medium uppercase tracking-wider"
           title="Insert Link"
         >
-          🔗 Link
+          Link
         </button>
         <button
           type="button"
           onClick={() => fileInputRef.current?.click()}
-          className="px-2.5 py-1 text-[#D4AF37] hover:text-black hover:bg-[#D4AF37] border border-[#D4AF37]/40 rounded transition-colors font-medium ml-1"
+          className="px-3 py-1 text-[#D4AF37] hover:text-black hover:bg-[#D4AF37] border border-[#D4AF37]/50 rounded transition-colors text-[11px] font-semibold uppercase tracking-wider ml-1"
           title="Upload & Insert Image"
         >
-          📷 + Upload Image
+          + Upload Image
         </button>
 
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex items-center gap-1.5">
           <button
             type="button"
             onClick={() => executeCommand("removeFormat")}
-            className="px-2 py-1 text-[11px] text-white/50 hover:text-white hover:bg-white/10 rounded transition-colors"
+            className="px-2.5 py-1 text-[11px] text-white/50 hover:text-white hover:bg-white/10 rounded transition-colors uppercase tracking-wider"
             title="Clear Text Formatting"
           >
-            Clean Text
+            Clean Format
           </button>
           <button
             type="button"
             onClick={handleClearAll}
-            className="px-2 py-1 text-[11px] text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded transition-colors font-medium border border-rose-500/20"
+            className="px-2.5 py-1 text-[11px] text-rose-400 hover:text-rose-300 hover:bg-rose-950/40 rounded transition-colors font-medium border border-rose-500/30 uppercase tracking-wider"
             title="Clear entire editor content"
           >
-            🗑 Clear All
+            Clear All
           </button>
         </div>
       </div>
 
       {/* Visual Block Builder Toolbar */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-white/10 p-2 bg-[#090909] select-none text-[11px]">
-        <div className="flex items-center gap-1 text-[#D4AF37] font-semibold uppercase tracking-wider text-[10px] mr-1">
-          <span>✨ Insert Visual Block:</span>
-        </div>
+      <div className="flex flex-wrap items-center gap-2 border-b border-white/10 p-2.5 bg-[#0a0a0a] select-none text-[11px]">
+        <span className="text-[#D4AF37] font-semibold uppercase tracking-[0.15em] text-[10px] mr-2">
+          Page Layout Presets:
+        </span>
 
         <button
           type="button"
@@ -300,11 +300,10 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
   </div>
 </div>
 <p><br></p>`)}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
+          className="px-3 py-1.5 bg-black/80 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/20 hover:border-[#D4AF37] transition-all cursor-pointer text-[11px] font-medium tracking-wide uppercase"
           title="Insert 2 Columns: Text on Left, Image on Right"
         >
-          <span>🖼️</span>
-          <span>Text + Image Right</span>
+          Text + Image Right
         </button>
 
         <button
@@ -320,11 +319,10 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
   </div>
 </div>
 <p><br></p>`)}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
+          className="px-3 py-1.5 bg-black/80 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/20 hover:border-[#D4AF37] transition-all cursor-pointer text-[11px] font-medium tracking-wide uppercase"
           title="Insert 2 Columns: Image on Left, Text on Right"
         >
-          <span>🖼️</span>
-          <span>Image Left + Text</span>
+          Image Left + Text
         </button>
 
         <button
@@ -335,11 +333,10 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
   <img src="/images/generated/kyiv_panoramic_banner.png" alt="Photo 2" style="width: 100%; height: 220px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.15);" />
 </div>
 <p><br></p>`)}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
+          className="px-3 py-1.5 bg-black/80 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/20 hover:border-[#D4AF37] transition-all cursor-pointer text-[11px] font-medium tracking-wide uppercase"
           title="Insert 2 Photos Side-by-Side"
         >
-          <span>📸</span>
-          <span>2-Photo Gallery</span>
+          2-Photo Gallery
         </button>
 
         <button
@@ -349,26 +346,25 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
   "Golden Land Property Investment — Exclusive investment allocations and direct developer terms for qualified buyers."
 </blockquote>
 <p><br></p>`)}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-black/60 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/15 transition-all cursor-pointer font-medium"
+          className="px-3 py-1.5 bg-black/80 hover:bg-[#D4AF37] hover:text-black text-white/90 rounded border border-white/20 hover:border-[#D4AF37] transition-all cursor-pointer text-[11px] font-medium tracking-wide uppercase"
           title="Insert Gold Highlight Box"
         >
-          <span>💬</span>
-          <span>Gold Quote Card</span>
+          Gold Quote Card
         </button>
       </div>
 
       {/* Selected Image Context Action Bar (appears when user clicks an image inside editor) */}
       {selectedImg && (
-        <div className="flex items-center gap-3 bg-[#D4AF37]/15 border-b border-[#D4AF37]/40 px-3 py-2 text-[12px] text-white">
-          <span className="text-[#D4AF37] font-semibold flex items-center gap-1">
-            <span>🖼️ Selected Image Actions:</span>
+        <div className="flex flex-wrap items-center gap-3 bg-[#D4AF37]/15 border-b border-[#D4AF37]/40 px-3.5 py-2 text-[12px] text-white">
+          <span className="text-[#D4AF37] font-semibold uppercase tracking-wider text-[10px]">
+            Selected Image Actions:
           </span>
           <button
             type="button"
             onClick={() => replaceImgInputRef.current?.click()}
-            className="bg-[#D4AF37] text-black hover:bg-white font-medium px-2.5 py-1 rounded text-[11px] transition-colors"
+            className="bg-[#D4AF37] text-black hover:bg-white font-semibold px-3 py-1 rounded text-[11px] uppercase tracking-wider transition-colors"
           >
-            🔄 Replace Image File
+            Replace Image File
           </button>
           <button
             type="button"
@@ -379,9 +375,9 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
                 handleInput();
               }
             }}
-            className="bg-white/10 hover:bg-white/20 text-white px-2.5 py-1 rounded text-[11px] transition-colors"
+            className="bg-white/10 hover:bg-white/20 text-white px-3 py-1 rounded text-[11px] uppercase tracking-wider transition-colors border border-white/10"
           >
-            🔗 Change Image URL
+            Change Image Link
           </button>
           <button
             type="button"
@@ -390,14 +386,15 @@ export function RichTextEditor({ value, onChange, placeholder }: RichTextEditorP
               setSelectedImg(null);
               handleInput();
             }}
-            className="bg-rose-600/80 hover:bg-rose-500 text-white px-2.5 py-1 rounded text-[11px] transition-colors ml-auto"
+            className="bg-rose-600/80 hover:bg-rose-500 text-white px-3 py-1 rounded text-[11px] uppercase tracking-wider transition-colors ml-auto font-medium"
           >
-            🗑 Delete Image
+            Delete Image
           </button>
           <button
             type="button"
             onClick={() => setSelectedImg(null)}
-            className="text-white/40 hover:text-white text-[14px] px-1"
+            className="text-white/40 hover:text-white text-[14px] px-1 font-mono"
+            title="Close image toolbar"
           >
             ✕
           </button>
