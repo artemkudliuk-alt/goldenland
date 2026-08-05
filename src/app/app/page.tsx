@@ -44,6 +44,7 @@ const CITIES: CityData[] = [
   { id: "kozyn", name: { en: "Kozyn", ua: "Козин", ar: "كوزين"  }, count: 3,  xPct: 51, yPct: 36 },
   { id: "odesa", name: { en: "Odesa", ua: "Одеса", ar: "أوديسا" }, count: 8,  xPct: 36, yPct: 66 },
   { id: "lviv",  name: { en: "Lviv",  ua: "Львів", ar: "لفيف"   }, count: 5,  xPct: 16, yPct: 26 },
+  { id: "dubai", name: { en: "Dubai", ua: "Дубай", ar: "دبي"   }, count: 6,  xPct: 75, yPct: 80 },
 ];
 
 // ─── All property data ───────────────────────────────────────────────────────

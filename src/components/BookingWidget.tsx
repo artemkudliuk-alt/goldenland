@@ -70,6 +70,7 @@ export function BookingWidget() {
                 <option value="kyiv" className="bg-[#0a0a0a] text-white">{t.locKyiv[language]}</option>
                 <option value="lviv" className="bg-[#0a0a0a] text-white">{t.locLviv[language]}</option>
                 <option value="odesa" className="bg-[#0a0a0a] text-white">{t.locOdesa[language]}</option>
+                <option value="dubai" className="bg-[#0a0a0a] text-white">Dubai (Дубай)</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <ChevronDownIcon className="h-3 w-3 text-white/70" />

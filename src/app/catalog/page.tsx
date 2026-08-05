@@ -70,6 +70,7 @@ const t = {
   kyiv: { en: "Kyiv", ua: "Київ", ru: "Киев" },
   lviv: { en: "Lviv", ua: "Львів", ru: "Львов" },
   odesa: { en: "Odesa", ua: "Одеса", ru: "Одесса" },
+  dubai: { en: "Dubai", ua: "Дубай", ru: "Дубай" },
 };
 
 type SortKey = "featured" | "price-asc" | "price-desc" | "roi-desc";

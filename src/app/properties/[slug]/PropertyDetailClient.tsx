@@ -55,6 +55,11 @@ const brokers = {
     initials: "VS",
     photo: "",
   },
+  dubai: {
+    name: { en: "Rashid Al-Maktoum", ua: "Рашид Аль-Мактум", ru: "Рашид Аль-Мактум" },
+    initials: "RM",
+    photo: "",
+  },
 };
 
 function getText(val: any, lang: "en" | "ua" | "ru", fallback = ""): string {
@@ -128,18 +133,17 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
   const locationEn = getText(p.location, "en", "Ukraine");
   const descriptionText = getText(p.description, language, "");
 
-  const defaultSpecs = getDefaultSpecs(language);
   const rawSpecs = p.specs && typeof p.specs === "object" ? p.specs : {};
   const specs = {
-    rooms: rawSpecs.rooms || defaultSpecs.rooms,
-    layout: rawSpecs.layout || defaultSpecs.layout,
-    floor: rawSpecs.floor || defaultSpecs.floor,
-    renovation: rawSpecs.renovation || defaultSpecs.renovation,
-    newBuild: rawSpecs.newBuild || defaultSpecs.newBuild,
-    construction: rawSpecs.construction || defaultSpecs.construction,
-    heating: rawSpecs.heating || defaultSpecs.heating,
-    ceilings: rawSpecs.ceilings || defaultSpecs.ceilings,
-    yearBuilt: rawSpecs.yearBuilt || defaultSpecs.yearBuilt,
+    rooms: rawSpecs.rooms?.trim() || (p.bedrooms ? `${p.bedrooms} ${language === "en" ? "Bedrooms" : language === "ua" ? "кімнати" : "комнаты"}` : ""),
+    layout: rawSpecs.layout?.trim() || "",
+    floor: rawSpecs.floor?.trim() || "",
+    renovation: rawSpecs.renovation?.trim() || "",
+    newBuild: rawSpecs.newBuild?.trim() || "",
+    construction: rawSpecs.construction?.trim() || "",
+    heating: rawSpecs.heating?.trim() || "",
+    ceilings: rawSpecs.ceilings?.trim() || "",
+    yearBuilt: rawSpecs.yearBuilt?.trim() || "",
   };
 
   const statusMap = (t.status as any)[p.status] || { en: "Ready", ua: "Готовий", ru: "Готов" };
@@ -310,39 +314,48 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
                       </svg>
                     }
                   />
-                  <IconStat
-                    label={t.floorLabel[language]}
-                    value={specs.floor}
-                    icon={
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" className="h-5 w-5 text-[#D4AF37]">
-                        <path d="M4 22V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v18M2 22h20"/>
-                      </svg>
-                    }
-                  />
-                  <IconStat
-                    label={t.roi[language]}
-                    value={p.roi ? `${p.roi}%` : "—"}
-                    icon={
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" className="h-5 w-5 text-[#D4AF37]">
-                        <path d="M3 3v18h18M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
-                      </svg>
-                    }
-                  />
+                  {specs.floor && (
+                    <IconStat
+                      label={t.floorLabel[language]}
+                      value={specs.floor}
+                      icon={
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" className="h-5 w-5 text-[#D4AF37]">
+                          <path d="M4 22V4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v18M2 22h20"/>
+                        </svg>
+                      }
+                    />
+                  )}
+                  {p.roi && (
+                    <IconStat
+                      label={t.roi[language]}
+                      value={`${p.roi}%`}
+                      icon={
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" className="h-5 w-5 text-[#D4AF37]">
+                          <path d="M3 3v18h18M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                        </svg>
+                      }
+                    />
+                  )}
                 </div>
               </div>
 
               {/* Specs grid */}
-              <div className="space-y-6">
-                <SectionEyebrow className="text-[#D4AF37]">{t.detailsTitle[language]}</SectionEyebrow>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-5 gap-x-8 text-[15px] font-light text-gray-800">
-                  <DetailItem label={language === "en" ? "Renovation" : "Ремонт"} value={specs.renovation} />
-                  <DetailItem label={language === "en" ? "Building Class" : "Тип будинку"} value={specs.newBuild} />
-                  <DetailItem label={language === "en" ? "Structure" : "Конструкція"} value={specs.construction} />
-                  <DetailItem label={language === "en" ? "Heating" : "Опалення"} value={specs.heating} />
-                  <DetailItem label={language === "en" ? "Ceilings" : "Висота стелі"} value={specs.ceilings} />
-                  <DetailItem label={language === "en" ? "Year Built" : "Рік"} value={specs.yearBuilt} />
+              {Object.values(specs).some(Boolean) && (
+                <div className="space-y-6">
+                  <SectionEyebrow className="text-[#D4AF37]">{t.detailsTitle[language]}</SectionEyebrow>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-5 gap-x-8 text-[15px] font-light text-gray-800">
+                    {specs.rooms && <DetailItem label={language === "en" ? "Rooms" : language === "ua" ? "Кімнати" : "Комнаты"} value={specs.rooms} />}
+                    {specs.layout && <DetailItem label={language === "en" ? "Layout" : language === "ua" ? "Планування" : "Планировка"} value={specs.layout} />}
+                    {specs.floor && <DetailItem label={language === "en" ? "Floor" : language === "ua" ? "Поверх" : "Этаж"} value={specs.floor} />}
+                    {specs.renovation && <DetailItem label={language === "en" ? "Renovation" : "Ремонт"} value={specs.renovation} />}
+                    {specs.newBuild && <DetailItem label={language === "en" ? "Building Class" : "Тип будинку"} value={specs.newBuild} />}
+                    {specs.construction && <DetailItem label={language === "en" ? "Structure" : "Конструкція"} value={specs.construction} />}
+                    {specs.heating && <DetailItem label={language === "en" ? "Heating" : "Опалення"} value={specs.heating} />}
+                    {specs.ceilings && <DetailItem label={language === "en" ? "Ceilings" : "Висота стелі"} value={specs.ceilings} />}
+                    {specs.yearBuilt && <DetailItem label={language === "en" ? "Year Built" : "Рік"} value={specs.yearBuilt} />}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* Description */}
               <div className="space-y-5 border-t border-gray-100 pt-10">
@@ -354,7 +367,10 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
                     }`}
                   >
                     {descriptionText ? (
-                      <p>{descriptionText}</p>
+                      <div
+                        className="prose prose-neutral max-w-none text-[16px] font-light leading-[1.8] text-gray-700 whitespace-pre-line"
+                        dangerouslySetInnerHTML={{ __html: descriptionText }}
+                      />
                     ) : (
                       <p className="text-gray-400 italic">
                         {language === "en" ? "No description yet." : language === "ua" ? "Опис відсутній." : "Описание отсутствует."}

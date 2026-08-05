@@ -65,19 +65,27 @@ export async function POST(request: Request) {
         ru: typeof p?.description === "object" ? (p?.description?.ru || p?.description?.en || "") : "",
       };
 
+      const addressObj = typeof p?.address === "object" && p.address !== null ? {
+        en: typeof p.address.en === "string" ? p.address.en : "",
+        ua: typeof p.address.ua === "string" ? p.address.ua : (typeof p.address.en === "string" ? p.address.en : ""),
+        ru: typeof p.address.ru === "string" ? p.address.ru : (typeof p.address.en === "string" ? p.address.en : ""),
+      } : (typeof p?.address === "string" ? { en: p.address, ua: p.address, ru: p.address } : { en: "", ua: "", ru: "" });
+
       const galleryArray = Array.isArray(p?.gallery)
         ? p.gallery.filter((g: any) => typeof g === "string" && g.trim().length > 0)
         : [];
 
       const validTypes = ["apartments", "villas", "hotels", "commercial"];
       const propType = validTypes.includes(p?.type) ? p.type : "apartments";
+      const validCities = ["kyiv", "lviv", "odesa", "dubai"];
+      const propCity = validCities.includes(p?.city) ? p.city : "kyiv";
 
       return {
         id,
         slug,
         title: titleObj,
         location: locationObj,
-        city: typeof p?.city === "string" ? p.city : "kyiv",
+        city: propCity,
         type: propType as any,
         price: typeof p?.price === "number" ? p.price : (Number(p?.price) || 0),
         area: typeof p?.area === "number" ? p.area : (Number(p?.area) || 0),
@@ -86,7 +94,7 @@ export async function POST(request: Request) {
         gallery: galleryArray,
         video: typeof p?.video === "string" ? p.video : "",
         status: typeof p?.status === "string" ? p.status : "ready",
-        address: typeof p?.address === "string" ? p.address : "",
+        address: addressObj,
         managerName: typeof p?.managerName === "string" ? p.managerName.trim() : "",
         managerInitials: typeof p?.managerInitials === "string" ? p.managerInitials.trim().toUpperCase().slice(0, 3) : "",
         managerPhoto: typeof p?.managerPhoto === "string" ? p.managerPhoto.trim() : "",

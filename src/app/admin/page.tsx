@@ -1255,7 +1255,7 @@ export default function AdminDashboard() {
                 gallery: [""],
                 video: "",
                 status: "ready",
-                address: "",
+                address: { en: "", ua: "", ru: "" },
                 managerName: "",
                 managerInitials: "",
                 managerPhoto: "",
@@ -1337,6 +1337,9 @@ export default function AdminDashboard() {
                               onClick={() => {
                                 setEditingProperty({
                                   ...p,
+                                  address: typeof p.address === "object" && p.address !== null
+                                    ? p.address
+                                    : { en: typeof p.address === "string" ? p.address : "", ua: typeof p.address === "string" ? p.address : "", ru: typeof p.address === "string" ? p.address : "" },
                                   specs: p.specs || {
                                     rooms: "",
                                     layout: "",
@@ -1542,6 +1545,7 @@ export default function AdminDashboard() {
                     <option value="kyiv">Kyiv</option>
                     <option value="lviv">Lviv</option>
                     <option value="odesa">Odesa</option>
+                    <option value="dubai">Dubai</option>
                   </select>
                 </div>
 
@@ -1769,16 +1773,46 @@ export default function AdminDashboard() {
               </div>
 
               <div>
+                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Physical Address / Map Query ({formLang.toUpperCase()})</label>
+                <input
+                  type="text"
+                  value={
+                    typeof editingProperty.address === "object" && editingProperty.address !== null
+                      ? (editingProperty.address[formLang] || "")
+                      : (typeof editingProperty.address === "string" ? editingProperty.address : "")
+                  }
+                  onChange={(e) => {
+                    const currentObj = typeof editingProperty.address === "object" && editingProperty.address !== null
+                      ? editingProperty.address
+                      : { en: "", ua: "", ru: "" };
+                    setEditingProperty({
+                      ...editingProperty,
+                      address: { ...currentObj, [formLang]: e.target.value }
+                    });
+                  }}
+                  placeholder={`Full Address in ${formLang.toUpperCase()} (e.g. Lomakivska St, 56/2, Kyiv)`}
+                  className="w-full border border-white/15 bg-black/40 px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none mb-3"
+                />
+              </div>
+
+              <div>
                 <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Description ({formLang.toUpperCase()})</label>
-                <textarea
-                  rows={4}
-                  value={editingProperty.description[formLang] || ""}
-                  onChange={(e) => setEditingProperty({
-                    ...editingProperty,
-                    description: { ...editingProperty.description, [formLang]: e.target.value }
-                  })}
-                  placeholder={`Full Property Description in ${formLang.toUpperCase()}`}
-                  className="w-full border border-white/15 bg-black/40 p-3.5 text-[13px] font-light text-white placeholder:text-white/20 focus:border-[#D4AF37] focus:outline-none"
+                <RichTextEditor
+                  value={
+                    typeof editingProperty.description === "object" && editingProperty.description !== null
+                      ? (editingProperty.description[formLang] || "")
+                      : (typeof editingProperty.description === "string" ? editingProperty.description : "")
+                  }
+                  onChange={(html) => {
+                    const currentObj = typeof editingProperty.description === "object" && editingProperty.description !== null
+                      ? editingProperty.description
+                      : { en: "", ua: "", ru: "" };
+                    setEditingProperty({
+                      ...editingProperty,
+                      description: { ...currentObj, [formLang]: html }
+                    });
+                  }}
+                  placeholder={`Full Property Description in ${formLang.toUpperCase()}... Format text, insert headings, lists, and images.`}
                 />
               </div>
             </div>
@@ -1924,37 +1958,39 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Google Map Address */}
-            <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">
-              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Physical Address & Google Map</h4>
-              <div>
-                <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">
-                  Google Map Address Query
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={editingProperty.address || ""}
-                    onChange={(e) => setEditingProperty({ ...editingProperty, address: e.target.value })}
-                    placeholder="e.g. Lomakivska St, 56/2, Pechersk, Kyiv"
-                    className="flex-1 border border-white/15 bg-black px-3.5 py-2.5 text-[13px] font-light text-white focus:border-[#D4AF37] focus:outline-none"
-                  />
-                  {editingProperty.address && (
-                    <a
-                      href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(editingProperty.address)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="bg-[#D4AF37] hover:bg-[#c5a030] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-black rounded-sm transition-colors shrink-0 flex items-center justify-center"
-                    >
-                      Confirm Address (Test Map)
-                    </a>
-                  )}
+            {/* Google Map Address Verification */}
+            {(() => {
+              const testAddress = typeof editingProperty.address === "object" && editingProperty.address !== null
+                ? (editingProperty.address[formLang] || editingProperty.address.en || editingProperty.address.ua || editingProperty.address.ru || "")
+                : (typeof editingProperty.address === "string" ? editingProperty.address : "");
+              return (
+                <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">
+                  <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Google Map Verification</h4>
+                  <div>
+                    <div className="flex items-center justify-between gap-4">
+                      <div>
+                        <p className="text-[12px] text-white/80 font-mono">
+                          Current Map Query ({formLang.toUpperCase()}): <span className="text-[#D4AF37]">{testAddress || "(No address entered)"}</span>
+                        </p>
+                        <p className="text-[10px] text-white/40 mt-0.5">
+                          Address is managed in the Multilingual Information section above for each language tab.
+                        </p>
+                      </div>
+                      {testAddress && (
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(testAddress)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="bg-[#D4AF37] hover:bg-[#c5a030] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-wider text-black rounded-sm transition-colors shrink-0 flex items-center justify-center"
+                        >
+                          Test Map Link ↗
+                        </a>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <p className="text-[10px] text-white/40 mt-1">
-                  Type a physical address. Click "Confirm Address" to verify how Google Maps resolves it.
-                </p>
-              </div>
-            </div>
+              );
+            })()}
 
             {/* Detailed Specs */}
             <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">

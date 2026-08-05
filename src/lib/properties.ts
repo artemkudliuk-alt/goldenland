@@ -9,7 +9,7 @@ export interface Property {
   status: PropertyStatus;
   title: Record<Locale, string>;
   location: Record<Locale, string>;
-  city: "kyiv" | "lviv" | "odesa";
+  city: "kyiv" | "lviv" | "odesa" | "dubai";
   price: number;
   priceOnRequest?: boolean;
   beds?: number;

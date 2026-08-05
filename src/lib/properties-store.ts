@@ -16,7 +16,7 @@ export interface PropertyData {
   gallery: string[];
   video?: string;
   status?: string;
-  address?: string;
+  address?: { en: string; ua: string; ru: string } | string;
   managerName?: string;
   managerInitials?: string;
   managerPhoto?: string;
