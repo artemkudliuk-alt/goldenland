@@ -64,6 +64,7 @@ export default function AdminDashboard() {
   const [propertiesLoading, setPropertiesLoading] = useState(false);
   const [propertiesSaving, setPropertiesSaving] = useState(false);
   const [editingProperty, setEditingProperty] = useState<any | null>(null);
+  const [initialPropertyBackup, setInitialPropertyBackup] = useState<any | null>(null);
 
   // Form translation selector
   const [formLang, setFormLang] = useState<"en" | "ua" | "ru">("en");
@@ -286,6 +287,51 @@ export default function AdminDashboard() {
       console.error("Error deleting property:", err);
     } finally {
       setPropertiesSaving(false);
+    }
+  };
+
+  const slugify = (text: string) =>
+    (text || "")
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/[\s_-]+/g, "-");
+
+  const handleDuplicateProperty = (propToCopy: any) => {
+    const copyId = "prop_" + Date.now();
+    const baseSlug = propToCopy.slug || "property";
+    const copySlug = `${baseSlug}-copy-${Math.floor(Math.random() * 1000)}`;
+    const duplicatedProp = {
+      ...JSON.parse(JSON.stringify(propToCopy)),
+      id: copyId,
+      slug: copySlug,
+      title: {
+        en: (propToCopy.title?.en || "") + " (Copy)",
+        ua: (propToCopy.title?.ua || "") + " (Копія)",
+        ru: (propToCopy.title?.ru || "") + " (Копия)",
+      },
+    };
+
+    setEditingProperty(duplicatedProp);
+    setInitialPropertyBackup(JSON.parse(JSON.stringify(duplicatedProp)));
+    setFormLang("en");
+  };
+
+  const moveGalleryImage = (index: number, direction: "up" | "down") => {
+    if (!editingProperty || !Array.isArray(editingProperty.gallery)) return;
+    const gallery = [...editingProperty.gallery];
+    const targetIndex = direction === "up" ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= gallery.length) return;
+    const temp = gallery[index];
+    gallery[index] = gallery[targetIndex];
+    gallery[targetIndex] = temp;
+    setEditingProperty({ ...editingProperty, gallery });
+  };
+
+  const handleResetPropertyForm = () => {
+    if (!initialPropertyBackup) return;
+    if (confirm("Reset all changes to their original values?")) {
+      setEditingProperty(JSON.parse(JSON.stringify(initialPropertyBackup)));
     }
   };
 
@@ -1335,7 +1381,7 @@ export default function AdminDashboard() {
                             </a>
                             <button
                               onClick={() => {
-                                setEditingProperty({
+                                const propToEdit = {
                                   ...p,
                                   address: typeof p.address === "object" && p.address !== null
                                     ? p.address
@@ -1351,12 +1397,21 @@ export default function AdminDashboard() {
                                     ceilings: "",
                                     yearBuilt: ""
                                   }
-                                });
+                                };
+                                setEditingProperty(propToEdit);
+                                setInitialPropertyBackup(JSON.parse(JSON.stringify(propToEdit)));
                                 setFormLang("en");
                               }}
                               className="text-[12px] uppercase tracking-wider text-white/60 hover:text-white transition-colors"
                             >
                               Edit
+                            </button>
+                            <button
+                              onClick={() => handleDuplicateProperty(p)}
+                              className="text-[12px] uppercase tracking-wider text-amber-300 hover:text-amber-200 transition-colors font-medium"
+                              title="Create a duplicate copy of this property"
+                            >
+                              + Clone
                             </button>
                             <button
                               onClick={() => handleDeleteProperty(p.id)}
@@ -1876,10 +1931,21 @@ export default function AdminDashboard() {
                   </span>
                 </div>
 
-                <div className="space-y-2 max-h-[220px] overflow-y-auto border border-white/10 p-3 bg-black/40 rounded-sm">
+                <div className="space-y-2.5 max-h-[300px] overflow-y-auto border border-white/10 p-3 bg-black/40 rounded-sm">
                   {editingProperty.gallery.map((imgUrl: string, idx: number) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <span className="text-[11px] font-mono text-white/40 w-6">#{idx + 1}</span>
+                    <div key={idx} className="flex items-center gap-2 bg-black/60 border border-white/5 p-2 rounded-xs">
+                      <span className="text-[11px] font-mono text-[#D4AF37] w-6 shrink-0 font-semibold">#{idx + 1}</span>
+                      
+                      {/* Photo Thumbnail */}
+                      <div className="w-10 h-10 rounded bg-white/5 border border-white/10 shrink-0 overflow-hidden relative flex items-center justify-center">
+                        {imgUrl ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={imgUrl} alt="" className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="text-[9px] text-white/30 font-mono uppercase">Empty</span>
+                        )}
+                      </div>
+
                       <input
                         type="text"
                         value={imgUrl}
@@ -1891,7 +1957,30 @@ export default function AdminDashboard() {
                         placeholder="e.g. /images/generated/prop-kyiv-podil-loft-1.webp"
                         className="flex-1 border border-white/10 bg-black px-3 py-1.5 text-[12px] font-mono text-white/95 focus:border-[#D4AF37] focus:outline-none"
                       />
-                      <label className="bg-white/10 hover:bg-white/20 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-wider text-white rounded-sm cursor-pointer transition-colors shrink-0">
+
+                      {/* Move Up / Move Down */}
+                      <div className="flex flex-col gap-0.5 shrink-0">
+                        <button
+                          type="button"
+                          disabled={idx === 0}
+                          onClick={() => moveGalleryImage(idx, "up")}
+                          className="px-1.5 py-0.5 text-[10px] bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/70 rounded transition-colors disabled:opacity-20"
+                          title="Move Up"
+                        >
+                          ▲
+                        </button>
+                        <button
+                          type="button"
+                          disabled={idx === editingProperty.gallery.length - 1}
+                          onClick={() => moveGalleryImage(idx, "down")}
+                          className="px-1.5 py-0.5 text-[10px] bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/70 rounded transition-colors disabled:opacity-20"
+                          title="Move Down"
+                        >
+                          ▼
+                        </button>
+                      </div>
+
+                      <label className="bg-[#D4AF37]/20 hover:bg-[#D4AF37] hover:text-black border border-[#D4AF37]/40 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#D4AF37] rounded-sm cursor-pointer transition-colors shrink-0">
                         Upload
                         <input
                           type="file"
@@ -1928,8 +2017,9 @@ export default function AdminDashboard() {
                           setEditingProperty({ ...editingProperty, gallery: updated });
                         }}
                         className="text-[11px] uppercase tracking-wider text-rose-400 hover:text-rose-300 px-1"
+                        title="Remove photo"
                       >
-                        Remove
+                        ✕
                       </button>
                     </div>
                   ))}
@@ -1994,7 +2084,7 @@ export default function AdminDashboard() {
 
             {/* Detailed Specs */}
             <div className="border border-white/10 bg-black/20 p-5 rounded-xs space-y-4">
-              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Technical Specifications</h4>
+              <h4 className="text-[12px] font-semibold uppercase tracking-wider text-[#D4AF37]">Technical Specifications (Optional)</h4>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -2065,7 +2155,7 @@ export default function AdminDashboard() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Construction (e.g. Monolithic)</label>
+                  <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50 mb-1">Structure (e.g. Monolithic frame)</label>
                   <input
                     type="text"
                     value={editingProperty.specs?.construction || ""}
@@ -2121,22 +2211,33 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-end gap-3 border-t border-white/10 pt-4">
+          <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4">
             <button
               type="button"
-              onClick={() => setEditingProperty(null)}
-              className="px-4 py-2 text-[12px] font-light text-white/60 hover:text-white"
+              onClick={handleResetPropertyForm}
+              className="px-4 py-2 text-[12px] font-medium uppercase tracking-wider text-amber-400/80 hover:text-amber-300 transition-colors border border-amber-500/20 rounded-xs"
+              title="Revert form back to original state"
             >
-              Cancel
+              ↺ Reset Changes
             </button>
-            <button
-              type="button"
-              disabled={propertiesSaving}
-              onClick={() => handleSaveProperty(editingProperty)}
-              className="bg-[#D4AF37] px-6 py-2.5 text-[12px] font-medium uppercase text-[#0a0a0a] hover:bg-white transition-all disabled:opacity-40"
-            >
-              {propertiesSaving ? "Saving..." : "Save Property"}
-            </button>
+
+            <div className="flex items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setEditingProperty(null)}
+                className="px-4 py-2 text-[12px] font-light text-white/60 hover:text-white"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={propertiesSaving}
+                onClick={() => handleSaveProperty(editingProperty)}
+                className="bg-[#D4AF37] px-6 py-2.5 text-[12px] font-medium uppercase text-[#0a0a0a] hover:bg-white transition-all disabled:opacity-40"
+              >
+                {propertiesSaving ? "Saving Property..." : "Save Property"}
+              </button>
+            </div>
           </div>
         </div>
       </div>
