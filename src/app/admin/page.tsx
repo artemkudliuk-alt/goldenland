@@ -284,6 +284,18 @@ const FORM_I18N = {
   }
 };
 
+function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
+  if (val && typeof val === "object" && !Array.isArray(val)) {
+    return {
+      en: typeof val.en === "string" ? val.en : "",
+      ua: typeof val.ua === "string" ? val.ua : (typeof val.en === "string" ? val.en : ""),
+      ru: typeof val.ru === "string" ? val.ru : (typeof val.en === "string" ? val.en : ""),
+    };
+  }
+  const str = typeof val === "string" ? val : "";
+  return { en: str, ua: str, ru: str };
+}
+
 export default function AdminDashboard() {
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -542,25 +554,35 @@ export default function AdminDashboard() {
   };
 
   const slugify = (text: string) =>
-    (text || "")
-      .toLowerCase()
-      .trim()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/[\s_-]+/g, "-");
+function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
+  if (val && typeof val === "object" && !Array.isArray(val)) {
+    return {
+      en: typeof val.en === "string" ? val.en : "",
+      ua: typeof val.ua === "string" ? val.ua : (typeof val.en === "string" ? val.en : ""),
+      ru: typeof val.ru === "string" ? val.ru : (typeof val.en === "string" ? val.en : ""),
+    };
+  }
+  const str = typeof val === "string" ? val : "";
+  return { en: str, ua: str, ru: str };
+}
 
   const handleDuplicateProperty = (propToCopy: any) => {
     const copyId = "prop_" + Date.now();
     const baseSlug = propToCopy.slug || "property";
     const copySlug = `${baseSlug}-copy-${Math.floor(Math.random() * 1000)}`;
+    const titleObj = toMultilingualObj(propToCopy.title);
     const duplicatedProp = {
       ...JSON.parse(JSON.stringify(propToCopy)),
       id: copyId,
       slug: copySlug,
       title: {
-        en: (propToCopy.title?.en || "") + " (Copy)",
-        ua: (propToCopy.title?.ua || "") + " (Копія)",
-        ru: (propToCopy.title?.ru || "") + " (Копия)",
+        en: (titleObj.en || "Property") + " (Copy)",
+        ua: (titleObj.ua || "Об'єкт") + " (Копія)",
+        ru: (titleObj.ru || "Объект") + " (Копия)",
       },
+      location: toMultilingualObj(propToCopy.location),
+      description: toMultilingualObj(propToCopy.description),
+      address: toMultilingualObj(propToCopy.address),
     };
 
     setEditingProperty(duplicatedProp);
@@ -1600,6 +1622,9 @@ export default function AdminDashboard() {
                 <tbody className="divide-y divide-white/5 text-[13px] font-light">
                   {customProperties.map((p) => {
                     const propUrl = `/properties/${p.slug}`;
+                    const displayTitle = typeof p.title === "object" && p.title !== null
+                      ? (p.title.en || p.title.ua || p.title.ru || "(No Title)")
+                      : (typeof p.title === "string" ? p.title : "(No Title)");
                     return (
                       <tr key={p.id} className="hover:bg-white/2 transition-colors">
                         <td className="px-6 py-4 font-normal text-white">
@@ -1610,7 +1635,7 @@ export default function AdminDashboard() {
                             className="hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1.5"
                             title="Open property page on site in new tab"
                           >
-                            <span>{p.title.en || "(No Title)"}</span>
+                            <span>{displayTitle}</span>
                             <svg className="w-3.5 h-3.5 text-[#D4AF37]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                             </svg>
@@ -1634,9 +1659,10 @@ export default function AdminDashboard() {
                               onClick={() => {
                                 const propToEdit = {
                                   ...p,
-                                  address: typeof p.address === "object" && p.address !== null
-                                    ? p.address
-                                    : { en: typeof p.address === "string" ? p.address : "", ua: typeof p.address === "string" ? p.address : "", ru: typeof p.address === "string" ? p.address : "" },
+                                  title: toMultilingualObj(p.title),
+                                  location: toMultilingualObj(p.location),
+                                  description: toMultilingualObj(p.description),
+                                  address: toMultilingualObj(p.address),
                                   specs: p.specs || {
                                     rooms: "",
                                     layout: "",
