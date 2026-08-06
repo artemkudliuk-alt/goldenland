@@ -9,11 +9,20 @@ interface DynamicPageContentProps {
   page: CustomPage;
 }
 
+function getText(val: any, lang: "en" | "ua" | "ru", fallback = ""): string {
+  if (val === null || val === undefined) return fallback;
+  if (typeof val === "string") return val || fallback;
+  if (typeof val === "object") {
+    return val[lang] || val.en || val.ua || val.ru || fallback;
+  }
+  return String(val) || fallback;
+}
+
 export function DynamicPageContent({ page }: DynamicPageContentProps) {
   const { language } = useLanguage();
 
-  const title = page.title[language] || page.title.en;
-  const content = page.content[language] || page.content.en;
+  const title = getText(page.title, language, "Page");
+  const content = getText(page.content, language, "");
 
   // Simple formatter to convert newlines to paragraphs/breaks if it's not HTML
   const isHtml = /<[a-z][\s\S]*>/i.test(content);

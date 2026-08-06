@@ -132,6 +132,7 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
   const locationText = getText(p.location, language, "Ukraine");
   const locationEn = getText(p.location, "en", "Ukraine");
   const descriptionText = getText(p.description, language, "");
+  const addressText = getText(p.address, language, `${p.city || "Kyiv"}, Ukraine`);
 
   const rawSpecs = p.specs && typeof p.specs === "object" ? p.specs : {};
   const specs = {
@@ -394,7 +395,7 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
               <div className="space-y-6 border-t border-gray-100 pt-10">
                 <SectionEyebrow className="text-[#D4AF37]">{t.locationTitle[language]}</SectionEyebrow>
                 <p className="text-[13.5px] font-light text-gray-500">
-                  {p.address || `${p.city || "Kyiv"}, Ukraine`}
+                  {addressText}
                 </p>
                 <div className="relative aspect-[16/9] w-full overflow-hidden border border-gray-100 rounded-sm shadow-sm">
                   <iframe
@@ -404,7 +405,7 @@ export function PropertyDetailClient({ property: p }: PropertyDetailClientProps)
                     loading="lazy"
                     allowFullScreen
                     referrerPolicy="no-referrer-when-downgrade"
-                    src={`https://maps.google.com/maps?q=${encodeURIComponent(p.address || `${p.city || "Kyiv"}, Ukraine`)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(addressText)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
                   />
                 </div>
               </div>
