@@ -409,7 +409,7 @@ export default function AdminDashboard() {
   const fetchProperties = async () => {
     setPropertiesLoading(true);
     try {
-      const res = await fetch("/api/admin/properties", { cache: "no-store" });
+      const res = await fetch(`/api/admin/properties?t=${Date.now()}`, { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         setCustomProperties(data.properties || []);

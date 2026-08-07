@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { put, list } from "@vercel/blob";
+import { put, list, del } from "@vercel/blob";
 import { properties as staticProperties } from "./properties";
 
 export interface PropertyData {
@@ -145,7 +145,7 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
   // 1. Try Vercel Blob Storage FIRST (Primary Store)
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
-      const { blobs } = await list({ prefix: "data/custom_properties.json" });
+      const { blobs } = await list({ prefix: "data/custom_properties" });
       if (blobs.length > 0) {
         const sorted = [...blobs].sort(
           (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
@@ -260,11 +260,17 @@ export async function saveCustomProperties(properties: PropertyData[]): Promise<
   // 1. Save to Vercel Blob Storage FIRST
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
+      // Find old blobs and delete them to keep storage clean
+      const { blobs } = await list({ prefix: "data/custom_properties" });
+      if (blobs.length > 0) {
+        const urlsToDelete = blobs.map((b) => b.url);
+        await del(urlsToDelete);
+      }
+
       await put("data/custom_properties.json", JSON.stringify(properties, null, 2), {
         access: "public",
         contentType: "application/json",
-        addRandomSuffix: false,
-        allowOverwrite: true,
+        addRandomSuffix: true,
       });
       saved = true;
     } catch (err) {

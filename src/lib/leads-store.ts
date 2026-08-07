@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
-import { put, list } from "@vercel/blob";
+import { put, list, del } from "@vercel/blob";
 
 export type LeadStatus = "new" | "in_progress" | "completed" | "declined";
 
@@ -78,7 +78,7 @@ async function readAll(): Promise<StoredLead[]> {
   // 2. Try Vercel Blob Storage
   if (!loaded && process.env.BLOB_READ_WRITE_TOKEN) {
     try {
-      const { blobs } = await list({ prefix: "data/leads_captured.json" });
+      const { blobs } = await list({ prefix: "data/leads_captured" });
       if (blobs.length > 0) {
         const sorted = [...blobs].sort(
           (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
@@ -157,11 +157,16 @@ async function writeAll(leads: StoredLead[]): Promise<boolean> {
   // 2. Save to Vercel Blob Storage
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
+      const { blobs } = await list({ prefix: "data/leads_captured" });
+      if (blobs.length > 0) {
+        const urlsToDelete = blobs.map((b) => b.url);
+        await del(urlsToDelete);
+      }
+
       await put("data/leads_captured.json", JSON.stringify(leads, null, 2), {
         access: "public",
         contentType: "application/json",
-        addRandomSuffix: false,
-        allowOverwrite: true,
+        addRandomSuffix: true,
       });
       saved = true;
     } catch (err) {

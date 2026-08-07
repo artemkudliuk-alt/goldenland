@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { put, list } from "@vercel/blob";
+import { put, list, del } from "@vercel/blob";
 import { type OfficeData, type ContactSettings, DEFAULT_CONTACT_SETTINGS } from "./contacts-types";
 
 export { type OfficeData, type ContactSettings, DEFAULT_CONTACT_SETTINGS };
@@ -56,7 +56,7 @@ export async function getContactSettings(): Promise<ContactSettings> {
   // 2. Try Vercel Blob Storage
   if (!settingsResult && process.env.BLOB_READ_WRITE_TOKEN) {
     try {
-      const { blobs } = await list({ prefix: "data/contacts_settings.json" });
+      const { blobs } = await list({ prefix: "data/contacts_settings" });
       if (blobs.length > 0) {
         const sorted = [...blobs].sort(
           (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
@@ -130,11 +130,16 @@ export async function saveContactSettings(settings: ContactSettings): Promise<bo
   // 2. Save to Vercel Blob Storage
   if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
+      const { blobs } = await list({ prefix: "data/contacts_settings" });
+      if (blobs.length > 0) {
+        const urlsToDelete = blobs.map((b) => b.url);
+        await del(urlsToDelete);
+      }
+
       await put("data/contacts_settings.json", JSON.stringify(settings, null, 2), {
         access: "public",
         contentType: "application/json",
-        addRandomSuffix: false,
-        allowOverwrite: true,
+        addRandomSuffix: true,
       });
       saved = true;
     } catch (err) {
