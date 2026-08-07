@@ -184,7 +184,7 @@ function CatalogInner() {
         break;
     }
     return copy;
-  }, [type, city, beds, budget, sort]);
+  }, [loadedProperties, type, city, beds, budget, sort]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, totalPages);

@@ -9,7 +9,7 @@ function slugify(text: string): string {
   return text
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, "")
+    .replace(/[^\w\s\u0400-\u04FF-]/gi, "")
     .replace(/[\s_-]+/g, "-")
     .replace(/^-+|-+$/g, "");
 }

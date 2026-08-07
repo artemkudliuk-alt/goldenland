@@ -493,7 +493,7 @@ export default function AdminDashboard() {
     const fallbackSlug = (property.title?.en || property.title?.ua || "property")
       .toLowerCase()
       .trim()
-      .replace(/[^\w\s-]/g, "")
+      .replace(/[^\w\s\u0400-\u04FF-]/gi, "")
       .replace(/[\s_-]+/g, "-");
     const cleanProp = {
       ...property,
