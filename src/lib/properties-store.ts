@@ -185,7 +185,10 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
     try {
       const { blobs } = await list({ prefix: "data/custom_properties.json" });
       if (blobs.length > 0) {
-        const blobRes = await fetch(blobs[0].url, { cache: "no-store" });
+        const sorted = [...blobs].sort(
+          (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
+        );
+        const blobRes = await fetch(sorted[0].url, { cache: "no-store" });
         if (blobRes.ok) {
           const parsed = await blobRes.json();
           if (Array.isArray(parsed) && parsed.length > 0) {
