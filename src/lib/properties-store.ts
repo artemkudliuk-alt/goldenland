@@ -139,49 +139,11 @@ function getSeededProperties(): PropertyData[] {
 }
 
 export async function getCustomProperties(): Promise<PropertyData[]> {
-  const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-
   let propertiesList: PropertyData[] = [];
   let loaded = false;
 
-  // 1. Try Vercel KV
-  if (kvUrl && kvToken) {
-    try {
-      const res = await fetch(kvUrl, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${kvToken}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(["GET", "custom_properties"]),
-        cache: "no-store",
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const raw = data?.result;
-        if (raw) {
-          let parsed: any = raw;
-          if (typeof raw === "string") {
-            try {
-              parsed = JSON.parse(raw);
-            } catch (e) {
-              console.error("[properties-store] JSON parse error:", e);
-            }
-          }
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            propertiesList = parsed as PropertyData[];
-            loaded = true;
-          }
-        }
-      }
-    } catch (err) {
-      console.error("[properties-store] KV read failed:", err);
-    }
-  }
-
-  // 2. Try Vercel Blob Storage
-  if (!loaded && process.env.BLOB_READ_WRITE_TOKEN) {
+  // 1. Try Vercel Blob Storage FIRST (Primary Store)
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
     try {
       const { blobs } = await list({ prefix: "data/custom_properties.json" });
       if (blobs.length > 0) {
@@ -201,6 +163,45 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
       }
     } catch (err) {
       console.error("[properties-store] Blob read failed:", err);
+    }
+  }
+
+  // 2. Try Vercel KV if Blob was not loaded
+  if (!loaded) {
+    const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+    const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+    if (kvUrl && kvToken) {
+      try {
+        const res = await fetch(kvUrl, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${kvToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(["GET", "custom_properties"]),
+          cache: "no-store",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          const raw = data?.result;
+          if (raw) {
+            let parsed: any = raw;
+            if (typeof raw === "string") {
+              try {
+                parsed = JSON.parse(raw);
+              } catch (e) {
+                console.error("[properties-store] JSON parse error:", e);
+              }
+            }
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              propertiesList = parsed as PropertyData[];
+              loaded = true;
+            }
+          }
+        }
+      } catch (err) {
+        console.error("[properties-store] KV read failed:", err);
+      }
     }
   }
 
@@ -254,12 +255,26 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
 }
 
 export async function saveCustomProperties(properties: PropertyData[]): Promise<boolean> {
-  const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-
   let saved = false;
 
-  // 1. Save to Vercel KV
+  // 1. Save to Vercel Blob Storage FIRST
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      await put("data/custom_properties.json", JSON.stringify(properties, null, 2), {
+        access: "public",
+        contentType: "application/json",
+        addRandomSuffix: false,
+        allowOverwrite: true,
+      });
+      saved = true;
+    } catch (err) {
+      console.error("[properties-store] Blob write failed:", err);
+    }
+  }
+
+  // 2. Save to Vercel KV
+  const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
   if (kvUrl && kvToken) {
     try {
       const res = await fetch(kvUrl, {
@@ -275,21 +290,6 @@ export async function saveCustomProperties(properties: PropertyData[]): Promise<
       }
     } catch (err) {
       console.error("[properties-store] KV write failed:", err);
-    }
-  }
-
-  // 2. Save to Vercel Blob Storage
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    try {
-      await put("data/custom_properties.json", JSON.stringify(properties, null, 2), {
-        access: "public",
-        contentType: "application/json",
-        addRandomSuffix: false,
-        allowOverwrite: true,
-      });
-      saved = true;
-    } catch (err) {
-      console.error("[properties-store] Blob write failed:", err);
     }
   }
 
