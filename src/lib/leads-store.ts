@@ -83,7 +83,8 @@ async function readAll(): Promise<StoredLead[]> {
         const sorted = [...blobs].sort(
           (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
         );
-        const blobRes = await fetch(sorted[0].url, { cache: "no-store" });
+        const blobUrl = `${sorted[0].url}?t=${Date.now()}`;
+        const blobRes = await fetch(blobUrl, { cache: "no-store" });
         if (blobRes.ok) {
           const parsed = await blobRes.json();
           if (Array.isArray(parsed)) {

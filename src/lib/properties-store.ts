@@ -188,7 +188,9 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
         const sorted = [...blobs].sort(
           (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
         );
-        const blobRes = await fetch(sorted[0].url, { cache: "no-store" });
+        // Add cache-busting param to bypass Vercel Blob CDN cache
+        const blobUrl = `${sorted[0].url}?t=${Date.now()}`;
+        const blobRes = await fetch(blobUrl, { cache: "no-store" });
         if (blobRes.ok) {
           const parsed = await blobRes.json();
           if (Array.isArray(parsed) && parsed.length > 0) {
