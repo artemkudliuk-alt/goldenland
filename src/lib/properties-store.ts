@@ -219,11 +219,36 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
     }
   }
 
-  if (!loaded || propertiesList.length === 0) {
-    return getSeededProperties();
+  if (loaded && propertiesList.length > 0) {
+    // Merge: start with seeded properties as base, override with Blob data by slug,
+    // then append any Blob items that are not in seeds (newly created in admin)
+    const seeded = getSeededProperties();
+    const blobMap = new Map(propertiesList.map((p) => [p.slug, p]));
+    const seededMap = new Map(seeded.map((p) => [p.slug, p]));
+
+    const merged: PropertyData[] = [];
+
+    // Start with seeded properties, potentially overridden by Blob data
+    for (const s of seeded) {
+      if (blobMap.has(s.slug)) {
+        merged.push(blobMap.get(s.slug)!);
+      } else {
+        merged.push(s);
+      }
+    }
+
+    // Append custom properties from Blob that are NOT in seeded list
+    for (const b of propertiesList) {
+      if (!seededMap.has(b.slug)) {
+        merged.push(b);
+      }
+    }
+
+    return merged;
   }
 
-  return propertiesList;
+  // No Blob data at all — return seeded defaults
+  return getSeededProperties();
 }
 
 export async function saveCustomProperties(properties: PropertyData[]): Promise<boolean> {
