@@ -138,7 +138,15 @@ function getSeededProperties(): PropertyData[] {
   });
 }
 
+declare global {
+  var __CUSTOM_PROPERTIES__: PropertyData[] | undefined;
+}
+
 export async function getCustomProperties(): Promise<PropertyData[]> {
+  if (global.__CUSTOM_PROPERTIES__ && global.__CUSTOM_PROPERTIES__.length > 0) {
+    return global.__CUSTOM_PROPERTIES__;
+  }
+
   const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
@@ -223,10 +231,13 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
     return getSeededProperties();
   }
 
+  global.__CUSTOM_PROPERTIES__ = propertiesList;
   return propertiesList;
 }
 
 export async function saveCustomProperties(properties: PropertyData[]): Promise<boolean> {
+  global.__CUSTOM_PROPERTIES__ = properties;
+
   const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
@@ -258,6 +269,7 @@ export async function saveCustomProperties(properties: PropertyData[]): Promise<
         access: "public",
         contentType: "application/json",
         addRandomSuffix: false,
+        allowOverwrite: true,
       });
       saved = true;
     } catch (err) {

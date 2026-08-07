@@ -267,6 +267,7 @@ export async function saveCustomPages(pages: CustomPage[]): Promise<boolean> {
         access: "public",
         contentType: "application/json",
         addRandomSuffix: false,
+        allowOverwrite: true,
       });
       saved = true;
     } catch (err) {

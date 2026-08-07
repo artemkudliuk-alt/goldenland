@@ -133,6 +133,7 @@ export async function saveContactSettings(settings: ContactSettings): Promise<bo
         access: "public",
         contentType: "application/json",
         addRandomSuffix: false,
+        allowOverwrite: true,
       });
       saved = true;
     } catch (err) {

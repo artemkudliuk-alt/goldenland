@@ -160,6 +160,7 @@ async function writeAll(leads: StoredLead[]): Promise<boolean> {
         access: "public",
         contentType: "application/json",
         addRandomSuffix: false,
+        allowOverwrite: true,
       });
       saved = true;
     } catch (err) {
