@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { getCustomPages, saveCustomPages, type CustomPage } from "@/lib/pages-store";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 function slugify(text: string): string {
   return text
     .toLowerCase()

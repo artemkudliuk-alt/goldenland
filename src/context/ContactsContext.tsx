@@ -16,7 +16,7 @@ export function ContactsProvider({ children }: { children: React.ReactNode }) {
 
   const fetchContacts = async () => {
     try {
-      const res = await fetch("/api/contacts");
+      const res = await fetch("/api/contacts", { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
         if (data.success && data.settings) {

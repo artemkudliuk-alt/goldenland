@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import crypto from "crypto";
+import { put, list } from "@vercel/blob";
 
 export type LeadStatus = "new" | "in_progress" | "completed" | "declined";
 
@@ -38,6 +39,10 @@ async function readAll(): Promise<StoredLead[]> {
   const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
+  let loaded = false;
+  let result: StoredLead[] = [];
+
+  // 1. Try Vercel KV
   if (kvUrl && kvToken) {
     try {
       const res = await fetch(kvUrl, {
@@ -49,48 +54,82 @@ async function readAll(): Promise<StoredLead[]> {
         body: JSON.stringify(["GET", "leads"]),
         cache: "no-store",
       });
-      if (!res.ok) {
-        throw new Error(`KV API error: ${res.status} ${res.statusText}`);
+      if (res.ok) {
+        const data = await res.json();
+        const raw = data?.result;
+        if (raw) {
+          const parsed = typeof raw === "string" ? JSON.parse(raw) : raw;
+          if (Array.isArray(parsed)) {
+            result = parsed.map((l: any) => ({
+              ...l,
+              id: l.id || crypto.randomUUID(),
+              status: l.status || "new",
+              timestamp: l.timestamp || new Date().toISOString(),
+            })) as StoredLead[];
+            loaded = true;
+          }
+        }
       }
-      const data = await res.json();
-      const raw = data?.result;
-      if (!raw) return [];
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) return [];
-      return parsed.map((l: any) => ({
-        ...l,
-        id: l.id || crypto.randomUUID(),
-        status: l.status || "new",
-        timestamp: l.timestamp || new Date().toISOString(),
-      })) as StoredLead[];
     } catch (err) {
-      console.error("[leads-store] KV read failed, falling back to local file:", err);
+      console.error("[leads-store] KV read failed:", err);
     }
   }
 
-  // Local file fallback
-  const fp = filePath();
-  try {
-    if (!fs.existsSync(fp)) return [];
-    const raw = fs.readFileSync(fp, "utf-8");
-    const parsed = JSON.parse(raw || "[]");
-    if (!Array.isArray(parsed)) return [];
-    return parsed.map((l: any) => ({
-      ...l,
-      id: l.id || crypto.randomUUID(),
-      status: l.status || "new",
-      timestamp: l.timestamp || new Date().toISOString(),
-    })) as StoredLead[];
-  } catch (err) {
-    console.error("[leads-store] local read failed:", err);
-    return [];
+  // 2. Try Vercel Blob Storage
+  if (!loaded && process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const { blobs } = await list({ prefix: "data/leads_captured.json" });
+      if (blobs.length > 0) {
+        const blobRes = await fetch(blobs[0].url, { cache: "no-store" });
+        if (blobRes.ok) {
+          const parsed = await blobRes.json();
+          if (Array.isArray(parsed)) {
+            result = parsed.map((l: any) => ({
+              ...l,
+              id: l.id || crypto.randomUUID(),
+              status: l.status || "new",
+              timestamp: l.timestamp || new Date().toISOString(),
+            })) as StoredLead[];
+            loaded = true;
+          }
+        }
+      }
+    } catch (err) {
+      console.error("[leads-store] Blob read failed:", err);
+    }
   }
+
+  // 3. Local file fallback
+  if (!loaded) {
+    const fp = filePath();
+    try {
+      if (fs.existsSync(fp)) {
+        const raw = fs.readFileSync(fp, "utf-8");
+        const parsed = JSON.parse(raw || "[]");
+        if (Array.isArray(parsed)) {
+          result = parsed.map((l: any) => ({
+            ...l,
+            id: l.id || crypto.randomUUID(),
+            status: l.status || "new",
+            timestamp: l.timestamp || new Date().toISOString(),
+          })) as StoredLead[];
+        }
+      }
+    } catch (err) {
+      console.error("[leads-store] local read failed:", err);
+    }
+  }
+
+  return result;
 }
 
 async function writeAll(leads: StoredLead[]): Promise<boolean> {
   const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
+  let saved = false;
+
+  // 1. Save to Vercel KV
   if (kvUrl && kvToken) {
     try {
       const res = await fetch(kvUrl, {
@@ -102,31 +141,45 @@ async function writeAll(leads: StoredLead[]): Promise<boolean> {
         body: JSON.stringify(["SET", "leads", JSON.stringify(leads)]),
         cache: "no-store",
       });
-      if (!res.ok) {
-        throw new Error(`KV API error: ${res.status} ${res.statusText}`);
+      if (res.ok) {
+        const data = await res.json();
+        if (data?.result === "OK") saved = true;
       }
-      const data = await res.json();
-      return data?.result === "OK";
     } catch (err) {
-      console.error("[leads-store] KV write failed, falling back to local file:", err);
+      console.error("[leads-store] KV write failed:", err);
     }
   }
 
-  // Local file fallback
+  // 2. Save to Vercel Blob Storage
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      await put("data/leads_captured.json", JSON.stringify(leads, null, 2), {
+        access: "public",
+        contentType: "application/json",
+        addRandomSuffix: false,
+      });
+      saved = true;
+    } catch (err) {
+      console.error("[leads-store] Blob write failed:", err);
+    }
+  }
+
+  // 3. Local file fallback
   const fp = filePath();
   const tmp = `${fp}.${process.pid}.tmp`;
   try {
     fs.mkdirSync(path.dirname(fp), { recursive: true });
     fs.writeFileSync(tmp, JSON.stringify(leads, null, 2), "utf-8");
     fs.renameSync(tmp, fp);
-    return true;
+    saved = true;
   } catch (err) {
     console.error("[leads-store] local write failed:", err);
     try {
       if (fs.existsSync(tmp)) fs.unlinkSync(tmp);
     } catch {}
-    return false;
   }
+
+  return saved;
 }
 
 export type NewLead = Omit<StoredLead, "id" | "status" | "timestamp"> &

@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { put, list } from "@vercel/blob";
 
 export interface CustomPage {
   slug: string;
@@ -137,6 +138,7 @@ export async function getCustomPages(): Promise<CustomPage[]> {
   let pagesList: CustomPage[] = [];
   let loaded = false;
 
+  // 1. Try Vercel KV
   if (kvUrl && kvToken) {
     try {
       const res = await fetch(kvUrl, {
@@ -167,11 +169,30 @@ export async function getCustomPages(): Promise<CustomPage[]> {
         }
       }
     } catch (err) {
-      console.error("[pages-store] KV read failed, falling back to local file:", err);
+      console.error("[pages-store] KV read failed:", err);
     }
   }
 
-  // Local file fallback
+  // 2. Try Vercel Blob Storage
+  if (!loaded && process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      const { blobs } = await list({ prefix: "data/custom_pages.json" });
+      if (blobs.length > 0) {
+        const blobRes = await fetch(blobs[0].url, { cache: "no-store" });
+        if (blobRes.ok) {
+          const parsed = await blobRes.json();
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            pagesList = parsed as CustomPage[];
+            loaded = true;
+          }
+        }
+      }
+    } catch (err) {
+      console.error("[pages-store] Blob read failed:", err);
+    }
+  }
+
+  // 3. Local file fallback
   if (!loaded) {
     const fp = filePath();
     try {
@@ -215,6 +236,9 @@ export async function saveCustomPages(pages: CustomPage[]): Promise<boolean> {
   const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
 
+  let saved = false;
+
+  // 1. Save to Vercel KV
   if (kvUrl && kvToken) {
     try {
       const res = await fetch(kvUrl, {
@@ -226,20 +250,35 @@ export async function saveCustomPages(pages: CustomPage[]): Promise<boolean> {
         body: JSON.stringify(["SET", "custom_pages", JSON.stringify(pages)]),
       });
       if (res.ok) {
-        return true;
+        saved = true;
       }
     } catch (err) {
-      console.error("[pages-store] KV write failed, saving locally:", err);
+      console.error("[pages-store] KV write failed:", err);
     }
   }
 
-  // Local file fallback
+  // 2. Save to Vercel Blob Storage
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    try {
+      await put("data/custom_pages.json", JSON.stringify(pages, null, 2), {
+        access: "public",
+        contentType: "application/json",
+        addRandomSuffix: false,
+      });
+      saved = true;
+    } catch (err) {
+      console.error("[pages-store] Blob write failed:", err);
+    }
+  }
+
+  // 3. Local file fallback
   const fp = filePath();
   try {
     fs.writeFileSync(fp, JSON.stringify(pages, null, 2), "utf-8");
-    return true;
+    saved = true;
   } catch (err) {
     console.error("[pages-store] local write failed:", err);
-    return false;
   }
+
+  return saved;
 }

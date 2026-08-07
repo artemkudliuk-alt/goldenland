@@ -93,7 +93,7 @@ function CatalogInner() {
   const [customPage, setCustomPage] = useState<any>(null);
 
   useEffect(() => {
-    fetch("/api/properties")
+    fetch("/api/properties", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.properties) {
@@ -102,7 +102,7 @@ function CatalogInner() {
       })
       .catch((err) => console.error("Error loading properties:", err));
 
-    fetch("/api/pages")
+    fetch("/api/pages", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.success && Array.isArray(data.pages)) {

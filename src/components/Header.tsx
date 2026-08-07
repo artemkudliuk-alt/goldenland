@@ -85,7 +85,7 @@ export function Header() {
   const [customPages, setCustomPages] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch("/api/pages")
+    fetch("/api/pages", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => {
         if (data.success && data.pages) {
