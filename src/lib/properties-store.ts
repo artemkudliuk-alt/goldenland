@@ -148,10 +148,11 @@ function normalizeKey(str?: string): string {
   return str.toLowerCase().trim().replace(/[^a-z0-9\u0400-\u04FF]/g, "");
 }
 
-function mergeAndDeduplicateProperties(stored: PropertyData[]): PropertyData[] {
+function deduplicateStoredProperties(stored: PropertyData[]): PropertyData[] {
   const seeded = getSeededProperties();
+  const seededMapBySlug = new Map(seeded.map((s) => [s.slug, s]));
   const result: PropertyData[] = [];
-  const usedKeys = new Set<string>();
+  const seenKeys = new Set<string>();
 
   const getKeys = (p: PropertyData): string[] => {
     const keys: string[] = [];
@@ -163,46 +164,29 @@ function mergeAndDeduplicateProperties(stored: PropertyData[]): PropertyData[] {
     return keys;
   };
 
-  const findMatchInStored = (p: PropertyData): PropertyData | undefined => {
-    const pKeys = getKeys(p);
-    return stored.find((item) => {
-      const itemKeys = getKeys(item);
-      return pKeys.some((k) => itemKeys.includes(k));
-    });
-  };
-
-  // 1. Start with seeded properties, merged with stored customizations
-  for (const s of seeded) {
-    const match = findMatchInStored(s);
-    if (match) {
-      const mergedItem: PropertyData = {
-        ...s,
-        ...match,
-        id: s.id,
-        slug: s.slug,
-        title: match.title || s.title,
-        location: match.location || s.location,
-        description: match.description || s.description,
-        address: match.address || s.address,
-        specs: match.specs || s.specs,
-        gallery: match.gallery && match.gallery.length > 0 ? match.gallery : s.gallery,
-      };
-      result.push(mergedItem);
-      getKeys(mergedItem).forEach((k) => usedKeys.add(k));
-    } else {
-      result.push(s);
-      getKeys(s).forEach((k) => usedKeys.add(k));
+  for (const item of stored) {
+    const keys = getKeys(item);
+    const alreadySeen = keys.some((k) => seenKeys.has(k));
+    if (alreadySeen) {
+      continue;
     }
-  }
 
-  // 2. Append custom properties from storage that do not match any seeded property
-  for (const b of stored) {
-    const bKeys = getKeys(b);
-    const alreadyIncluded = bKeys.some((k) => usedKeys.has(k));
-    if (!alreadyIncluded) {
-      result.push(b);
-      bKeys.forEach((k) => usedKeys.add(k));
-    }
+    const seedDefault = seededMapBySlug.get(item.slug);
+    const enrichedItem: PropertyData = {
+      ...(seedDefault || {}),
+      ...item,
+      id: item.id || seedDefault?.id || `prop_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+      slug: item.slug || seedDefault?.slug || "",
+      title: item.title || seedDefault?.title || { en: "", ua: "", ru: "" },
+      location: item.location || seedDefault?.location || { en: "", ua: "", ru: "" },
+      description: item.description || seedDefault?.description || { en: "", ua: "", ru: "" },
+      address: item.address || seedDefault?.address || "",
+      specs: item.specs || seedDefault?.specs,
+      gallery: item.gallery && item.gallery.length > 0 ? item.gallery : (seedDefault?.gallery || []),
+    };
+
+    result.push(enrichedItem);
+    keys.forEach((k) => seenKeys.add(k));
   }
 
   return result;
@@ -293,7 +277,7 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
   }
 
   if (loaded && propertiesList.length > 0) {
-    return mergeAndDeduplicateProperties(propertiesList);
+    return deduplicateStoredProperties(propertiesList);
   }
 
   // No stored data at all — return seeded defaults

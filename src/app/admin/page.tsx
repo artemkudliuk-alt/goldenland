@@ -331,6 +331,8 @@ export default function AdminDashboard() {
 
   // Form translation selector
   const [formLang, setFormLang] = useState<"en" | "ua" | "ru">("en");
+  const [propertySearch, setPropertySearch] = useState("");
+  const [propertyCityFilter, setPropertyCityFilter] = useState("all");
 
   // The real gate is the httpOnly cookie checked server-side. On load we simply
   // attempt to fetch leads: 200 means we already hold a valid session, 401 shows login.
@@ -991,11 +993,16 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
         <div className="flex border-b border-white/10 mb-8 gap-6 overflow-x-auto whitespace-nowrap scrollbar-none">
           <button
             onClick={() => setActiveTab("leads")}
-            className={`pb-4 text-[13px] font-medium tracking-[0.1em] uppercase border-b-2 transition-all ${
+            className={`pb-4 text-[13px] font-medium tracking-[0.1em] uppercase border-b-2 transition-all flex items-center gap-2 ${
               activeTab === "leads" ? "border-[#D4AF37] text-white" : "border-transparent text-white/40 hover:text-white/80"
             }`}
           >
-            Leads Database
+            <span>Leads Database</span>
+            {leads.length > 0 && (
+              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-mono text-white/70">
+                {leads.length}
+              </span>
+            )}
           </button>
           <button
             onClick={() => setActiveTab("contacts")}
@@ -1007,19 +1014,27 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
           </button>
           <button
             onClick={() => setActiveTab("pages")}
-            className={`pb-4 text-[13px] font-medium tracking-[0.1em] uppercase border-b-2 transition-all ${
+            className={`pb-4 text-[13px] font-medium tracking-[0.1em] uppercase border-b-2 transition-all flex items-center gap-2 ${
               activeTab === "pages" ? "border-[#D4AF37] text-white" : "border-transparent text-white/40 hover:text-white/80"
             }`}
           >
-            Custom Pages
+            <span>Custom Pages</span>
+            {customPages.length > 0 && (
+              <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-mono text-white/70">
+                {customPages.length}
+              </span>
+            )}
           </button>
           <button
             onClick={() => setActiveTab("catalog")}
-            className={`pb-4 text-[13px] font-medium tracking-[0.1em] uppercase border-b-2 transition-all ${
+            className={`pb-4 text-[13px] font-medium tracking-[0.1em] uppercase border-b-2 transition-all flex items-center gap-2 ${
               activeTab === "catalog" ? "border-[#D4AF37] text-white" : "border-transparent text-white/40 hover:text-white/80"
             }`}
           >
-            Catalog Manager
+            <span>Catalog Manager</span>
+            <span className="rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 px-2.5 py-0.5 text-[11px] font-mono font-medium text-[#D4AF37]">
+              {customProperties.length}
+            </span>
           </button>
         </div>
 
@@ -1549,103 +1564,213 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
       </div>
     )}
 
-    {activeTab === "catalog" && (
-      <div className="space-y-6 mt-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-[20px] font-light text-[#D4AF37] uppercase tracking-wider">
-              Catalog Manager
-            </h2>
-            <p className="text-[11px] text-white/40 mt-1">Manage dynamic properties directory listed in the catalog.</p>
-          </div>
-          <button
-            onClick={() => {
-              setEditingProperty({
-                id: "prop_" + Date.now(),
-                slug: "",
-                title: { en: "", ua: "", ru: "" },
-                location: { en: "", ua: "", ru: "" },
-                city: "kyiv",
-                type: "apartments",
-                price: 0,
-                area: 0,
-                bedrooms: 0,
-                roi: "",
-                gallery: [""],
-                video: "",
-                status: "ready",
-                address: { en: "", ua: "", ru: "" },
-                managerName: "",
-                managerInitials: "",
-                managerPhoto: "",
-                managerWhatsapp: "",
-                managerTelegram: "",
-                description: { en: "", ua: "", ru: "" },
-                specs: {
-                  rooms: "",
-                  layout: "",
-                  floor: "",
-                  renovation: "",
-                  newBuild: "",
-                  construction: "",
-                  heating: "",
-                  ceilings: "",
-                  yearBuilt: ""
-                }
-              });
-              setFormLang("en");
-            }}
-            className="border border-[#D4AF37] text-[#D4AF37] px-5 py-2.5 text-[12px] font-medium uppercase tracking-wider hover:bg-[#D4AF37] hover:text-[#0a0a0a] transition-all duration-300"
-          >
-            + Add New Property
-          </button>
-        </div>
+    {activeTab === "catalog" && (() => {
+      const odesaCount = customProperties.filter((p) => p.city === "odesa").length;
+      const dubaiCount = customProperties.filter((p) => p.city === "dubai").length;
+      const kyivCount = customProperties.filter((p) => p.city === "kyiv").length;
+      const lvivCount = customProperties.filter((p) => p.city === "lviv").length;
 
-        <div className="border border-white/10 bg-[#0a0a0a] overflow-hidden">
-          {propertiesLoading ? (
-            <div className="py-12 text-center text-white/40 text-[14px]">Loading properties...</div>
-          ) : customProperties.length === 0 ? (
-            <div className="py-12 text-center text-white/40 text-[14px]">No dynamic properties found. Click button above to add one.</div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-white border-collapse">
-                <thead>
-                  <tr className="border-b border-white/10 bg-black/40 text-[11px] font-medium uppercase tracking-[0.12em] text-white/50">
-                    <th className="px-6 py-4">Title (EN)</th>
-                    <th className="px-6 py-4">City</th>
-                    <th className="px-6 py-4">Type</th>
-                    <th className="px-6 py-4">Price</th>
-                    <th className="px-6 py-4">Area (m²)</th>
-                    <th className="px-6 py-4 text-right">Actions</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5 text-[13px] font-light">
-                  {customProperties.map((p) => {
-                    const propUrl = `/properties/${p.slug}`;
-                    const displayTitle = typeof p.title === "object" && p.title !== null
-                      ? (p.title.en || p.title.ua || p.title.ru || "(No Title)")
-                      : (typeof p.title === "string" ? p.title : "(No Title)");
-                    return (
-                      <tr key={p.id} className="hover:bg-white/2 transition-colors">
-                        <td className="px-6 py-4 font-normal text-white">
-                          <a
-                            href={propUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1.5"
-                            title="Open property page on site in new tab"
-                          >
-                            <span>{displayTitle}</span>
-                            <svg className="w-3.5 h-3.5 text-[#D4AF37]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                            </svg>
-                          </a>
-                        </td>
-                        <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.city}</td>
-                        <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.type}</td>
-                        <td className="px-6 py-4 text-[#D4AF37]">${p.price?.toLocaleString()}</td>
-                        <td className="px-6 py-4 text-white/80">{p.area} m²</td>
-                        <td className="px-6 py-4 text-right">
+      const filteredProperties = customProperties.filter((p) => {
+        const matchesCity = propertyCityFilter === "all" || p.city === propertyCityFilter;
+        const query = propertySearch.toLowerCase().trim();
+        const titleEn = p.title?.en?.toLowerCase() || (typeof p.title === "string" ? p.title.toLowerCase() : "");
+        const titleUa = p.title?.ua?.toLowerCase() || "";
+        const titleRu = p.title?.ru?.toLowerCase() || "";
+        const slug = p.slug?.toLowerCase() || "";
+        const locationStr = typeof p.location === "object" ? `${p.location?.en} ${p.location?.ua} ${p.location?.ru}`.toLowerCase() : (p.location || "");
+        const matchesSearch = !query || titleEn.includes(query) || titleUa.includes(query) || titleRu.includes(query) || slug.includes(query) || locationStr.includes(query);
+        return matchesCity && matchesSearch;
+      });
+
+      return (
+        <div className="space-y-6 mt-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h2 className="text-[20px] font-light text-[#D4AF37] uppercase tracking-wider">
+                  Catalog Manager
+                </h2>
+                <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-[12px] font-medium tracking-wider uppercase">
+                  <span>Объектов в базе:</span>
+                  <strong className="text-[14px] text-white font-mono font-semibold">{customProperties.length}</strong>
+                </div>
+              </div>
+              <p className="text-[11px] text-white/40 mt-1">
+                Всего в каталоге: <strong className="text-white/80 font-mono">{customProperties.length}</strong> карточек (Одесса: {odesaCount}, Дубай: {dubaiCount}, Киев: {kyivCount}, Львов: {lvivCount})
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-3 flex-wrap">
+              <button
+                onClick={fetchProperties}
+                disabled={propertiesLoading}
+                className="border border-white/10 text-white/60 hover:text-white px-4 py-2.5 text-[12px] font-medium uppercase tracking-wider hover:bg-white/5 transition-all disabled:opacity-50"
+                title="Refresh properties list"
+              >
+                {propertiesLoading ? "Загрузка..." : "↺ Обновить"}
+              </button>
+              <button
+                onClick={() => {
+                  setEditingProperty({
+                    id: "prop_" + Date.now(),
+                    slug: "",
+                    title: { en: "", ua: "", ru: "" },
+                    location: { en: "", ua: "", ru: "" },
+                    city: "kyiv",
+                    type: "apartments",
+                    price: 0,
+                    area: 0,
+                    bedrooms: 0,
+                    roi: "",
+                    gallery: [""],
+                    video: "",
+                    status: "ready",
+                    address: { en: "", ua: "", ru: "" },
+                    managerName: "",
+                    managerInitials: "",
+                    managerPhoto: "",
+                    managerWhatsapp: "",
+                    managerTelegram: "",
+                    description: { en: "", ua: "", ru: "" },
+                    specs: {
+                      rooms: "",
+                      layout: "",
+                      floor: "",
+                      renovation: "",
+                      newBuild: "",
+                      construction: "",
+                      heating: "",
+                      ceilings: "",
+                      yearBuilt: ""
+                    }
+                  });
+                  setFormLang("en");
+                }}
+                className="border border-[#D4AF37] bg-[#D4AF37]/10 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0a0a0a] px-5 py-2.5 text-[12px] font-medium uppercase tracking-wider transition-all duration-300"
+              >
+                + Add New Property
+              </button>
+            </div>
+          </div>
+
+          {/* Filter Bar & City Chips */}
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border border-white/10 bg-white/3 p-4">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-[11px] uppercase tracking-wider text-white/40 mr-1">Город:</span>
+              <button
+                onClick={() => setPropertyCityFilter("all")}
+                className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
+                  propertyCityFilter === "all"
+                    ? "bg-[#D4AF37] text-black font-semibold"
+                    : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Все ({customProperties.length})
+              </button>
+              <button
+                onClick={() => setPropertyCityFilter("odesa")}
+                className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
+                  propertyCityFilter === "odesa"
+                    ? "bg-[#D4AF37] text-black font-semibold"
+                    : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Одесса ({odesaCount})
+              </button>
+              <button
+                onClick={() => setPropertyCityFilter("dubai")}
+                className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
+                  propertyCityFilter === "dubai"
+                    ? "bg-[#D4AF37] text-black font-semibold"
+                    : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Дубай ({dubaiCount})
+              </button>
+              <button
+                onClick={() => setPropertyCityFilter("kyiv")}
+                className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
+                  propertyCityFilter === "kyiv"
+                    ? "bg-[#D4AF37] text-black font-semibold"
+                    : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Киев ({kyivCount})
+              </button>
+              <button
+                onClick={() => setPropertyCityFilter("lviv")}
+                className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
+                  propertyCityFilter === "lviv"
+                    ? "bg-[#D4AF37] text-black font-semibold"
+                    : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                Львов ({lvivCount})
+              </button>
+            </div>
+
+            <div className="w-full md:w-72">
+              <input
+                type="text"
+                value={propertySearch}
+                onChange={(e) => setPropertySearch(e.target.value)}
+                placeholder="Поиск по названию или slug..."
+                className="w-full border border-white/10 bg-black/50 px-3.5 py-1.5 text-[12px] font-light text-white placeholder:text-white/30 focus:border-[#D4AF37] focus:outline-none"
+              />
+            </div>
+          </div>
+
+          <div className="border border-white/10 bg-[#0a0a0a] overflow-hidden">
+            {propertiesLoading ? (
+              <div className="py-12 text-center text-white/40 text-[14px]">Loading properties...</div>
+            ) : customProperties.length === 0 ? (
+              <div className="py-12 text-center text-white/40 text-[14px]">No dynamic properties found. Click button above to add one.</div>
+            ) : filteredProperties.length === 0 ? (
+              <div className="py-12 text-center text-white/40 text-[14px]">
+                Ничего не найдено по вашему запросу.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left text-white border-collapse">
+                  <thead>
+                    <tr className="border-b border-white/10 bg-black/40 text-[11px] font-medium uppercase tracking-[0.12em] text-white/50">
+                      <th className="px-6 py-4">№</th>
+                      <th className="px-6 py-4">Title</th>
+                      <th className="px-6 py-4">City</th>
+                      <th className="px-6 py-4">Type</th>
+                      <th className="px-6 py-4">Price</th>
+                      <th className="px-6 py-4">Area (m²)</th>
+                      <th className="px-6 py-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-white/5 text-[13px] font-light">
+                    {filteredProperties.map((p, pIdx) => {
+                      const propUrl = `/properties/${p.slug}`;
+                      const displayTitle = typeof p.title === "object" && p.title !== null
+                        ? (p.title.en || p.title.ua || p.title.ru || "(No Title)")
+                        : (typeof p.title === "string" ? p.title : "(No Title)");
+                      return (
+                        <tr key={p.id} className="hover:bg-white/2 transition-colors">
+                          <td className="px-6 py-4 text-white/30 font-mono text-[11px]">{pIdx + 1}</td>
+                          <td className="px-6 py-4 font-normal text-white">
+                            <a
+                              href={propUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-[#D4AF37] transition-colors inline-flex items-center gap-1.5"
+                              title="Open property page on site in new tab"
+                            >
+                              <span>{displayTitle}</span>
+                              <svg className="w-3.5 h-3.5 text-[#D4AF37]/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                              </svg>
+                            </a>
+                          </td>
+                          <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.city}</td>
+                          <td className="px-6 py-4 uppercase font-semibold text-white/60 text-[11px]">{p.type}</td>
+                          <td className="px-6 py-4 text-[#D4AF37]">${p.price?.toLocaleString()}</td>
+                          <td className="px-6 py-4 text-white/80">{p.area} m²</td>
+                          <td className="px-6 py-4 text-right">
                           <div className="flex items-center justify-end gap-3">
                             <a
                               href={propUrl}
@@ -1707,7 +1832,8 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
           )}
         </div>
       </div>
-    )}
+    );
+  })()}
 
     {/* Custom Page Editor Modal */}
     {editingPage && (
