@@ -27,6 +27,7 @@
     ],
     "video": "/videos/tour.mp4",
     "status": "exclusive",
+    "address": "Lomakivska St, 56/2, Pechersk, Kyiv",
     "description": {
       "en": "A double-height corner residence in one of Kyiv's most sought-after districts, with panoramic views of the gilded domes of Kyiv Pechersk Lavra and the Dnipro river. A wraparound terrace with a linear infinity pool, private lift lobby and dedicated concierge define the tier.",
       "ua": "Двоповерхова кутова резиденція в одному з найбажаніших районів Києва з панорамним видом на позолочені куполи Києво-Печерської Лаври та Дніпро. Тераса з басейном інфініті, приватний ліфтовий хол і персональний консьєрж.",
@@ -34,14 +35,14 @@
     },
     "specs": {
       "rooms": "4 Rooms",
-      "layout": "320 / 180 / 35 м²",
-      "floor": "Floor 24 of 25",
-      "renovation": "Luxury designer finish",
-      "newBuild": "New premium build",
+      "layout": "320 / 192 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
       "construction": "Monolithic Frame",
-      "heating": "Autonomous building boiler",
-      "ceilings": "3.4 m ceiling height",
-      "yearBuilt": "Built in 2021"
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
     }
   },
   {
@@ -72,6 +73,7 @@
     ],
     "video": "",
     "status": "ready",
+    "address": "Yaroslavska St, 15, Podil, Kyiv",
     "description": {
       "en": "A restored loft in a 19th-century commercial building on Podil, blending exposed brick with contemporary design. Walking distance to the riverfront and Kontraktova square. Ideal city pied-à-terre or premium rental.",
       "ua": "Реставрований лофт у комерційній будівлі XIX століття на Подолі. Поєднання цегли з сучасним дизайном. Кроки до набережної та Контрактової. Ідеально для міської квартири або преміальної оренди.",
@@ -79,14 +81,14 @@
     },
     "specs": {
       "rooms": "2 Rooms",
-      "layout": "120 / 72 / 20 м²",
-      "floor": "Floor 3 of 5",
-      "renovation": "Loft designer finish",
-      "newBuild": "Heritage Restored",
-      "construction": "Brick & Monolith",
-      "heating": "Autonomous gas boiler",
-      "ceilings": "3.8 m ceiling height",
-      "yearBuilt": "Built in 2018"
+      "layout": "145 / 87 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
     }
   },
   {
@@ -117,19 +119,20 @@
     ],
     "video": "",
     "status": "off-plan",
+    "address": "Genoese St, 24A, Arcadia, Odesa",
     "description": {
       "en": "Off-plan seafront apartment in the Arkadia resort district, delivered furnished with panoramic Black Sea views, direct beach access, and a full on-site resort service package. Strong short-term rental yield in Odesa's summer season.",
       "ua": "Off-plan апартаменти на першій лінії Аркадії з панорамним видом на Чорне море, прямим виходом до пляжу та повним resort-сервісом. Висока прибутковість короткострокової оренди у літньому сезоні.",
       "ru": "Off-plan апартаменты на первой линии Аркадии с панорамным видом на Чёрное море, прямым выходом к пляжу и полным resort-сервисом. Высокая доходность краткосрочной аренды летом."
     },
     "specs": {
-      "rooms": "3 Rooms",
-      "layout": "145 / 80 / 28 м²",
-      "floor": "Floor 12 of 18",
-      "renovation": "Turnkey premium finish",
-      "newBuild": "New building",
+      "rooms": "2 Rooms",
+      "layout": "98 / 59 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
       "construction": "Monolithic Frame",
-      "heating": "Autonomous building boiler",
+      "heating": "Autonomous heating",
       "ceilings": "3.1 m ceiling height",
       "yearBuilt": "Built in 2022"
     }
@@ -162,6 +165,7 @@
     ],
     "video": "",
     "status": "ready",
+    "address": "Staroyevreiska St, 10, Lviv",
     "description": {
       "en": "A meticulously restored four-storey townhouse in Lviv's UNESCO-protected historic centre. Original stone facade, restored oak parquet, custom brass fittings and a private inner courtyard. Fully approved for boutique-hotel conversion.",
       "ua": "Досконало відреставрований чотириповерховий таунхаус в історичному центрі Львова (ЮНЕСКО). Оригінальний кам'яний фасад, паркет з дуба, латунна фурнітура та приватний внутрішній дворик. З дозволами під бутик-готель.",
@@ -207,6 +211,7 @@
     ],
     "video": "",
     "status": "exclusive",
+    "address": "Kozyn, Kyiv Oblast, Ukraine",
     "description": {
       "en": "A contemporary architect-designed villa on a private plot of pine and silver birch outside Kyiv. Floor-to-ceiling glass, cantilevered upper level and a reflecting pool. 30 minutes to central Kyiv, 45 minutes to Boryspil airport.",
       "ua": "Сучасна авторська вілла на приватній ділянці серед сосен і берез під Києвом. Скло від підлоги до стелі, консольний другий поверх та відображаючий басейн. 30 хвилин до центру Києва, 45 до Борисполя.",
@@ -252,6 +257,7 @@
     ],
     "video": "",
     "status": "off-plan",
+    "address": "Fontanska Rd, 120, Odesa",
     "description": {
       "en": "An off-plan modernist villa on the Black Sea coast with private beach frontage and an infinity pool that visually meets the sea horizon. Designed for year-round living with underfloor heating, deep-set solar shading and full smart-home integration.",
       "ua": "Off-plan модерна вілла на узбережжі Чорного моря з приватною береговою лінією та басейном інфініті, що зливається з горизонтом. Спроєктована для проживання цілорічно: тепла підлога, глибокі сонцезахисні виступи, повна smart-home інтеграція.",
@@ -297,6 +303,7 @@
     ],
     "video": "",
     "status": "investment",
+    "address": "Rynok Square, 5, Lviv",
     "description": {
       "en": "A fully operational 24-key boutique hotel in a restored Austro-Hungarian building, one block from Rynok Square. Historic detailing preserved throughout. Strong ADR and steady RevPAR growth across seasons.",
       "ua": "Діючий бутик-готель на 24 номери у відреставрованій австро-угорській будівлі за квартал від Ринку. Історичні деталі збережено. Висока ADR та стабільне зростання RevPAR у сезонах.",
@@ -342,6 +349,7 @@
     ],
     "video": "",
     "status": "off-plan",
+    "address": "Primorskiy Blvd, 11, Odesa",
     "description": {
       "en": "Off-plan 40-key seafront resort hotel with full-service spa, sea-view rooftop restaurant and direct beach access. Positioned in Odesa's premium resort corridor. Institutional-grade specification with international operator interest already secured.",
       "ua": "Off-plan 40-номерний resort-готель з повноцінним спа, ресторан на даху з видом на море та прямим виходом до пляжу. Розташування в преміальному курортному коридорі Одеси. Institutional-grade специфікація, є попередній інтерес операторів.",
@@ -387,6 +395,7 @@
     ],
     "video": "",
     "status": "investment",
+    "address": "Khreschatyk St, 2, Kyiv",
     "description": {
       "en": "Existing central-Kyiv hotel building with approved redevelopment plans to a 78-key upper-upscale hospitality asset. Structural surveys complete. Positioned adjacent to leading corporate and government districts.",
       "ua": "Готель у центрі Києва з затвердженими планами реновації до 78-номерного upper-upscale активу. Обстеження конструкцій завершено. Розташування поруч з корпоративним і урядовим кварталом.",
@@ -432,6 +441,7 @@
     ],
     "video": "",
     "status": "investment",
+    "address": "Lesi Ukrainky Blvd, 26, Pechersk, Kyiv",
     "description": {
       "en": "Full-floor and multi-floor blocks in a Grade-A glass tower in central Kyiv's business district. Blue-chip anchor tenants secured for 60% of the leasable area. Long WALT and inflation-linked leases.",
       "ua": "Повнотиповерхові блоки в скляному Grade-A бізнес-центрі у діловому кварталі Києва. Blue-chip якірні орендарі на 60% площі. Довгий WALT та індексовані оренди.",
@@ -477,6 +487,7 @@
     ],
     "video": "",
     "status": "ready",
+    "address": "Naukova St, 7, Lviv",
     "description": {
       "en": "A restored 4-storey boutique office building in the heart of Lviv's IT cluster, currently 92% leased to tech tenants on 3-5 year terms. Modern MEP, on-site parking and shared meeting suites.",
       "ua": "Відреставрована 4-поверхова бутик-офісна будівля в серці львівського IT-квартала, наразі здана на 92% техно-орендарям на 3–5 років. Сучасні MEP, паркінг та переговорні кімнати.",
@@ -522,6 +533,7 @@
     ],
     "video": "",
     "status": "off-plan",
+    "address": "Frantsuzskyi Boulevard, Odesa",
     "description": {
       "en": "Off-plan mixed-use retail plaza on Odesa's premium boulevard, delivered with pre-leased anchor F&B tenants and street-level premium retail spaces. Direct seasonal foot traffic and strong year-round resident base.",
       "ua": "Off-plan mixed-use retail plaza на преміальному бульварі Одеси з переднайманими F&B-якорними орендарями та вуличним ритейлом. Прямий сезонний трафік і стабільний резидентський попит.",
@@ -530,6 +542,742 @@
     "specs": {
       "rooms": "3 Rooms",
       "layout": "4200 / 2520 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_commercial-property-kadorr-new-city",
+    "slug": "commercial-property-kadorr-new-city",
+    "title": {
+      "en": "Commercial Property for Sale in KADORR New City",
+      "ua": "Комерційна нерухомість у KADORR New City",
+      "ru": "Коммерческая недвижимость в KADORR New City"
+    },
+    "location": {
+      "en": "KADORR New City, Odesa",
+      "ua": "KADORR New City, Одеса",
+      "ru": "KADORR New City, Одесса"
+    },
+    "city": "odesa",
+    "type": "commercial",
+    "price": 0,
+    "area": 338,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-odesa-retail-plaza-1.webp",
+      "/images/generated/category-commercial.webp",
+      "/images/generated/service-commercial.webp",
+      "/images/generated/service-investment.webp",
+      "/images/generated/insight-kyiv-market.webp"
+    ],
+    "video": "",
+    "status": "investment",
+    "address": "KADORR New City, Odesa",
+    "description": {
+      "en": "Investment commercial space ideal for retail or office in KADORR New City, Odesa.",
+      "ua": "Інвестиційне комерційне приміщення під ритейл або офіс у KADORR New City, Одеса.",
+      "ru": "Инвестиционное коммерческое помещение под ритейл или офис в KADORR New City, Одесса."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "338 / 203 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_residential-hotel-kadorr-new-city",
+    "slug": "residential-hotel-kadorr-new-city",
+    "title": {
+      "en": "Residential / Hotel Investment Property for Sale - KADORR New City",
+      "ua": "Інвестиційний житлово-готельний об'єкт - KADORR New City",
+      "ru": "Инвестиционный жилой / отельный объект - KADORR New City"
+    },
+    "location": {
+      "en": "KADORR New City, Odesa",
+      "ua": "KADORR New City, Одеса",
+      "ru": "KADORR New City, Одесса"
+    },
+    "city": "odesa",
+    "type": "commercial",
+    "price": 0,
+    "area": 613,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-odesa-retail-plaza-1.webp",
+      "/images/generated/category-commercial.webp",
+      "/images/generated/service-commercial.webp",
+      "/images/generated/service-investment.webp",
+      "/images/generated/insight-kyiv-market.webp"
+    ],
+    "video": "",
+    "status": "investment",
+    "address": "KADORR New City, Odesa",
+    "description": {
+      "en": "Spacious investment space suited for boutique hotel or residential units in KADORR New City.",
+      "ua": "Просторе інвестиційне приміщення під бутик-готель або житлові юніти в KADORR New City.",
+      "ru": "Просторное инвестиционное помещение под бутик-отель или жилые юниты в KADORR New City."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "613 / 368 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_luxury-villa-arcadia-odesa",
+    "slug": "luxury-villa-arcadia-odesa",
+    "title": {
+      "en": "Luxury Villa in the Heart of Arcadia",
+      "ua": "Розкішна вілла в серці Аркадії",
+      "ru": "Роскошная вилла в сердце Аркадии"
+    },
+    "location": {
+      "en": "Arcadia, Odesa",
+      "ua": "Аркадія, Одеса",
+      "ru": "Аркадия, Одесса"
+    },
+    "city": "odesa",
+    "type": "villas",
+    "price": 0,
+    "area": 512,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-kozyn-forest-villa-1.webp",
+      "/images/generated/category-villas.webp",
+      "/images/generated/featured-odesa-villa.webp",
+      "/images/generated/service-residential.webp",
+      "/images/generated/insight-offplan.webp"
+    ],
+    "video": "",
+    "status": "exclusive",
+    "address": "Arcadia, Odesa",
+    "description": {
+      "en": "Exclusive private villa with pool and private garden in the heart of Arcadia, Odesa.",
+      "ua": "Ексклюзивна приватна вілла з басейном та власністю в серці Аркадії, Одеса.",
+      "ru": "Эксклюзивная частная вилла с бассейном и садом в сердце Аркадии, Одесса."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "512 / 307 / 20 m²",
+      "floor": "2 Floors",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_geneva-hotel-odesa",
+    "slug": "geneva-hotel-odesa",
+    "title": {
+      "en": "Geneva Hotel",
+      "ua": "Готель Женева",
+      "ru": "Отель Женева"
+    },
+    "location": {
+      "en": "Center, Odesa",
+      "ua": "Центр, Одеса",
+      "ru": "Центр, Одесса"
+    },
+    "city": "odesa",
+    "type": "hotels",
+    "price": 650000,
+    "area": 443,
+    "bedrooms": 0,
+    "roi": "9.2",
+    "gallery": [
+      "/images/generated/prop-lviv-rynok-boutique-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "ready",
+    "address": "Center, Odesa",
+    "description": {
+      "en": "Operating boutique hotel in the historic center of Odesa with high occupancy rate.",
+      "ua": "Діючий бутик-готель в історичному центрі Одеси з високою завантаженістю.",
+      "ru": "Действующий бутик-отель в историческом центре Одессы с высокой загрузкой."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "443 / 266 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_ekaterina-hotel-odesa",
+    "slug": "ekaterina-hotel-odesa",
+    "title": {
+      "en": "Ekaterina Hotel",
+      "ua": "Готель Катерина",
+      "ru": "Отель Екатерины"
+    },
+    "location": {
+      "en": "Ekaterininsks Sq, Odesa",
+      "ua": "Катерининська пл., Одеса",
+      "ru": "Екатерининская пл., Одесса"
+    },
+    "city": "odesa",
+    "type": "hotels",
+    "price": 1100000,
+    "area": 700,
+    "bedrooms": 0,
+    "roi": "9.8",
+    "gallery": [
+      "/images/generated/prop-odesa-black-sea-hotel-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "ready",
+    "address": "Ekaterininsks Sq, Odesa",
+    "description": {
+      "en": "Premium boutique hotel located on Catherine Square in Odesa.",
+      "ua": "Преміальний бутик-готель розташований на Катерининській площі в Одесі.",
+      "ru": "Премиальный бутик-отель расположен на Екатерининской площади в Одессе."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "700 / 420 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_hotel-complex-prestigious-neighborhood-odesa",
+    "slug": "hotel-complex-prestigious-neighborhood-odesa",
+    "title": {
+      "en": "A hotel complex in one of Odessa's most prestigious neighborhoods",
+      "ua": "Готельний комплекс у найпрестижнішому районі Одеси",
+      "ru": "Отельный комплекс в наиболее престижном районе Одессы"
+    },
+    "location": {
+      "en": "French Blvd, Odesa",
+      "ua": "Французький бульвар, Одеса",
+      "ru": "Французский бульвар, Одесса"
+    },
+    "city": "odesa",
+    "type": "hotels",
+    "price": 2100000,
+    "area": 1230,
+    "bedrooms": 0,
+    "roi": "10.5",
+    "gallery": [
+      "/images/generated/prop-kyiv-hospitality-project-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "investment",
+    "address": "French Blvd, Odesa",
+    "description": {
+      "en": "Large hospitality complex with private grounds on French Boulevard, Odesa.",
+      "ua": "Великий готельний комплекс з власною територією на Французькому бульварі, Одеса.",
+      "ru": "Крупный отельный комплекс с собственной территорией на Французском бульваре, Одесса."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "1230 / 738 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_modern-apartment-terrace-odesa",
+    "slug": "modern-apartment-terrace-odesa",
+    "title": {
+      "en": "Modern Apartment with a Large Sea-View Terrace - Odesa",
+      "ua": "Сучасні апартаменти з великою терасою та видом на море - Одеса",
+      "ru": "Современные апартаменты с большой террасой и видом на море - Одесса"
+    },
+    "location": {
+      "en": "Arcadia, Odesa",
+      "ua": "Аркадія, Одеса",
+      "ru": "Аркадия, Одесса"
+    },
+    "city": "odesa",
+    "type": "apartments",
+    "price": 0,
+    "area": 41,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-odesa-arkadia-apartment-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "ready",
+    "address": "Arcadia, Odesa",
+    "description": {
+      "en": "Exclusive sea-view apartment featuring a large private terrace in Arcadia, Odesa.",
+      "ua": "Ексклюзивні апартаменти з видом на море та просторою приватною терасою в Аркадії.",
+      "ru": "Эксклюзивные апартаменты с видом на море и просторной частной террасой в Аркадии."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "41 / 25 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_premium-class-hotel-odesa",
+    "slug": "premium-class-hotel-odesa",
+    "title": {
+      "en": "Premium-class hotel",
+      "ua": "Преміум-клас готель",
+      "ru": "Премиум-класс отель"
+    },
+    "location": {
+      "en": "Coastal Area, Odesa",
+      "ua": "Прибережна зона, Одеса",
+      "ru": "Прибрежная зона, Одесса"
+    },
+    "city": "odesa",
+    "type": "hotels",
+    "price": 2500000,
+    "area": 800,
+    "bedrooms": 0,
+    "roi": "11",
+    "gallery": [
+      "/images/generated/prop-odesa-black-sea-hotel-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "exclusive",
+    "address": "Coastal Area, Odesa",
+    "description": {
+      "en": "Turnkey premium class hotel located near Odesa coastline.",
+      "ua": "Готовий преміальний готель біля прибережної зони Одеси.",
+      "ru": "Готовый премиальный отель возле прибрежной зоны Одессы."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "800 / 480 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_continental-hotel-odesa",
+    "slug": "continental-hotel-odesa",
+    "title": {
+      "en": "The Continental Hotel",
+      "ua": "Готель Континенталь",
+      "ru": "Отель Континенталь"
+    },
+    "location": {
+      "en": "Deribasovskaya St, Odesa",
+      "ua": "вул. Дерибасівська, Одеса",
+      "ru": "ул. Дерибасовская, Одесса"
+    },
+    "city": "odesa",
+    "type": "hotels",
+    "price": 10500000,
+    "area": 3000,
+    "bedrooms": 0,
+    "roi": "12.5",
+    "gallery": [
+      "/images/generated/prop-kyiv-hospitality-project-1.webp",
+      "/images/generated/category-hotels.webp",
+      "/images/generated/service-hotel.webp",
+      "/images/generated/insight-hotels.webp",
+      "/images/generated/featured-lviv-townhouse.webp"
+    ],
+    "video": "",
+    "status": "exclusive",
+    "address": "Deribasovskaya St, Odesa",
+    "description": {
+      "en": "Flagship 5-star continental hotel landmark property on Deribasovskaya Street.",
+      "ua": "Флагманський 5-зірковий готельний комплекс на вулиці Дерибасівській.",
+      "ru": "Флагманский 5-звездочный отельный комплекс на улице Дерибасовской."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "3000 / 1800 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_exclusive-investment-proposal-70-pearl-residence-kadorr-group-odesa-ukraine",
+    "slug": "exclusive-investment-proposal-70-pearl-residence-kadorr-group-odesa-ukraine",
+    "title": {
+      "en": "Exclusive Investment Proposal 70 Pearl Residence - KADORR Group",
+      "ua": "Ексклюзивна інвестиційна пропозиція 70 Перлина - KADORR Group",
+      "ru": "Эксклюзивное инвестиционное предложение 70 Жемчужина - KADORR Group"
+    },
+    "location": {
+      "en": "70 Pearl Residence, Odesa",
+      "ua": "70 Перлина, Одеса",
+      "ru": "70 Жемчужина, Одесса"
+    },
+    "city": "odesa",
+    "type": "commercial",
+    "price": 184800,
+    "area": 120,
+    "bedrooms": 0,
+    "roi": "9.5",
+    "gallery": [
+      "/images/generated/prop-odesa-retail-plaza-1.webp",
+      "/images/generated/category-commercial.webp",
+      "/images/generated/service-commercial.webp",
+      "/images/generated/service-investment.webp",
+      "/images/generated/insight-kyiv-market.webp"
+    ],
+    "video": "",
+    "status": "investment",
+    "address": "70 Pearl Residence, Odesa",
+    "description": {
+      "en": "Commercial space in 70 Pearl Residence by KADORR Group in Odesa.",
+      "ua": "Комерційне приміщення в 70 Перлині від KADORR Group в Одесі.",
+      "ru": "Коммерческое помещение в 70 Жемчужине от KADORR Group в Одессе."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "120 / 72 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Ready Property",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_violet-4-dubai",
+    "slug": "violet-4-dubai",
+    "title": {
+      "en": "VIOLET 4",
+      "ua": "VIOLET 4",
+      "ru": "VIOLET 4"
+    },
+    "location": {
+      "en": "DAMAC Hills 2, Dubai",
+      "ua": "DAMAC Hills 2, Дубай",
+      "ru": "DAMAC Hills 2, Дубай"
+    },
+    "city": "dubai",
+    "type": "apartments",
+    "price": 0,
+    "area": 120,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-kyiv-pechersk-penthouse-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "address": "DAMAC Hills 2, Dubai",
+    "description": {
+      "en": "Off-plan luxury townhouses in DAMAC Hills 2, Dubai.",
+      "ua": "Off-plan розкішні таунхауси в DAMAC Hills 2, Дубай.",
+      "ru": "Off-plan роскошные таунхаусы в DAMAC Hills 2, Дубай."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "120 / 72 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_azure-2-dubai",
+    "slug": "azure-2-dubai",
+    "title": {
+      "en": "AZURE 2",
+      "ua": "AZURE 2",
+      "ru": "AZURE 2"
+    },
+    "location": {
+      "en": "Dubai Marina, Dubai",
+      "ua": "Дубай Марина, Дубай",
+      "ru": "Дубай Марина, Дубай"
+    },
+    "city": "dubai",
+    "type": "apartments",
+    "price": 0,
+    "area": 95,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-odesa-arkadia-apartment-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "address": "Dubai Marina, Dubai",
+    "description": {
+      "en": "Waterfront apartments with panoramic views in Dubai Marina.",
+      "ua": "Апартаменти на першій лінії в Дубай Марина.",
+      "ru": "Апартаменты на первой линии в Дубай Марина."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "95 / 57 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_damac-islands-dubai",
+    "slug": "damac-islands-dubai",
+    "title": {
+      "en": "DAMAC Islands",
+      "ua": "DAMAC Islands",
+      "ru": "DAMAC Islands"
+    },
+    "location": {
+      "en": "DAMAC Islands, Dubai",
+      "ua": "DAMAC Islands, Дубай",
+      "ru": "DAMAC Islands, Дубай"
+    },
+    "city": "dubai",
+    "type": "villas",
+    "price": 0,
+    "area": 450,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-kozyn-forest-villa-1.webp",
+      "/images/generated/category-villas.webp",
+      "/images/generated/featured-odesa-villa.webp",
+      "/images/generated/service-residential.webp",
+      "/images/generated/insight-offplan.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "address": "DAMAC Islands, Dubai",
+    "description": {
+      "en": "Exclusive island resort villas community by DAMAC in Dubai.",
+      "ua": "Ексклюзивне вільновий ком'юніті DAMAC Islands в Дубаї.",
+      "ru": "Эксклюзивное вилловое комьюнити DAMAC Islands в Дубае."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "450 / 270 / 20 m²",
+      "floor": "2 Floors",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_safa-gate-dubai",
+    "slug": "safa-gate-dubai",
+    "title": {
+      "en": "SAFA GATE",
+      "ua": "SAFA GATE",
+      "ru": "SAFA GATE"
+    },
+    "location": {
+      "en": "Safa Park, Dubai",
+      "ua": "Safa Park, Дубай",
+      "ru": "Safa Park, Дубай"
+    },
+    "city": "dubai",
+    "type": "apartments",
+    "price": 0,
+    "area": 110,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-kyiv-pechersk-penthouse-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "address": "Safa Park, Dubai",
+    "description": {
+      "en": "Luxury residence overlooking Safa Park and Dubai Canal.",
+      "ua": "Розкішна резиденція з видом на Safa Park та канал Дубай.",
+      "ru": "Роскошная резиденция с видом на Safa Park и канал Дубай."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "110 / 66 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_chelsea-residences-dubai",
+    "slug": "chelsea-residences-dubai",
+    "title": {
+      "en": "CHELSEA RESIDENCES",
+      "ua": "CHELSEA RESIDENCES",
+      "ru": "CHELSEA RESIDENCES"
+    },
+    "location": {
+      "en": "Business Bay, Dubai",
+      "ua": "Business Bay, Дубай",
+      "ru": "Business Bay, Дубай"
+    },
+    "city": "dubai",
+    "type": "apartments",
+    "price": 0,
+    "area": 88,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-kyiv-podil-loft-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "address": "Business Bay, Dubai",
+    "description": {
+      "en": "Modern urban residences in the heart of Business Bay, Dubai.",
+      "ua": "Сучасні міські резиденції у серці Business Bay, Дубай.",
+      "ru": "Современные городские резиденции в сердце Business Bay, Дубай."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "88 / 53 / 20 m²",
+      "floor": "Floor 5 of 12",
+      "renovation": "Designer premium finish",
+      "newBuild": "Off-Plan Project",
+      "construction": "Monolithic Frame",
+      "heating": "Autonomous heating",
+      "ceilings": "3.1 m ceiling height",
+      "yearBuilt": "Built in 2022"
+    }
+  },
+  {
+    "id": "seed_shoreline-by-damac-dubai",
+    "slug": "shoreline-by-damac-dubai",
+    "title": {
+      "en": "Shoreline by DAMAC",
+      "ua": "Shoreline by DAMAC",
+      "ru": "Shoreline by DAMAC"
+    },
+    "location": {
+      "en": "Ras Al Khaimah / Dubai",
+      "ua": "Рас-аль-Хайма / Дубай",
+      "ru": "Рас-эль-Хайма / Дубай"
+    },
+    "city": "dubai",
+    "type": "apartments",
+    "price": 0,
+    "area": 135,
+    "bedrooms": 0,
+    "roi": "",
+    "gallery": [
+      "/images/generated/prop-odesa-arkadia-apartment-1.webp",
+      "/images/generated/shared-apt-living.webp",
+      "/images/generated/shared-apt-bedroom.webp",
+      "/images/generated/shared-apt-kitchen.webp",
+      "/images/generated/shared-apt-bathroom.webp"
+    ],
+    "video": "",
+    "status": "off-plan",
+    "address": "Ras Al Khaimah / Dubai",
+    "description": {
+      "en": "Beachfront residences with private beach access by DAMAC.",
+      "ua": "Пляжні резиденції з приватним доступом до пляжу від DAMAC.",
+      "ru": "Пляжные резиденции с частным доступом к пляжу от DAMAC."
+    },
+    "specs": {
+      "rooms": "3 Rooms",
+      "layout": "135 / 81 / 20 m²",
       "floor": "Floor 5 of 12",
       "renovation": "Designer premium finish",
       "newBuild": "Off-Plan Project",

@@ -94,7 +94,7 @@ function getSeededProperties(): PropertyData[] {
       yearBuiltText = "Built in 2022";
     }
 
-    let addressVal = "Kyiv, Ukraine";
+    let addressVal = p.location?.en || "Kyiv, Ukraine";
     if (p.slug === "kyiv-pechersk-penthouse") addressVal = "Lomakivska St, 56/2, Pechersk, Kyiv";
     else if (p.slug === "kyiv-podil-loft") addressVal = "Yaroslavska St, 15, Podil, Kyiv";
     else if (p.slug === "odesa-arkadia-apartment") addressVal = "Genoese St, 24A, Arcadia, Odesa";
@@ -106,6 +106,11 @@ function getSeededProperties(): PropertyData[] {
     else if (p.slug === "kyiv-hospitality-project") addressVal = "Khreschatyk St, 2, Kyiv";
     else if (p.slug === "kyiv-business-tower") addressVal = "Lesi Ukrainky Blvd, 26, Pechersk, Kyiv";
     else if (p.slug === "lviv-office-building") addressVal = "Naukova St, 7, Lviv";
+    else if (p.location?.en) addressVal = p.location.en;
+    else if (p.city === "dubai") addressVal = "Dubai, UAE";
+    else if (p.city === "odesa") addressVal = "Odesa, Ukraine";
+    else if (p.city === "lviv") addressVal = "Lviv, Ukraine";
+    else addressVal = "Kyiv, Ukraine";
 
     return {
       id: "seed_" + p.slug,
@@ -136,6 +141,71 @@ function getSeededProperties(): PropertyData[] {
       }
     };
   });
+}
+
+function normalizeKey(str?: string): string {
+  if (!str) return "";
+  return str.toLowerCase().trim().replace(/[^a-z0-9\u0400-\u04FF]/g, "");
+}
+
+function mergeAndDeduplicateProperties(stored: PropertyData[]): PropertyData[] {
+  const seeded = getSeededProperties();
+  const result: PropertyData[] = [];
+  const usedKeys = new Set<string>();
+
+  const getKeys = (p: PropertyData): string[] => {
+    const keys: string[] = [];
+    if (p.slug) keys.push(`slug:${p.slug.toLowerCase().trim()}`);
+    if (p.id && !p.id.startsWith("prop_")) keys.push(`id:${p.id.toLowerCase().trim()}`);
+    if (p.title?.en) keys.push(`title_en:${normalizeKey(p.title.en)}`);
+    if (p.title?.ua) keys.push(`title_ua:${normalizeKey(p.title.ua)}`);
+    if (p.title?.ru) keys.push(`title_ru:${normalizeKey(p.title.ru)}`);
+    return keys;
+  };
+
+  const findMatchInStored = (p: PropertyData): PropertyData | undefined => {
+    const pKeys = getKeys(p);
+    return stored.find((item) => {
+      const itemKeys = getKeys(item);
+      return pKeys.some((k) => itemKeys.includes(k));
+    });
+  };
+
+  // 1. Start with seeded properties, merged with stored customizations
+  for (const s of seeded) {
+    const match = findMatchInStored(s);
+    if (match) {
+      const mergedItem: PropertyData = {
+        ...s,
+        ...match,
+        id: s.id,
+        slug: s.slug,
+        title: match.title || s.title,
+        location: match.location || s.location,
+        description: match.description || s.description,
+        address: match.address || s.address,
+        specs: match.specs || s.specs,
+        gallery: match.gallery && match.gallery.length > 0 ? match.gallery : s.gallery,
+      };
+      result.push(mergedItem);
+      getKeys(mergedItem).forEach((k) => usedKeys.add(k));
+    } else {
+      result.push(s);
+      getKeys(s).forEach((k) => usedKeys.add(k));
+    }
+  }
+
+  // 2. Append custom properties from storage that do not match any seeded property
+  for (const b of stored) {
+    const bKeys = getKeys(b);
+    const alreadyIncluded = bKeys.some((k) => usedKeys.has(k));
+    if (!alreadyIncluded) {
+      result.push(b);
+      bKeys.forEach((k) => usedKeys.add(k));
+    }
+  }
+
+  return result;
 }
 
 export async function getCustomProperties(): Promise<PropertyData[]> {
@@ -223,34 +293,10 @@ export async function getCustomProperties(): Promise<PropertyData[]> {
   }
 
   if (loaded && propertiesList.length > 0) {
-    // Merge: start with seeded properties as base, override with Blob data by slug,
-    // then append any Blob items that are not in seeds (newly created in admin)
-    const seeded = getSeededProperties();
-    const blobMap = new Map(propertiesList.map((p) => [p.slug, p]));
-    const seededMap = new Map(seeded.map((p) => [p.slug, p]));
-
-    const merged: PropertyData[] = [];
-
-    // Start with seeded properties, potentially overridden by Blob data
-    for (const s of seeded) {
-      if (blobMap.has(s.slug)) {
-        merged.push(blobMap.get(s.slug)!);
-      } else {
-        merged.push(s);
-      }
-    }
-
-    // Append custom properties from Blob that are NOT in seeded list
-    for (const b of propertiesList) {
-      if (!seededMap.has(b.slug)) {
-        merged.push(b);
-      }
-    }
-
-    return merged;
+    return mergeAndDeduplicateProperties(propertiesList);
   }
 
-  // No Blob data at all — return seeded defaults
+  // No stored data at all — return seeded defaults
   return getSeededProperties();
 }
 
