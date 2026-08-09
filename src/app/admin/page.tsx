@@ -579,8 +579,8 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
       slug: copySlug,
       title: {
         en: (titleObj.en || "Property") + " (Copy)",
-        ua: (titleObj.ua || "Об'єкт") + " (Копія)",
-        ru: (titleObj.ru || "Объект") + " (Копия)",
+        ua: (titleObj.ua || "Property") + " (Copy)",
+        ru: (titleObj.ru || "Property") + " (Copy)",
       },
       location: toMultilingualObj(propToCopy.location),
       description: toMultilingualObj(propToCopy.description),
@@ -638,7 +638,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
     if (!contactsSettings) return;
     const newOffice: OfficeData = {
       id: "office_" + Date.now(),
-      name: { en: "New Office", ua: "Новий офіс", ru: "Новый офис" },
+      name: { en: "New Office", ua: "New Office", ru: "New Office" },
       phone: "+380 00 000 0000",
     };
     setContactsSettings({
@@ -1591,12 +1591,12 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                   Catalog Manager
                 </h2>
                 <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-[12px] font-medium tracking-wider uppercase">
-                  <span>Объектов в базе:</span>
+                  <span>Properties in base:</span>
                   <strong className="text-[14px] text-white font-mono font-semibold">{customProperties.length}</strong>
                 </div>
               </div>
               <p className="text-[11px] text-white/40 mt-1">
-                Всего в каталоге: <strong className="text-white/80 font-mono">{customProperties.length}</strong> карточек (Одесса: {odesaCount}, Дубай: {dubaiCount}{kyivCount > 0 ? `, Киев: ${kyivCount}` : ""}{lvivCount > 0 ? `, Львов: ${lvivCount}` : ""})
+                Total in catalog: <strong className="text-white/80 font-mono">{customProperties.length}</strong> listings (Odesa: {odesaCount}, Dubai: {dubaiCount}{kyivCount > 0 ? `, Kyiv: ${kyivCount}` : ""}{lvivCount > 0 ? `, Lviv: ${lvivCount}` : ""})
               </p>
             </div>
             
@@ -1607,7 +1607,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                 className="border border-white/10 text-white/60 hover:text-white px-4 py-2.5 text-[12px] font-medium uppercase tracking-wider hover:bg-white/5 transition-all disabled:opacity-50"
                 title="Refresh properties list"
               >
-                {propertiesLoading ? "Загрузка..." : "↺ Обновить"}
+                {propertiesLoading ? "Loading..." : "↺ Refresh"}
               </button>
               <button
                 onClick={() => {
@@ -1657,7 +1657,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
           {/* Filter Bar & City Chips */}
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-black/40 border border-white/10 p-3">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] text-white/40 uppercase tracking-wider mr-1">Фильтр:</span>
+              <span className="text-[11px] text-white/40 uppercase tracking-wider mr-1">Filter:</span>
               <button
                 onClick={() => setPropertyCityFilter("all")}
                 className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
@@ -1666,7 +1666,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                     : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
                 }`}
               >
-                Все ({customProperties.length})
+                All ({customProperties.length})
               </button>
               <button
                 onClick={() => setPropertyCityFilter("odesa")}
@@ -1676,7 +1676,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                     : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
                 }`}
               >
-                Одесса ({odesaCount})
+                Odesa ({odesaCount})
               </button>
               <button
                 onClick={() => setPropertyCityFilter("dubai")}
@@ -1686,7 +1686,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                     : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
                 }`}
               >
-                Дубай ({dubaiCount})
+                Dubai ({dubaiCount})
               </button>
               {kyivCount > 0 && (
                 <button
@@ -1697,7 +1697,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                       : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
                   }`}
                 >
-                  Киев ({kyivCount})
+                  Kyiv ({kyivCount})
                 </button>
               )}
               {lvivCount > 0 && (
@@ -1709,7 +1709,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                       : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
                   }`}
                 >
-                  Львов ({lvivCount})
+                  Lviv ({lvivCount})
                 </button>
               )}
             </div>
@@ -1719,7 +1719,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                 type="text"
                 value={propertySearch}
                 onChange={(e) => setPropertySearch(e.target.value)}
-                placeholder="Поиск по названию или slug..."
+                placeholder="Search by title or slug..."
                 className="w-full border border-white/10 bg-black/50 px-3.5 py-1.5 text-[12px] font-light text-white placeholder:text-white/30 focus:border-[#D4AF37] focus:outline-none"
               />
             </div>
@@ -1732,7 +1732,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
               <div className="py-12 text-center text-white/40 text-[14px]">No dynamic properties found. Click button above to add one.</div>
             ) : filteredProperties.length === 0 ? (
               <div className="py-12 text-center text-white/40 text-[14px]">
-                Ничего не найдено по вашему запросу.
+                No properties match your search.
               </div>
             ) : (
               <div className="overflow-x-auto">
