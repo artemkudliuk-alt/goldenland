@@ -62,55 +62,7 @@ function getSeededProperties(): PropertyData[] {
     let ceilingsText = "3.1 m ceiling height";
     let yearBuiltText = "Built in 2022";
 
-    if (p.slug === "kyiv-pechersk-penthouse") {
-      roomsText = "4 Rooms";
-      layoutText = "320 / 180 / 35 м²";
-      floorText = "Floor 24 of 25";
-      renovationText = "Luxury designer finish";
-      newBuildText = "New premium build";
-      constructionText = "Monolithic Frame";
-      heatingText = "Autonomous building boiler";
-      ceilingsText = "3.4 m ceiling height";
-      yearBuiltText = "Built in 2021";
-    } else if (p.slug === "kyiv-podil-loft") {
-      roomsText = "2 Rooms";
-      layoutText = "120 / 72 / 20 м²";
-      floorText = "Floor 3 of 5";
-      renovationText = "Loft designer finish";
-      newBuildText = "Heritage Restored";
-      constructionText = "Brick & Monolith";
-      heatingText = "Autonomous gas boiler";
-      ceilingsText = "3.8 m ceiling height";
-      yearBuiltText = "Built in 2018";
-    } else if (p.slug === "odesa-arkadia-apartment") {
-      roomsText = "3 Rooms";
-      layoutText = "145 / 80 / 28 м²";
-      floorText = "Floor 12 of 18";
-      renovationText = "Turnkey premium finish";
-      newBuildText = "New building";
-      constructionText = "Monolithic Frame";
-      heatingText = "Autonomous building boiler";
-      ceilingsText = "3.1 m ceiling height";
-      yearBuiltText = "Built in 2022";
-    }
-
-    let addressVal = p.location?.en || "Kyiv, Ukraine";
-    if (p.slug === "kyiv-pechersk-penthouse") addressVal = "Lomakivska St, 56/2, Pechersk, Kyiv";
-    else if (p.slug === "kyiv-podil-loft") addressVal = "Yaroslavska St, 15, Podil, Kyiv";
-    else if (p.slug === "odesa-arkadia-apartment") addressVal = "Genoese St, 24A, Arcadia, Odesa";
-    else if (p.slug === "lviv-historic-townhouse") addressVal = "Staroyevreiska St, 10, Lviv";
-    else if (p.slug === "kozyn-forest-villa") addressVal = "Kozyn, Kyiv Oblast, Ukraine";
-    else if (p.slug === "odesa-beachfront-villa") addressVal = "Fontanska Rd, 120, Odesa";
-    else if (p.slug === "lviv-rynok-boutique") addressVal = "Rynok Square, 5, Lviv";
-    else if (p.slug === "odesa-black-sea-hotel") addressVal = "Primorskiy Blvd, 11, Odesa";
-    else if (p.slug === "kyiv-hospitality-project") addressVal = "Khreschatyk St, 2, Kyiv";
-    else if (p.slug === "kyiv-business-tower") addressVal = "Lesi Ukrainky Blvd, 26, Pechersk, Kyiv";
-    else if (p.slug === "lviv-office-building") addressVal = "Naukova St, 7, Lviv";
-    else if (p.location?.en) addressVal = p.location.en;
-    else if (p.city === "dubai") addressVal = "Dubai, UAE";
-    else if (p.city === "odesa") addressVal = "Odesa, Ukraine";
-    else if (p.city === "lviv") addressVal = "Lviv, Ukraine";
-    else addressVal = "Kyiv, Ukraine";
+    let addressVal = p.location?.en || (p.city === "dubai" ? "Dubai, UAE" : "Odesa, Ukraine");
 
     return {
       id: "seed_" + p.slug,
@@ -124,7 +76,7 @@ function getSeededProperties(): PropertyData[] {
       bedrooms: bedrooms,
       roi: p.roi ? String(p.roi) : "",
       gallery: p.gallery,
-      video: p.slug === "kyiv-pechersk-penthouse" ? "/videos/tour.mp4" : "",
+      video: "",
       status: p.status,
       address: addressVal,
       description: { en: p.description.en, ua: p.description.ua, ru: p.description.ru },

@@ -33,6 +33,11 @@ export async function GET() {
         amenities: [],
         specs: p.specs,
         address: p.address,
+        managerName: p.managerName,
+        managerInitials: p.managerInitials,
+        managerPhoto: p.managerPhoto,
+        managerWhatsapp: p.managerWhatsapp,
+        managerTelegram: p.managerTelegram,
         id: p.id,
       };
     });

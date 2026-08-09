@@ -22,9 +22,9 @@ const t = {
       ru: "Премиальные объекты для продажи и инвестиций в Украине.",
     },
     subtitle: {
-      en: "Kyiv, Lviv and Odesa — residential, commercial and hospitality opportunities vetted by our international team.",
-      ua: "Київ, Львів і Одеса — житлові, комерційні та готельні можливості, перевірені нашою міжнародною командою.",
-      ru: "Киев, Львов и Одесса — жилые, коммерческие и отельные возможности, проверенные нашей международной командой.",
+      en: "Odesa and Dubai — residential, commercial and hospitality opportunities vetted by our international team.",
+      ua: "Одеса та Дубай — житлові, комерційні та готельні можливості, перевірені нашою міжнародною командою.",
+      ru: "Одесса и Дубай — жилые, коммерческие и отельные возможности, проверенные нашей международной командой.",
     },
   },
   filterAll: { en: "All", ua: "Всі", ru: "Все" },

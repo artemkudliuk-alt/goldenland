@@ -1596,7 +1596,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                 </div>
               </div>
               <p className="text-[11px] text-white/40 mt-1">
-                Всего в каталоге: <strong className="text-white/80 font-mono">{customProperties.length}</strong> карточек (Одесса: {odesaCount}, Дубай: {dubaiCount}, Киев: {kyivCount}, Львов: {lvivCount})
+                Всего в каталоге: <strong className="text-white/80 font-mono">{customProperties.length}</strong> карточек (Одесса: {odesaCount}, Дубай: {dubaiCount}{kyivCount > 0 ? `, Киев: ${kyivCount}` : ""}{lvivCount > 0 ? `, Львов: ${lvivCount}` : ""})
               </p>
             </div>
             
@@ -1616,7 +1616,7 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                     slug: "",
                     title: { en: "", ua: "", ru: "" },
                     location: { en: "", ua: "", ru: "" },
-                    city: "kyiv",
+                    city: "odesa",
                     type: "apartments",
                     price: 0,
                     area: 0,
@@ -1644,19 +1644,20 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                       yearBuilt: ""
                     }
                   });
+                  setInitialPropertyBackup(null);
                   setFormLang("en");
                 }}
-                className="border border-[#D4AF37] bg-[#D4AF37]/10 text-[#D4AF37] hover:bg-[#D4AF37] hover:text-[#0a0a0a] px-5 py-2.5 text-[12px] font-medium uppercase tracking-wider transition-all duration-300"
+                className="bg-[#D4AF37] hover:bg-[#c49f27] text-black font-medium px-5 py-2.5 text-[12px] uppercase tracking-wider transition-colors shadow-sm"
               >
-                + Add New Property
+                + Add Property
               </button>
             </div>
           </div>
 
           {/* Filter Bar & City Chips */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border border-white/10 bg-white/3 p-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-black/40 border border-white/10 p-3">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[11px] uppercase tracking-wider text-white/40 mr-1">Город:</span>
+              <span className="text-[11px] text-white/40 uppercase tracking-wider mr-1">Фильтр:</span>
               <button
                 onClick={() => setPropertyCityFilter("all")}
                 className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
@@ -1687,26 +1688,30 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
               >
                 Дубай ({dubaiCount})
               </button>
-              <button
-                onClick={() => setPropertyCityFilter("kyiv")}
-                className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
-                  propertyCityFilter === "kyiv"
-                    ? "bg-[#D4AF37] text-black font-semibold"
-                    : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                Киев ({kyivCount})
-              </button>
-              <button
-                onClick={() => setPropertyCityFilter("lviv")}
-                className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
-                  propertyCityFilter === "lviv"
-                    ? "bg-[#D4AF37] text-black font-semibold"
-                    : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                Львов ({lvivCount})
-              </button>
+              {kyivCount > 0 && (
+                <button
+                  onClick={() => setPropertyCityFilter("kyiv")}
+                  className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
+                    propertyCityFilter === "kyiv"
+                      ? "bg-[#D4AF37] text-black font-semibold"
+                      : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  Киев ({kyivCount})
+                </button>
+              )}
+              {lvivCount > 0 && (
+                <button
+                  onClick={() => setPropertyCityFilter("lviv")}
+                  className={`px-3 py-1 text-[11px] uppercase tracking-wider transition-colors font-medium ${
+                    propertyCityFilter === "lviv"
+                      ? "bg-[#D4AF37] text-black font-semibold"
+                      : "bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  Львов ({lvivCount})
+                </button>
+              )}
             </div>
 
             <div className="w-full md:w-72">

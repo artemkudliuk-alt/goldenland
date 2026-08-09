@@ -80,8 +80,8 @@ export async function POST(request: Request) {
 
       const validTypes = ["apartments", "villas", "hotels", "commercial"];
       const propType = validTypes.includes(p?.type) ? p.type : "apartments";
-      const validCities = ["kyiv", "lviv", "odesa", "dubai"];
-      const propCity = validCities.includes(p?.city) ? p.city : "kyiv";
+      const validCities = ["odesa", "dubai", "kyiv", "lviv"];
+      const propCity = validCities.includes(p?.city) ? p.city : "odesa";
 
       return {
         id,
