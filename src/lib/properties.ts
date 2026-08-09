@@ -1,3 +1,26 @@
+export type PropertyType = "apartments" | "villas" | "hotels" | "commercial";
+export type PropertyStatus = "off-plan" | "ready" | "exclusive" | "investment";
+export type Locale = "en" | "ua" | "ru";
+
+export interface Property {
+  slug: string;
+  type: PropertyType;
+  status: PropertyStatus;
+  city: "kyiv" | "lviv" | "odesa" | "dubai";
+  price: number;
+  priceOnRequest?: boolean;
+  area: number;
+  beds?: number;
+  baths?: number;
+  roi?: number;
+  gallery: string[];
+  title: Record<Locale, string>;
+  location: Record<Locale, string>;
+  description: Record<Locale, string>;
+  amenities: { en: string; ua: string; ru: string }[];
+  paymentPlan: { label: Record<Locale, string>; percent: number }[];
+}
+
 export const galleries: Record<string, string[]> = {
   "commercial-property-kadorr-new-city": [
     "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294419147_WhatsApp_Image_2026_08_09_at_19_00_28__1.jpeg",
