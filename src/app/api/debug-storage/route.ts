@@ -8,24 +8,25 @@ export async function GET() {
   const hasKvUrl = !!(process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL);
   const isVercel = !!process.env.VERCEL;
 
-  let blobList: any[] = [];
+  let allBlobs: any[] = [];
   let blobError: string | null = null;
-  let blobContent: any = null;
+  let customPropertiesBlobData: any = null;
+  let kvData: any = null;
 
   if (hasBlobToken) {
     try {
       const { list } = await import("@vercel/blob");
-      const { blobs } = await list({ prefix: "data/custom_properties.json" });
-      blobList = blobs.map((b) => ({ url: b.url, uploadedAt: b.uploadedAt, size: b.size }));
+      const { blobs } = await list();
+      allBlobs = blobs.map((b) => ({ pathname: b.pathname, url: b.url, uploadedAt: b.uploadedAt, size: b.size }));
 
-      if (blobs.length > 0) {
-        const sorted = [...blobs].sort(
+      const propBlobs = blobs.filter((b) => b.pathname.includes("custom_properties"));
+      if (propBlobs.length > 0) {
+        const sorted = [...propBlobs].sort(
           (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
         );
-        const res = await fetch(sorted[0].url, { cache: "no-store" });
+        const res = await fetch(`${sorted[0].url}?t=${Date.now()}`, { cache: "no-store" });
         if (res.ok) {
-          const arr = await res.json();
-          blobContent = { count: Array.isArray(arr) ? arr.length : null };
+          customPropertiesBlobData = await res.json();
         }
       }
     } catch (err: any) {
@@ -33,16 +34,33 @@ export async function GET() {
     }
   }
 
+  if (hasKvUrl) {
+    try {
+      const kvUrl = process.env.KV_REST_API_URL || process.env.STORAGE_REST_API_URL;
+      const kvToken = process.env.KV_REST_API_TOKEN || process.env.STORAGE_REST_API_TOKEN;
+      const res = await fetch(kvUrl!, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${kvToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(["GET", "custom_properties"]),
+        cache: "no-store",
+      });
+      if (res.ok) {
+        const data = await res.json();
+        kvData = data?.result;
+      }
+    } catch (err: any) {
+      // ignore
+    }
+  }
+
   return NextResponse.json({
     isVercel,
-    hasBlobToken,
-    hasKvUrl,
-    blobList,
+    allBlobs,
     blobError,
-    blobContent,
-    env: {
-      BLOB_READ_WRITE_TOKEN: hasBlobToken ? "SET ✅" : "NOT SET ❌",
-      KV_REST_API_URL: hasKvUrl ? "SET ✅" : "NOT SET ❌",
-    },
+    customPropertiesBlobData,
+    kvData,
   });
 }
