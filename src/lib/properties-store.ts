@@ -100,6 +100,21 @@ function normalizeKey(str?: string): string {
   return str.toLowerCase().trim().replace(/[^a-z0-9\u0400-\u04FF]/g, "");
 }
 
+const MOCK_SLUGS_TO_REMOVE = new Set([
+  "kyiv-pechersk-penthouse",
+  "kyiv-podil-loft",
+  "odesa-arkadia-apartment",
+  "lviv-historic-townhouse",
+  "kozyn-forest-villa",
+  "odesa-beachfront-villa",
+  "lviv-rynok-boutique",
+  "odesa-black-sea-hotel",
+  "kyiv-hospitality-project",
+  "kyiv-business-tower",
+  "lviv-office-building",
+  "odesa-retail-plaza",
+]);
+
 function deduplicateStoredProperties(stored: PropertyData[]): PropertyData[] {
   const seeded = getSeededProperties();
   const seededMapBySlug = new Map(seeded.map((s) => [s.slug, s]));
@@ -117,6 +132,10 @@ function deduplicateStoredProperties(stored: PropertyData[]): PropertyData[] {
   };
 
   for (const item of stored) {
+    if (item.slug && MOCK_SLUGS_TO_REMOVE.has(item.slug.toLowerCase().trim())) {
+      continue;
+    }
+
     const keys = getKeys(item);
     const alreadySeen = keys.some((k) => seenKeys.has(k));
     if (alreadySeen) {
