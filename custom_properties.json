@@ -19,11 +19,12 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-odesa-retail-plaza-1.webp",
-      "/images/generated/category-commercial.webp",
-      "/images/generated/service-commercial.webp",
-      "/images/generated/service-investment.webp",
-      "/images/generated/insight-kyiv-market.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294419147_WhatsApp_Image_2026_08_09_at_19_00_28__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294423592_WhatsApp_Image_2026_08_09_at_19_00_28__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294427028_WhatsApp_Image_2026_08_09_at_19_00_28__3.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294432881_WhatsApp_Image_2026_08_09_at_19_00_28__4.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294438903_WhatsApp_Image_2026_08_09_at_19_00_28__5.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294442578_WhatsApp_Image_2026_08_09_at_19_00_28__6.jpeg"
     ],
     "video": "",
     "status": "investment",
@@ -65,11 +66,11 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-odesa-retail-plaza-1.webp",
-      "/images/generated/category-commercial.webp",
-      "/images/generated/service-commercial.webp",
-      "/images/generated/service-investment.webp",
-      "/images/generated/insight-kyiv-market.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294446056_WhatsApp_Image_2026_08_09_at_19_00_28.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294449628_WhatsApp_Image_2026_08_09_at_19_00_29__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294452835_WhatsApp_Image_2026_08_09_at_19_00_29__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294456644_WhatsApp_Image_2026_08_09_at_19_00_29__3.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786294460031_WhatsApp_Image_2026_08_09_at_19_00_29.jpeg"
     ],
     "video": "",
     "status": "investment",
@@ -111,11 +112,9 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-kozyn-forest-villa-1.webp",
-      "/images/generated/category-villas.webp",
-      "/images/generated/featured-odesa-villa.webp",
-      "/images/generated/service-residential.webp",
-      "/images/generated/insight-offplan.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872439274_WhatsApp_Image_2026_08_03_at_22_36_36__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872446479_WhatsApp_Image_2026_08_03_at_22_36_36__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872449083_WhatsApp_Image_2026_08_03_at_22_36_36.jpeg"
     ],
     "video": "",
     "status": "exclusive",
@@ -157,11 +156,13 @@
     "bedrooms": 0,
     "roi": "9.2",
     "gallery": [
-      "/images/generated/prop-lviv-rynok-boutique-1.webp",
-      "/images/generated/category-hotels.webp",
-      "/images/generated/service-hotel.webp",
-      "/images/generated/insight-hotels.webp",
-      "/images/generated/featured-lviv-townhouse.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872435581_WhatsApp_Image_2026_08_03_at_22_36_38__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872452073_WhatsApp_Image_2026_08_03_at_22_36_38__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872455055_WhatsApp_Image_2026_08_03_at_22_36_38.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872675395_WhatsApp_Image_2026_08_03_at_22_36_38__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872679189_WhatsApp_Image_2026_08_03_at_22_36_38__3.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872683425_WhatsApp_Image_2026_08_03_at_22_36_38__4.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872687081_WhatsApp_Image_2026_08_03_at_22_36_38.jpeg"
     ],
     "video": "",
     "status": "ready",
@@ -203,11 +204,20 @@
     "bedrooms": 0,
     "roi": "9.8",
     "gallery": [
-      "/images/generated/prop-odesa-black-sea-hotel-1.webp",
-      "/images/generated/category-hotels.webp",
-      "/images/generated/service-hotel.webp",
-      "/images/generated/insight-hotels.webp",
-      "/images/generated/featured-lviv-townhouse.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871107639_WhatsApp_Video_2026_08_03_at_22_37_45_mp.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871987478_WhatsApp_Image_2026_08_03_at_22_37_40__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871991559_WhatsApp_Image_2026_08_03_at_22_37_40__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871994305_WhatsApp_Image_2026_08_03_at_22_37_40.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871997558_WhatsApp_Image_2026_08_03_at_22_37_41__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872001314_WhatsApp_Image_2026_08_03_at_22_37_41__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872006534_WhatsApp_Image_2026_08_03_at_22_37_41__3.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872011299_WhatsApp_Image_2026_08_03_at_22_37_41__3.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872015258_WhatsApp_Image_2026_08_03_at_22_37_41__4.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872019854_WhatsApp_Image_2026_08_03_at_22_37_41__5.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872023760_WhatsApp_Image_2026_08_03_at_22_37_41.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872027332_WhatsApp_Image_2026_08_03_at_22_37_45.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872205193_WhatsApp_Image_2026_08_03_at_22_37_40.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872853129_WhatsApp_Image_2026_08_03_at_22_37_40.jpeg"
     ],
     "video": "",
     "status": "ready",
@@ -249,11 +259,17 @@
     "bedrooms": 0,
     "roi": "10.5",
     "gallery": [
-      "/images/generated/prop-kyiv-hospitality-project-1.webp",
-      "/images/generated/category-hotels.webp",
-      "/images/generated/service-hotel.webp",
-      "/images/generated/insight-hotels.webp",
-      "/images/generated/featured-lviv-townhouse.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871092890_WhatsApp_Video_2026_08_03_at_22_37_44__2.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871099648_WhatsApp_Video_2026_08_03_at_22_37_44__4.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871103939_WhatsApp_Video_2026_08_03_at_22_37_44_mp.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871679050_WhatsApp_Image_2026_08_03_at_22_37_44.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871683041_WhatsApp_Image_2026_08_03_at_22_37_43__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871686695_WhatsApp_Image_2026_08_03_at_22_37_43__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871693382_WhatsApp_Image_2026_08_03_at_22_37_43__3.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871697127_WhatsApp_Image_2026_08_03_at_22_37_43__4.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871702073_WhatsApp_Image_2026_08_03_at_22_37_43__5.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871706018_WhatsApp_Image_2026_08_03_at_22_37_43__6.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871710142_WhatsApp_Image_2026_08_03_at_22_37_43.jpeg"
     ],
     "video": "",
     "status": "investment",
@@ -295,11 +311,11 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-odesa-arkadia-apartment-1.webp",
-      "/images/generated/shared-apt-living.webp",
-      "/images/generated/shared-apt-bedroom.webp",
-      "/images/generated/shared-apt-kitchen.webp",
-      "/images/generated/shared-apt-bathroom.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785231530962_WhatsApp_Image_2026_07_27_at_18_07_01__2.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785231545341_WhatsApp_Image_2026_07_27_at_18_07_01.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785231553442_WhatsApp_Image_2026_07_27_at_18_07_01__1.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785231560005_WhatsApp_Image_2026_07_27_at_18_07_01__3.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785231814205_WhatsApp_Image_2026_07_27_at_18_07_01__4.jpg"
     ],
     "video": "",
     "status": "ready",
@@ -341,11 +357,11 @@
     "bedrooms": 0,
     "roi": "11",
     "gallery": [
-      "/images/generated/prop-odesa-black-sea-hotel-1.webp",
-      "/images/generated/category-hotels.webp",
-      "/images/generated/service-hotel.webp",
-      "/images/generated/insight-hotels.webp",
-      "/images/generated/featured-lviv-townhouse.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871092890_WhatsApp_Video_2026_08_03_at_22_37_44__2.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871099648_WhatsApp_Video_2026_08_03_at_22_37_44__4.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871103939_WhatsApp_Video_2026_08_03_at_22_37_44_mp.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785871679050_WhatsApp_Image_2026_08_03_at_22_37_44.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872649633_WhatsApp_Image_2026_08_03_at_22_36_37__5.jpeg"
     ],
     "video": "",
     "status": "exclusive",
@@ -387,11 +403,17 @@
     "bedrooms": 0,
     "roi": "12.5",
     "gallery": [
-      "/images/generated/prop-kyiv-hospitality-project-1.webp",
-      "/images/generated/category-hotels.webp",
-      "/images/generated/service-hotel.webp",
-      "/images/generated/insight-hotels.webp",
-      "/images/generated/featured-lviv-townhouse.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872621495_WhatsApp_Image_2026_08_03_at_22_36_35.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872633482_WhatsApp_Image_2026_08_03_at_22_36_37__3.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872637897_WhatsApp_Image_2026_08_03_at_22_36_37__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872641108_WhatsApp_Image_2026_08_03_at_22_36_37__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872644934_WhatsApp_Image_2026_08_03_at_22_36_37__4.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872649633_WhatsApp_Image_2026_08_03_at_22_36_37__5.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872653201_WhatsApp_Image_2026_08_03_at_22_36_37__6.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872656449_WhatsApp_Image_2026_08_03_at_22_36_37__7.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872660266_WhatsApp_Image_2026_08_03_at_22_36_37__8.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872664188_WhatsApp_Image_2026_08_03_at_22_36_37__9.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872669790_WhatsApp_Image_2026_08_03_at_22_36_37.jpeg"
     ],
     "video": "",
     "status": "exclusive",
@@ -433,11 +455,17 @@
     "bedrooms": 0,
     "roi": "9.5",
     "gallery": [
-      "/images/generated/prop-odesa-retail-plaza-1.webp",
-      "/images/generated/category-commercial.webp",
-      "/images/generated/service-commercial.webp",
-      "/images/generated/service-investment.webp",
-      "/images/generated/insight-kyiv-market.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873174388_WhatsApp_Image_2026_08_04_at_22_25_40__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873177223_WhatsApp_Image_2026_08_04_at_22_25_40.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873179874_WhatsApp_Image_2026_08_04_at_22_25_41__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873182499_WhatsApp_Image_2026_08_04_at_22_25_41__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873185157_WhatsApp_Image_2026_08_04_at_22_25_41.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873188787_WhatsApp_Image_2026_08_04_at_22_25_41.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873191722_WhatsApp_Image_2026_08_04_at_22_25_42__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873194454_WhatsApp_Image_2026_08_04_at_22_25_42.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873197163_WhatsApp_Image_2026_08_04_at_22_25_43__1.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873200024_WhatsApp_Image_2026_08_04_at_22_25_43__2.jpeg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785873202905_WhatsApp_Image_2026_08_04_at_22_25_43.jpeg"
     ],
     "video": "",
     "status": "investment",
@@ -479,11 +507,16 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-kyiv-pechersk-penthouse-1.webp",
-      "/images/generated/shared-apt-living.webp",
-      "/images/generated/shared-apt-bedroom.webp",
-      "/images/generated/shared-apt-kitchen.webp",
-      "/images/generated/shared-apt-bathroom.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038438689_imgi_209_Violet_4_Gallery_4x3_00.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038475197_imgi_209_Violet_4_Gallery_4x3_00.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038478357_imgi_176_Violet_4_Gallery_4x3_08.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038481632_imgi_211_Violet_4_Gallery_4x3_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038484667_imgi_212_Violet_4_Gallery_4x3_03.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038489571_imgi_214_Violet_4_Gallery_4x3_05.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038494008_imgi_217_Violet_4_Gallery_4x3_08.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038497597_imgi_218_Violet_4_Gallery_4x3_09.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038500836_imgi_220_Violet_4_Gallery_4x3_11.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038504380_imgi_221_Violet_4_Gallery_4x3_12.jpg"
     ],
     "video": "",
     "status": "off-plan",
@@ -525,11 +558,13 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-odesa-arkadia-apartment-1.webp",
-      "/images/generated/shared-apt-living.webp",
-      "/images/generated/shared-apt-bedroom.webp",
-      "/images/generated/shared-apt-kitchen.webp",
-      "/images/generated/shared-apt-bathroom.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786039666222_Riverside_Views_Gallery_08.webp",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786039670398_Riverside_Views_Gallery_11.webp",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786039678063_Riverside_Views_Gallery_12.webp",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786039683774_Riverside_Views_Gallery_14.webp",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786039690788_Riverside_Views_Gallery_17.webp",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786039695524_Riverside_Views_Gallery_18.webp",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786039698926_Riverside_Views_Gallery_19.webp"
     ],
     "video": "",
     "status": "off-plan",
@@ -571,11 +606,16 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-kozyn-forest-villa-1.webp",
-      "/images/generated/category-villas.webp",
-      "/images/generated/featured-odesa-villa.webp",
-      "/images/generated/service-residential.webp",
-      "/images/generated/insight-offplan.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053644339_imgi_3_DAMAC_Islands___5BR_01.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053648706_imgi_4_DAMAC_Islands___5BR_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053651938_imgi_5_DAMAC_Islands___5BR_03.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053657203_DAMAC_Islands_Gallery_00.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053663264_DAMAC_Islands_Gallery_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053667938_DAMAC_Islands_Gallery_09.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053672086_DAMAC_Islands_Gallery_12.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053675569_DAMAC_Islands_Gallery_15.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053678694_DAMAC_Islands_Gallery_17.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053682422_DAMAC_Islands_Gallery_19.jpg"
     ],
     "video": "",
     "status": "off-plan",
@@ -617,11 +657,13 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-kyiv-pechersk-penthouse-1.webp",
-      "/images/generated/shared-apt-living.webp",
-      "/images/generated/shared-apt-bedroom.webp",
-      "/images/generated/shared-apt-kitchen.webp",
-      "/images/generated/shared-apt-bathroom.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786055726939_imgi_294_02_Living_Dining.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786055730128_imgi_295_03_Kitchen.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786055734758_imgi_296_04_Master_Bed_Room.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786055739163_Safa_Gate_Gallery_00.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786055743265_Safa_Gate_Gallery_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786055747491_Safa_Gate_Gallery_03.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786055752147_Safa_Gate_Gallery_05.jpg"
     ],
     "video": "",
     "status": "off-plan",
@@ -663,11 +705,14 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-kyiv-podil-loft-1.webp",
-      "/images/generated/shared-apt-living.webp",
-      "/images/generated/shared-apt-bedroom.webp",
-      "/images/generated/shared-apt-kitchen.webp",
-      "/images/generated/shared-apt-bathroom.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056002914_imgi_6_1BR_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056006615_imgi_5_1BR_01.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056009669_imgi_4_1BR_04.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056012852_imgi_3_1BR_05.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056016439_Chelsea_Residences_Gallery_00.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056021348_Chelsea_Residences_Gallery_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056024599_Chelsea_Residences_Gallery_03.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056028850_Chelsea_Residences_Gallery_05.jpg"
     ],
     "video": "",
     "status": "off-plan",
@@ -709,11 +754,13 @@
     "bedrooms": 0,
     "roi": "",
     "gallery": [
-      "/images/generated/prop-odesa-arkadia-apartment-1.webp",
-      "/images/generated/shared-apt-living.webp",
-      "/images/generated/shared-apt-bedroom.webp",
-      "/images/generated/shared-apt-kitchen.webp",
-      "/images/generated/shared-apt-bathroom.webp"
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056974895_imgi_3_Shoreline_by_DAMAC___3BR_01.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056990151_imgi_3_Shoreline_by_DAMAC___3BR_01.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056993492_imgi_4_Shoreline_by_DAMAC___3BR_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056996338_imgi_5_Shoreline_by_DAMAC___3BR_03.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786056999199_Shoreline_by_DAMAC_Gallery_00.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786057002560_Shoreline_by_DAMAC_Gallery_02.jpg",
+      "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786057005815_Shoreline_by_DAMAC_Gallery_03.jpg"
     ],
     "video": "",
     "status": "off-plan",

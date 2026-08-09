@@ -20,14 +20,28 @@ export async function GET() {
       allBlobs = blobs.map((b) => ({ pathname: b.pathname, url: b.url, uploadedAt: b.uploadedAt, size: b.size }));
 
       const propBlobs = blobs.filter((b) => b.pathname.includes("custom_properties"));
-      if (propBlobs.length > 0) {
-        const sorted = [...propBlobs].sort(
-          (a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime()
-        );
-        const res = await fetch(`${sorted[0].url}?t=${Date.now()}`, { cache: "no-store" });
-        if (res.ok) {
-          customPropertiesBlobData = await res.json();
+      const snapshots: any[] = [];
+      for (const pb of propBlobs) {
+        try {
+          const res = await fetch(`${pb.url}?t=${Date.now()}`, { cache: "no-store" });
+          if (res.ok) {
+            const arr = await res.json();
+            snapshots.push({
+              pathname: pb.pathname,
+              uploadedAt: pb.uploadedAt,
+              url: pb.url,
+              count: Array.isArray(arr) ? arr.length : 0,
+              data: arr,
+            });
+          }
+        } catch (e: any) {
+          snapshots.push({ pathname: pb.pathname, uploadedAt: pb.uploadedAt, error: e.message });
         }
+      }
+
+      if (snapshots.length > 0) {
+        snapshots.sort((a, b) => new Date(b.uploadedAt).getTime() - new Date(a.uploadedAt).getTime());
+        customPropertiesBlobData = snapshots[0].data;
       }
     } catch (err: any) {
       blobError = err?.message || String(err);

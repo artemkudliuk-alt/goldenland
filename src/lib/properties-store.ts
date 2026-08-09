@@ -115,9 +115,24 @@ const MOCK_SLUGS_TO_REMOVE = new Set([
   "odesa-retail-plaza",
 ]);
 
+function getLocalCleanProperties(): PropertyData[] {
+  try {
+    const raw = fs.readFileSync(path.join(process.cwd(), "custom_properties.json"), "utf-8");
+    const arr = JSON.parse(raw);
+    if (Array.isArray(arr) && arr.length > 0) {
+      return arr as PropertyData[];
+    }
+  } catch (e) {
+    // fallback
+  }
+  return [];
+}
+
 function deduplicateStoredProperties(stored: PropertyData[]): PropertyData[] {
   const seeded = getSeededProperties();
   const seededMapBySlug = new Map(seeded.map((s) => [s.slug, s]));
+  const localList = getLocalCleanProperties();
+  const localMapBySlug = new Map(localList.map((l) => [l.slug, l]));
   const result: PropertyData[] = [];
   const seenKeys = new Set<string>();
 
@@ -143,17 +158,23 @@ function deduplicateStoredProperties(stored: PropertyData[]): PropertyData[] {
     }
 
     const seedDefault = seededMapBySlug.get(item.slug);
+    const localReal = localMapBySlug.get(item.slug);
+    const itemGallery = Array.isArray(item.gallery) ? item.gallery : [];
+    const hasOnlyGenerated = itemGallery.length === 0 || itemGallery.every((g: string) => typeof g === "string" && g.startsWith("/images/generated/"));
+    const finalGallery = !hasOnlyGenerated ? itemGallery : (localReal?.gallery && localReal.gallery.length > 0 ? localReal.gallery : (seedDefault?.gallery || []));
+
     const enrichedItem: PropertyData = {
       ...(seedDefault || {}),
+      ...(localReal || {}),
       ...item,
-      id: item.id || seedDefault?.id || `prop_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
-      slug: item.slug || seedDefault?.slug || "",
-      title: item.title || seedDefault?.title || { en: "", ua: "", ru: "" },
-      location: item.location || seedDefault?.location || { en: "", ua: "", ru: "" },
-      description: item.description || seedDefault?.description || { en: "", ua: "", ru: "" },
-      address: item.address || seedDefault?.address || "",
-      specs: item.specs || seedDefault?.specs,
-      gallery: item.gallery && item.gallery.length > 0 ? item.gallery : (seedDefault?.gallery || []),
+      id: item.id || localReal?.id || seedDefault?.id || `prop_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
+      slug: item.slug || localReal?.slug || seedDefault?.slug || "",
+      title: item.title || localReal?.title || seedDefault?.title || { en: "", ua: "", ru: "" },
+      location: item.location || localReal?.location || seedDefault?.location || { en: "", ua: "", ru: "" },
+      description: item.description || localReal?.description || seedDefault?.description || { en: "", ua: "", ru: "" },
+      address: item.address || localReal?.address || seedDefault?.address || "",
+      specs: item.specs || localReal?.specs || seedDefault?.specs,
+      gallery: finalGallery,
     };
 
     result.push(enrichedItem);

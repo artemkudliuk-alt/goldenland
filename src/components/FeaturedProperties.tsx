@@ -39,7 +39,7 @@ type Property = {
 const properties: Property[] = [
   {
     slug: "continental-hotel-odesa",
-    image: "/images/generated/prop-kyiv-hospitality-project-1.webp",
+    image: "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872637897_WhatsApp_Image_2026_08_03_at_22_36_37__1.jpeg",
     location: { en: "Deribasivska, Odesa", ua: "вул. Дерибасівська, Одеса", ru: "ул. Дерибасовская, Одесса" },
     title: {
       en: "The Continental Hotel",
@@ -53,7 +53,7 @@ const properties: Property[] = [
   },
   {
     slug: "luxury-villa-arcadia-odesa",
-    image: "/images/generated/prop-kozyn-forest-villa-1.webp",
+    image: "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872449083_WhatsApp_Image_2026_08_03_at_22_36_36.jpeg",
     location: { en: "Arcadia, Odesa", ua: "Аркадія, Одеса", ru: "Аркадия, Одесса" },
     title: {
       en: "Luxury Villa in the Heart of Arcadia",
@@ -67,7 +67,7 @@ const properties: Property[] = [
   },
   {
     slug: "geneva-hotel-odesa",
-    image: "/images/generated/prop-lviv-rynok-boutique-1.webp",
+    image: "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785872455055_WhatsApp_Image_2026_08_03_at_22_36_38.jpeg",
     location: { en: "City Center, Odesa", ua: "Центр міста, Одеса", ru: "Центр города, Одесса" },
     title: {
       en: "Geneva Hotel",
@@ -81,7 +81,7 @@ const properties: Property[] = [
   },
   {
     slug: "damac-islands-dubai",
-    image: "/images/generated/prop-kozyn-forest-villa-1.webp",
+    image: "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786053657203_DAMAC_Islands_Gallery_00.jpg",
     location: { en: "DAMAC Islands, Dubai", ua: "DAMAC Islands, Дубай", ru: "DAMAC Islands, Дубай" },
     title: {
       en: "DAMAC Islands Luxury Residences",
@@ -95,7 +95,7 @@ const properties: Property[] = [
   },
   {
     slug: "violet-4-dubai",
-    image: "/images/generated/prop-kyiv-pechersk-penthouse-1.webp",
+    image: "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1786038438689_imgi_209_Violet_4_Gallery_4x3_00.jpg",
     location: { en: "DAMAC Hills 2, Dubai", ua: "DAMAC Hills 2, Дубай", ru: "DAMAC Hills 2, Дубай" },
     title: {
       en: "VIOLET 4 Premier Townhouses",
@@ -109,7 +109,7 @@ const properties: Property[] = [
   },
   {
     slug: "modern-apartment-terrace-odesa",
-    image: "/images/generated/prop-odesa-arkadia-apartment-1.webp",
+    image: "https://sor9fvtsekakbkwi.public.blob.vercel-storage.com/gl-uploads/1785231545341_WhatsApp_Image_2026_07_27_at_18_07_01.jpg",
     location: { en: "Arcadia, Odesa", ua: "Аркадія, Одеса", ru: "Аркадия, Одесса" },
     title: {
       en: "Modern Apartment with Sea-View Terrace",
