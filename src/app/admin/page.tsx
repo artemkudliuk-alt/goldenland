@@ -603,6 +603,15 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
     setEditingProperty({ ...editingProperty, gallery });
   };
 
+  const setAsMainPhoto = (index: number) => {
+    if (!editingProperty || !Array.isArray(editingProperty.gallery)) return;
+    if (index <= 0 || index >= editingProperty.gallery.length) return;
+    const gallery = [...editingProperty.gallery];
+    const [selected] = gallery.splice(index, 1);
+    gallery.unshift(selected);
+    setEditingProperty({ ...editingProperty, gallery });
+  };
+
   const handleResetPropertyForm = () => {
     if (!initialPropertyBackup) return;
     if (confirm("Reset all changes to their original values?")) {
@@ -2378,25 +2387,42 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <label className="block text-[10px] font-medium uppercase tracking-wider text-white/50">
-                    Photos Gallery (Maximum 15 images)
+                    Photos Gallery (Maximum 15 images) — <span className="text-[#D4AF37] font-semibold">Photo #1 is Main Cover</span>
                   </label>
                   <span className="text-[10px] text-white/40">
                     {editingProperty.gallery.length} / 15 Photos
                   </span>
                 </div>
 
-                <div className="space-y-2.5 max-h-[300px] overflow-y-auto border border-white/10 p-3 bg-black/40 rounded-sm">
+                <div className="space-y-2.5 max-h-[360px] overflow-y-auto border border-white/10 p-3 bg-black/40 rounded-sm">
                   {editingProperty.gallery.map((imgUrl: string, idx: number) => (
-                    <div key={idx} className="flex items-center gap-2 bg-black/60 border border-white/5 p-2 rounded-xs">
-                      <span className="text-[11px] font-mono text-[#D4AF37] w-6 shrink-0 font-semibold">#{idx + 1}</span>
-                      
-                      {/* Photo Thumbnail */}
-                      <div className="w-10 h-10 rounded bg-white/5 border border-white/10 shrink-0 overflow-hidden relative flex items-center justify-center">
-                        {imgUrl ? (
-                          // eslint-disable-next-line @next/next/no-img-element
-                          <img src={imgUrl} alt="" className="w-full h-full object-cover" />
-                        ) : (
-                          <span className="text-[9px] text-white/30 font-mono uppercase">Empty</span>
+                    <div
+                      key={idx}
+                      className={`flex flex-col sm:flex-row sm:items-center gap-2 p-2 rounded-xs transition-all ${
+                        idx === 0
+                          ? "bg-[#D4AF37]/15 border border-[#D4AF37]/60 shadow-[0_0_12px_rgba(212,175,55,0.15)]"
+                          : "bg-black/60 border border-white/5"
+                      }`}
+                    >
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span className={`text-[11px] font-mono w-6 font-semibold ${idx === 0 ? "text-[#D4AF37]" : "text-white/40"}`}>
+                          #{idx + 1}
+                        </span>
+
+                        {/* Photo Thumbnail */}
+                        <div className="w-10 h-10 rounded bg-white/5 border border-white/10 shrink-0 overflow-hidden relative flex items-center justify-center">
+                          {imgUrl ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={imgUrl} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="text-[9px] text-white/30 font-mono uppercase">Empty</span>
+                          )}
+                        </div>
+
+                        {idx === 0 && (
+                          <span className="bg-[#D4AF37] text-black text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-xs shrink-0">
+                            ⭐ MAIN COVER
+                          </span>
                         )}
                       </div>
 
@@ -2408,73 +2434,88 @@ function toMultilingualObj(val: any): { en: string; ua: string; ru: string } {
                           updated[idx] = e.target.value;
                           setEditingProperty({ ...editingProperty, gallery: updated });
                         }}
-                        placeholder="e.g. /images/generated/prop-kyiv-podil-loft-1.webp"
+                        placeholder="e.g. https://... or /images/..."
                         className="flex-1 border border-white/10 bg-black px-3 py-1.5 text-[12px] font-mono text-white/95 focus:border-[#D4AF37] focus:outline-none"
                       />
 
-                      {/* Move Up / Move Down */}
-                      <div className="flex flex-col gap-0.5 shrink-0">
+                      <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
+                        {/* Make Main Button for items > 0 */}
+                        {idx > 0 && (
+                          <button
+                            type="button"
+                            onClick={() => setAsMainPhoto(idx)}
+                            className="bg-[#D4AF37]/20 hover:bg-[#D4AF37] hover:text-black border border-[#D4AF37]/40 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#D4AF37] rounded-xs transition-colors shrink-0"
+                            title="Set as Main Cover Photo (#1)"
+                          >
+                            ★ Make Main
+                          </button>
+                        )}
+
+                        {/* Move Up / Move Down */}
+                        <div className="flex gap-0.5 shrink-0">
+                          <button
+                            type="button"
+                            disabled={idx === 0}
+                            onClick={() => moveGalleryImage(idx, "up")}
+                            className="px-1.5 py-0.5 text-[10px] bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/70 rounded transition-colors disabled:opacity-20"
+                            title="Move Up"
+                          >
+                            ▲
+                          </button>
+                          <button
+                            type="button"
+                            disabled={idx === editingProperty.gallery.length - 1}
+                            onClick={() => moveGalleryImage(idx, "down")}
+                            className="px-1.5 py-0.5 text-[10px] bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/70 rounded transition-colors disabled:opacity-20"
+                            title="Move Down"
+                          >
+                            ▼
+                          </button>
+                        </div>
+
+                        <label className="bg-white/10 hover:bg-white/20 border border-white/15 px-2 py-1 text-[10px] font-semibold uppercase tracking-wider text-white rounded-xs cursor-pointer transition-colors shrink-0">
+                          Upload
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              try {
+                                const formData = new FormData();
+                                formData.append("file", file);
+                                const res = await fetch("/api/admin/upload", {
+                                  method: "POST",
+                                  body: formData,
+                                });
+                                const data = await res.json();
+                                if (data.success) {
+                                  const updated = [...editingProperty.gallery];
+                                  updated[idx] = data.url;
+                                  setEditingProperty({ ...editingProperty, gallery: updated });
+                                } else {
+                                  alert("Upload failed: " + (data.error || "Unknown error"));
+                                }
+                              } catch (err: any) {
+                                alert("Upload error: " + err.message);
+                              }
+                            }}
+                          />
+                        </label>
+
                         <button
                           type="button"
-                          disabled={idx === 0}
-                          onClick={() => moveGalleryImage(idx, "up")}
-                          className="px-1.5 py-0.5 text-[10px] bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/70 rounded transition-colors disabled:opacity-20"
-                          title="Move Up"
+                          onClick={() => {
+                            const updated = editingProperty.gallery.filter((_: any, i: number) => i !== idx);
+                            setEditingProperty({ ...editingProperty, gallery: updated });
+                          }}
+                          className="text-[11px] uppercase tracking-wider text-rose-400 hover:text-rose-300 px-1"
+                          title="Remove photo"
                         >
-                          ▲
-                        </button>
-                        <button
-                          type="button"
-                          disabled={idx === editingProperty.gallery.length - 1}
-                          onClick={() => moveGalleryImage(idx, "down")}
-                          className="px-1.5 py-0.5 text-[10px] bg-white/5 hover:bg-[#D4AF37] hover:text-black text-white/70 rounded transition-colors disabled:opacity-20"
-                          title="Move Down"
-                        >
-                          ▼
+                          ✕
                         </button>
                       </div>
-
-                      <label className="bg-[#D4AF37]/20 hover:bg-[#D4AF37] hover:text-black border border-[#D4AF37]/40 px-2.5 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-[#D4AF37] rounded-sm cursor-pointer transition-colors shrink-0">
-                        Upload
-                        <input
-                          type="file"
-                          accept="image/*"
-                          className="hidden"
-                          onChange={async (e) => {
-                            const file = e.target.files?.[0];
-                            if (!file) return;
-                            try {
-                              const formData = new FormData();
-                              formData.append("file", file);
-                              const res = await fetch("/api/admin/upload", {
-                                method: "POST",
-                                body: formData,
-                              });
-                              const data = await res.json();
-                              if (data.success) {
-                                const updated = [...editingProperty.gallery];
-                                updated[idx] = data.url;
-                                setEditingProperty({ ...editingProperty, gallery: updated });
-                              } else {
-                                alert("Upload failed: " + (data.error || "Unknown error"));
-                              }
-                            } catch (err: any) {
-                              alert("Upload error: " + err.message);
-                            }
-                          }}
-                        />
-                      </label>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          const updated = editingProperty.gallery.filter((_: any, i: number) => i !== idx);
-                          setEditingProperty({ ...editingProperty, gallery: updated });
-                        }}
-                        className="text-[11px] uppercase tracking-wider text-rose-400 hover:text-rose-300 px-1"
-                        title="Remove photo"
-                      >
-                        ✕
-                      </button>
                     </div>
                   ))}
 
